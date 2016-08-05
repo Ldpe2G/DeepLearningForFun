@@ -11,7 +11,6 @@ Tested on Ubuntu 14.04
 
 ###Requirements
 
-* java 8
 * sbt 0.13
 * Mxnet
 
