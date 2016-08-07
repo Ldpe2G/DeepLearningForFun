@@ -1,5 +1,5 @@
 # MXNET-Scala GAN
-MXNet-scala module implementation of generative models (Minibatch discrimation).
+MXNet-scala module implementation of generative models.
 
 Based on: https://github.com/tqchen/mxnet-gan
 
