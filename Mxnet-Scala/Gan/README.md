@@ -1,5 +1,5 @@
 # MXNET-Scala GAN
-MXNet-scala module implementation of generative models.
+MXNet-scala module implementation of Generative Adversarial Net.
 
 Based on: https://github.com/tqchen/mxnet-gan
 
