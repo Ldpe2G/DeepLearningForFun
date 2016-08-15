@@ -33,15 +33,15 @@ Tested on Ubuntu 14.04
 
 ### Mnist
 
-<img src="./results/mnist1.png" width="350"/>
+<img src="./results/mnist1.png" width="500"/>
 
-<img src="./results/mnist2.png" width="600"/>
+<img src="./results/mnist2.png" width="500"/>
 
 ### Cifar10
 
-<img src="./results/cifar1.png" width="600"/>
+<img src="./results/cifar1.png" width="500"/>
 
-<img src="./results/cifar2.png" width="600"/>
+<img src="./results/cifar2.png" width="500"/>
 
 
 
