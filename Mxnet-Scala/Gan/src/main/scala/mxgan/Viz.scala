@@ -87,8 +87,9 @@ object Viz {
       Core.vconcat(lineMats, result)
       result
     }
-
-    showMap(title).showImage(img)
+    val resizedImg = new Mat
+    Imgproc.resize(img, resizedImg, new Size(img.width() * 1.5, img.height() * 1.5))
+    showMap(title).showImage(resizedImg)
     Thread.sleep(waitsec)
   }
 
