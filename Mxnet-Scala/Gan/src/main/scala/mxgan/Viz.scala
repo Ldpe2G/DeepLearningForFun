@@ -8,6 +8,7 @@ import visual.Imshow
 import org.opencv.core.Mat
 import org.opencv.core.CvType
 import java.util.ArrayList
+import org.opencv.core.Size
 
 object Viz {
 
