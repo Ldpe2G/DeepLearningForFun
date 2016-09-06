@@ -1,3 +1,5 @@
+# Implementation of matrix-factorization with Mxnet scalapkg
+
 for running this code, you need to add the following code to your Symbol object in Symbol.scala, then recompile the scala-pkg:
 
 ```scala
