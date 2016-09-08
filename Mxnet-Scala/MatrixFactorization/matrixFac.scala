@@ -17,16 +17,16 @@ object SVDF {
     var item = Symbol.Variable("item")
     val score = Symbol.Variable("score")
 
-    user = Symbol.Embedding()(Map("data" -> user, "input_dim" -> maxUser, "output_dim" -> 500))
-    user = Symbol.Flatten()(Map("data" -> user))
-    user = Symbol.FullyConnected()(Map("data" -> user, "num_hidden" -> hidden))
-    item = Symbol.Embedding()(Map("data" -> item, "input_dim" -> maxItem, "output_dim" -> 500))
-    item = Symbol.FullyConnected()(Map("data" -> item, "num_hidden" -> hidden))
-    item = Symbol.Flatten()(Map("data" -> item))
+    user = Symbol.Embedding()()(Map("data" -> user, "input_dim" -> maxUser, "output_dim" -> 500))
+    user = Symbol.Flatten()()(Map("data" -> user))
+    user = Symbol.FullyConnected()()(Map("data" -> user, "num_hidden" -> hidden))
+    item = Symbol.Embedding()()(Map("data" -> item, "input_dim" -> maxItem, "output_dim" -> 500))
+    item = Symbol.FullyConnected()()(Map("data" -> item, "num_hidden" -> hidden))
+    item = Symbol.Flatten()()(Map("data" -> item))
     var pred = user * item
-    pred = Symbol.sumAxis()(Map("data" -> pred, "axis" -> 1))
-    pred = Symbol.Flatten()(Map("data" -> pred))
-    pred = Symbol.LinearRegressionOutput()(Map("data" -> pred, "label" -> score))
+    pred = Symbol.sum_axis()()(Map("data" -> pred, "axis" -> 1))
+    pred = Symbol.Flatten()()(Map("data" -> pred))
+    pred = Symbol.LinearRegressionOutput()()(Map("data" -> pred, "label" -> score))
     pred
   }
   
