@@ -37,8 +37,8 @@ class GANModule(
   // discriminator
   private val batchSize = dataShape(0)
   private var encoder = symbolEncoder
-  encoder = Symbol.FullyConnected("fc_dloss")(Map("data" -> encoder, "num_hidden" -> 1))
-  encoder = Symbol.LogisticRegressionOutput("dloss")(Map("data" -> encoder))
+  encoder = Symbol.FullyConnected("fc_dloss")()(Map("data" -> encoder, "num_hidden" -> 1))
+  encoder = Symbol.LogisticRegressionOutput("dloss")()(Map("data" -> encoder))
   
   private val dDataShape = Map("data" -> dataShape)
   private val dLabelShape = Map("dloss_label" -> Shape(batchSize))

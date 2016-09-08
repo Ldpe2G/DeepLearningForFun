@@ -11,10 +11,10 @@ object Generator {
     assert(oShape(oShape.length - 1) == 28)
     assert(oShape(oShape.length - 2) == 28)
     val code = Symbol.Variable("code")
-    var net = Symbol.FullyConnected("g1")(Map("data" -> code, "num_hidden" -> 4 * 4 * ngf * 4, "no_bias" -> true))
-    net = Symbol.Activation("gact1")(Map("data" -> net, "act_type" -> "relu"))
+    var net = Symbol.FullyConnected("g1")()(Map("data" -> code, "num_hidden" -> 4 * 4 * ngf * 4, "no_bias" -> true))
+    net = Symbol.Activation("gact1")()(Map("data" -> net, "act_type" -> "relu"))
     // 4 x 4
-    net = Symbol.Reshape()(Map("data" -> net, "shape" -> s"(-1, ${ngf * 4}, 4, 4)"))
+    net = Symbol.Reshape()()(Map("data" -> net, "shape" -> s"(-1, ${ngf * 4}, 4, 4)"))
     // 8 x 8
     net = deconv2DBnRelu(net, prefix = "g2", iShape = Shape(ngf * 4, 4, 4), oShape = Shape(ngf * 2, 8, 8), kShape = (3, 3))
     // 14x14
@@ -30,10 +30,10 @@ object Generator {
     assert(oShape(oShape.length - 1) == 32)
     assert(oShape(oShape.length - 2) == 32)
     val code = Symbol.Variable("code")
-    var net = Symbol.FullyConnected("g1")(Map("data" -> code, "num_hidden" -> 4 * 4 * ngf * 4, "no_bias" -> true))
-    net = Symbol.Activation("gact1")(Map("data" -> net, "act_type" -> "relu"))
+    var net = Symbol.FullyConnected("g1")()(Map("data" -> code, "num_hidden" -> 4 * 4 * ngf * 4, "no_bias" -> true))
+    net = Symbol.Activation("gact1")()(Map("data" -> net, "act_type" -> "relu"))
     // 4 x 4
-    net = Symbol.Reshape()(Map("data" -> net, "shape" -> s"(-1, ${ngf * 4}, 4, 4)"))
+    net = Symbol.Reshape()()(Map("data" -> net, "shape" -> s"(-1, ${ngf * 4}, 4, 4)"))
     // 8 x 8
     net = deconv2DBnRelu(net, prefix = "g2", iShape = Shape(ngf * 4, 4, 4) , oShape = Shape(ngf * 2, 8, 8), kShape = (4, 4))
     // 16x16
