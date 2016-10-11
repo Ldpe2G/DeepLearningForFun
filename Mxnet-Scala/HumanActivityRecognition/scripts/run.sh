@@ -17,6 +17,8 @@ if [ ! -d $ROOT/data/UCI_HAR_Dataset ] ; then
 fi
 
 DATA_PATH=$ROOT/data/UCI_HAR_Dataset
+
+# -1 for cpu
 GPU=0
 
 java -Xmx1G -cp $CLASS_PATH \
