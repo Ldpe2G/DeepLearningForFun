@@ -113,7 +113,7 @@ object HumanAR {
       step += 1
     }
     
-      val (finalLoss, accuracy) = test(testDataCount, batchSize, testDatas, testLabels, model)
+    val (finalLoss, accuracy) = test(testDataCount, batchSize, testDatas, testLabels, model)
 
     println(s"FINAL RESULT: Batch Loss= $finalLoss, Accuracy= $accuracy")
     

@@ -49,36 +49,5 @@ object Utils {
   def loadLabel(labelPath: String): Array[Float] = {
     Source.fromFile(labelPath).mkString.split("\n").map(_.toFloat - 1)
   }
-  
-  def visualize(): Unit = {
-    
-  }
 
-//  %matplotlib inline
-//
-//font = {
-//    'family' : 'Bitstream Vera Sans',
-//    'weight' : 'bold',
-//    'size'   : 18
-//}
-//matplotlib.rc('font', **font)
-//
-//width = 12
-//height = 12
-//plt.figure(figsize=(width, height))
-//
-//indep_train_axis = np.array(range(batch_size, (len(train_losses)+1)*batch_size, batch_size))
-//plt.plot(indep_train_axis, np.array(train_losses),     "b--", label="Train losses")
-//plt.plot(indep_train_axis, np.array(train_accuracies), "g--", label="Train accuracies")
-//
-//indep_test_axis = np.array(range(batch_size, len(test_losses)*display_iter, display_iter)[:-1] + [training_iters])
-//plt.plot(indep_test_axis, np.array(test_losses),     "b-", label="Test losses")
-//plt.plot(indep_test_axis, np.array(test_accuracies), "g-", label="Test accuracies")
-//
-//plt.title("Training session's progress over iterations")
-//plt.legend(loc='upper right', shadow=True)
-//plt.ylabel('Training Progress (Loss or Accuracy values)')
-//plt.xlabel('Training iteration')
-//
-//plt.show()
 }
