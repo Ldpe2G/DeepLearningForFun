@@ -1,38 +1,82 @@
-# MXNET-Scala Human Activity Recognition
-MXNet-scala module implementation of LSTM for Human Activity Recognition.
+# MXNET-Scala Fast Neural Style
+MXNet-scala module implementation of fast neural style[1].
 
-Based on: https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition
+Based on: https://github.com/jcjohnson/fast-neural-style and https://github.com/dmlc/mxnet/tree/master/example/neural-style/end_to_end
 
-## Building
+The results are not as good as the torch version but not bad anyway :)
 
-Tested on Ubuntu 14.04
+Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for at resolution of 712 x 414.
 
-###Requirements
+## Setup
 
-* sbt 0.13
-* Mxnet
-
-###steps
-
-1, compile Mxnet with CUDA, then compile the scala-pkg;
-
-2, cd into Mxnet-Scala/HumanActivityRecognition, then mkdir lib;
-
-3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.1.2-SNAPSHOT.jar into lib folder;
-
-4, run sbt, compile the project
-
-## Running
-
-* cd scripts;
-* bash run.sh
-
-then have fun!
- 
-
-## Visualization of the training process
-
-<img src="./visualize/result.png" width="800"/>
+First [install Torch](http://torch.ch/docs/getting-started.html#installing-torch), then
+update / install the following packages:
 
 
+<div align='center'>
+  <img src='datas/images/candy.jpg' height='174px'>
+  <img src='data/pretrain_models/candy/out.jpg' height="174px">
+  <img src='images/outputs/chicago_udnie.jpg' height="174px">
+  <img src='images/styles/udnie.jpg' height='174px'>
+  <br>
+  <img src='images/styles/the_scream.jpg' height='174px'>
+  <img src='images/outputs/chicago_scream.jpg' height="174px">
+  <img src='images/outputs/chicago_mosaic.jpg' height="174px">
+  <img src='images/styles/mosaic.jpg' height='174px'>
+  <br>
+  <img src='images/styles/feathers.jpg' height='173px'>
+  <img src='images/outputs/chicago_feathers.jpg' height="173px">
+  <img src='images/outputs/chicago_muse.jpg' height="173px">
+  <img src='images/styles/la_muse.jpg' height='173px'>
+</div>
+
+
+## Running on new images
+The script `fast_neural_style.lua` lets you use a trained model to stylize new images:
+
+```bash
+th fast_neural_style.lua \
+  -model models/eccv16/starry_night.t7 \
+  -input_image images/content/chicago.jpg \
+  -output_image out.png
+```
+
+You can run the same model on an entire directory of images like this:
+
+```bash
+th fast_neural_style.lua \
+  -model models/eccv16/starry_night.t7 \
+  -input_dir images/content/ \
+  -output_dir out/
+```
+
+You can control the size of the output images using the `-image_size` flag.
+
+By default this script runs on CPU; to run on GPU, add the flag `-gpu`
+specifying the GPU on which to run.
+
+The full set of options for this script is [described here](doc/flags.md#fast_neural_stylelua).
+
+
+## Training new models
+
+```
+
+### Pretrained Models
+Download all pretrained style transfer models by running the script
+
+```bash
+bash models/download_style_transfer_models.sh
+```
+
+This will download ten model files (~200MB) to the folder `models/`.
+
+You can [find instructions for training new models here](doc/training.md).
+
+## License
+
+Free for personal or research use.
+
+## Reference
+[1] Johnson, Justin, Alexandre Alahi, and Li Fei-Fei. "Perceptual losses for real-time style transfer and super-resolution." arXiv preprint arXiv:1603.08155.
 
