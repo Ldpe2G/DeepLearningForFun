@@ -15,22 +15,22 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for at resolution of 712 x
   <img src='datas/images/chicago.jpg' height="185px">
 </div>
 <br>
-<div>
+<div align='center'>
   <img src='datas/images/the_scream.jpg' height='174px'>
   <img src='datas/pretrain_models/scream/out.jpg' height="174px">
 </div>
 <br>
-<div>
+<div align='center'>
   <img src='datas/images/mosaic.jpg' height='174px'>
   <img src='datas/pretrain_models/mosaic/out.jpg' height="174px">
 </div>
 <br>
-<div>
+<div align='center'>
   <img src='datas/images/feathers.jpg' height='173px'>
   <img src='datas/pretrain_models/feathers/out.jpg' height="173px">
 </div>
 <br>
-<div>
+<div align='center'>
   <img src='datas/images/la_muse.jpg' height='173px'>
   <img src='datas/pretrain_models/la_muse/out.jpg' height="173px">
 </div>
