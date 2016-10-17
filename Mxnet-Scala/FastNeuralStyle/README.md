@@ -7,7 +7,7 @@ https://github.com/jcjohnson/fast-neural-style and https://github.com/dmlc/mxnet
 
 The results are not as good as the torch version but not bad anyway :)
 
-Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for at resolution of 712 x 414.
+Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 414.
 
 ## Results:
 
