@@ -67,7 +67,7 @@ Tested on Ubuntu 14.04
 4, run `sbt` then compile the project
 
 ## Running on new images
-The script `run_fast_neural_style.sh` in the scripts older, lets you use a pre-trained model to stylize new images:
+The script `run_fast_neural_style.sh` under the scripts folder, lets you use a pretrained model to stylize new images:
 
 ```bash
 java -Xmx1G -cp $CLASS_PATH \
@@ -79,28 +79,62 @@ java -Xmx1G -cp $CLASS_PATH \
 ```
 You can run this script on CPU or GPU, 
 
-for cpu set the GPU to -1;
+for cpu set the GPU flag to -1;
 
-for gpu plesase specifying the GPU on which to run.
+for gpu plesase specifying the GPU number on which to run.
 
 ## Training new models
 
-```
-
-### Pretrained Models
-Download all pretrained style transfer models by running the script
+1, download the vgg model 
 
 ```bash
-bash models/download_style_transfer_models.sh
+cd scripts
+bash download_vgg_model.sh
 ```
+This will download the pretrained vgg model file (~80MB) to the folder `datas/vggmodel`.
 
-This will download ten model files (~200MB) to the folder `models/`.
+2, download the [Coco dataset]http://msvocds.blob.core.windows.net/coco2015/test2015.zip
 
-You can [find instructions for training new models here](doc/training.md).
+3, use the script `train_fast_nueral_style.sh` under the scripts folder to train on new style image.
+you just need to set the `TRAIN_DATA_PATH` flag to your coco dataset path.
+
+```bash
+# path to the coco dataset,
+# you can download it by : http://msvocds.blob.core.windows.net/coco2015/test2015.zip
+TRAIN_DATA_PATH=
+
+VGG_MODEL=$ROOT/datas/vggmodel/vgg19.params
+
+SAVE_MODEL_PATH=$ROOT/datas/models
+
+STYLE_IMAGE=$ROOT/datas/images/the_scream.jpg
+
+LEARNING_RATE=0.0001
+
+# resume the training progress
+# by adding the commamd line parameter: 
+# --resume-model-path $RESUME_MODEL_PATH
+RESUME_MODEL_PATH=
+
+# -1 for cpu
+GPU=0
+
+java -Xmx1G -cp $CLASS_PATH \
+	Train \
+	--data-path $TRAIN_DATA_PATH \
+	--vgg-model-path $VGG_MODEL \
+	--save-model-path $SAVE_MODEL_PATH \
+	--style-image $STYLE_IMAGE \
+	--lr $LEARNING_RATE \
+	--gpu $GPU
+```
+for now, the training program on support training bash size 1, the program may crash during the training process, 
+can't figure out the reason. but if you encounter this cituasion. you set the `RESUME_MODEL_PATH` to your lastest 
+saved model (a mdoel will be saved every 1000 iters). And use the `--resume-model-path` command line
+parameter to resume the training.
 
 ## License
-
-Free for personal or research use.
+MIT
 
 ## Reference
 [1] Johnson, Justin, Alexandre Alahi, and Li Fei-Fei. "Perceptual losses for real-time style transfer and super-resolution." arXiv preprint arXiv:1603.08155.
