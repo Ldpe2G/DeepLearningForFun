@@ -1,19 +1,38 @@
 # MXNET-Scala Fast Neural Style
 MXNet-scala module implementation of fast neural style[1].
 
-Based on: https://github.com/jcjohnson/fast-neural-style and https://github.com/dmlc/mxnet/tree/master/example/neural-style/end_to_end
+Based on: 
+
+https://github.com/jcjohnson/fast-neural-style and https://github.com/dmlc/mxnet/tree/master/example/neural-style/end_to_end
 
 The results are not as good as the torch version but not bad anyway :)
 
 Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for at resolution of 712 x 414.
 
-## Setup
-
-First [install Torch](http://torch.ch/docs/getting-started.html#installing-torch), then
-update / install the following packages:
+## Results:
 
 <div align='center'>
   <img src='datas/images/chicago.jpg' height="185px">
+</div>
+<br>
+<div>
+  <img src='datas/images/the_scream.jpg' height='174px'>
+  <img src='datas/pretrain_models/scream/out.jpg' height="174px">
+</div>
+<br>
+<div>
+  <img src='datas/images/mosaic.jpg' height='174px'>
+  <img src='datas/pretrain_models/mosaic/out.jpg' height="174px">
+</div>
+<br>
+<div>
+  <img src='datas/images/feathers.jpg' height='173px'>
+  <img src='datas/pretrain_models/feathers/out.jpg' height="173px">
+</div>
+<br>
+<div>
+  <img src='datas/images/la_muse.jpg' height='173px'>
+  <img src='datas/pretrain_models/la_muse/out.jpg' height="173px">
 </div>
 <br>
 <div align='center'>
@@ -25,36 +44,44 @@ update / install the following packages:
   <img src='datas/images/udnie.jpg' height='174px'>
   <img src='datas/pretrain_models/udnie/out.jpg' height="174px">
 </div>
-<br>
 
 
+## Setup
+Tested on Ubuntu 14.04
+
+###Requirements
+
+* [sbt 0.13]http://www.scala-sbt.org/
+* [Mxnet]https://github.com/dmlc/mxnet
+
+###steps
+
+1, compile Mxnet with CUDA, then compile the [scala-pkg]https://github.com/dmlc/mxnet/tree/master/scala-package
+
+2, under the Mxnet-Scala/FastNeuralStyle folder 
+```bah
+ mkdir lib;
+```
+3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.1.2-SNAPSHOT.jar into lib folder;
+
+4, run `sbt` then compile the project
 
 ## Running on new images
-The script `fast_neural_style.lua` lets you use a trained model to stylize new images:
+The script `run_fast_neural_style.sh` in the scripts older, lets you use a pre-trained model to stylize new images:
 
 ```bash
-th fast_neural_style.lua \
-  -model models/eccv16/starry_night.t7 \
-  -input_image images/content/chicago.jpg \
-  -output_image out.png
+java -Xmx1G -cp $CLASS_PATH \
+	FastNeuralStyle \
+	--model-path  $PREAREIN_MODEL \
+	--input-image $INPUT_IMAGE \
+	--output-path $OUTPUT_PATH \
+	--gpu $GPU
 ```
+You can run this script on CPU or GPU, 
 
-You can run the same model on an entire directory of images like this:
+for cpu set the GPU to -1;
 
-```bash
-th fast_neural_style.lua \
-  -model models/eccv16/starry_night.t7 \
-  -input_dir images/content/ \
-  -output_dir out/
-```
-
-You can control the size of the output images using the `-image_size` flag.
-
-By default this script runs on CPU; to run on GPU, add the flag `-gpu`
-specifying the GPU on which to run.
-
-The full set of options for this script is [described here](doc/flags.md#fast_neural_stylelua).
-
+for gpu plesase specifying the GPU on which to run.
 
 ## Training new models
 
