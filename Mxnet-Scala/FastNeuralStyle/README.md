@@ -12,7 +12,9 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for at resolution of 712 x
 First [install Torch](http://torch.ch/docs/getting-started.html#installing-torch), then
 update / install the following packages:
 
-
+<div align='center'>
+  <img src='datas/images/chicago.jpg' height="185px">
+</div>
 <div align='center'>
   <img src='datas/images/candy.jpg' height='174px'>
   <img src='datas/pretrain_models/candy/out.jpg' height="174px">
@@ -26,7 +28,7 @@ update / install the following packages:
   <br>
   <img src='datas/images/feathers.jpg' height='173px'>
   <img src='datas/pretrain_models/feathers/out.jpg' height="173px">
-  <img src='datas/pretrain_models/muse/out.jpg' height="173px">
+  <img src='datas/pretrain_models/la_muse/out.jpg' height="173px">
   <img src='datas/images/la_muse.jpg' height='173px'>
 </div>
 
