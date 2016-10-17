@@ -45,6 +45,11 @@ INPUT_IMAGE=$ROOT/datas/images/chicago.jpg
 
 OUTPUT_PATH=$ROOT/datas/output
 
+
+if [ ! -d $OUTPUT_PATH ] ; then
+	mkdir -p $OUTPUT_PATH
+fi
+
 # -1 for cpu
 GPU=0
 
