@@ -53,4 +53,4 @@ java -Xmx1G -cp $CLASS_PATH \
 	--model-path  $PREAREIN_MODEL \
 	--input-image $INPUT_IMAGE \
 	--output-path $OUTPUT_PATH \
-	--gpu 0
+	--gpu $GPU
