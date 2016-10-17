@@ -15,19 +15,19 @@ update / install the following packages:
 
 <div align='center'>
   <img src='datas/images/candy.jpg' height='174px'>
-  <img src='data/pretrain_models/candy/out.jpg' height="174px">
-  <img src='images/outputs/chicago_udnie.jpg' height="174px">
-  <img src='images/styles/udnie.jpg' height='174px'>
+  <img src='datas/pretrain_models/candy/out.jpg' height="174px">
+  <img src='datas/pretrain_models/udnie/out.jpg' height="174px">
+  <img src='datas/images/udnie.jpg' height='174px'>
   <br>
-  <img src='images/styles/the_scream.jpg' height='174px'>
-  <img src='images/outputs/chicago_scream.jpg' height="174px">
-  <img src='images/outputs/chicago_mosaic.jpg' height="174px">
-  <img src='images/styles/mosaic.jpg' height='174px'>
+  <img src='datas/images/the_scream.jpg' height='174px'>
+  <img src='datas/pretrain_models/scream/out.jpg' height="174px">
+  <img src='datas/pretrain_models/mosaic/out.jpg' height="174px">
+  <img src='datas/images/mosaic.jpg' height='174px'>
   <br>
-  <img src='images/styles/feathers.jpg' height='173px'>
-  <img src='images/outputs/chicago_feathers.jpg' height="173px">
-  <img src='images/outputs/chicago_muse.jpg' height="173px">
-  <img src='images/styles/la_muse.jpg' height='173px'>
+  <img src='datas/images/feathers.jpg' height='173px'>
+  <img src='datas/pretrain_models/feathers/out.jpg' height="173px">
+  <img src='datas/pretrain_models/muse/out.jpg' height="173px">
+  <img src='datas/images/la_muse.jpg' height='173px'>
 </div>
 
 
