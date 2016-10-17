@@ -12,37 +12,37 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 41
 ## Results:
 
 <div align='center'>
-  <img src='datas/images/chicago.jpg' height="185px">
+  <img src='datas/images/chicago.jpg' height="300px">
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/the_scream.jpg' height='174px'>
-  <img src='datas/pretrain_models/scream/out.jpg' height="174px">
+  <img src='datas/images/the_scream.jpg' height='200px'>
+  <img src='datas/pretrain_models/scream/out.jpg' height="300px">
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/mosaic.jpg' height='174px'>
-  <img src='datas/pretrain_models/mosaic/out.jpg' height="174px">
+  <img src='datas/images/mosaic.jpg' height='200px'>
+  <img src='datas/pretrain_models/mosaic/out.jpg' height="300px">
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/feathers.jpg' height='173px'>
-  <img src='datas/pretrain_models/feathers/out.jpg' height="173px">
+  <img src='datas/images/feathers.jpg' height='200px'>
+  <img src='datas/pretrain_models/feathers/out.jpg' height="300px">
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/la_muse.jpg' height='173px'>
-  <img src='datas/pretrain_models/la_muse/out.jpg' height="173px">
+  <img src='datas/images/la_muse.jpg' height='200px'>
+  <img src='datas/pretrain_models/la_muse/out.jpg' height="300px">
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/candy.jpg' height='174px'>
-  <img src='datas/pretrain_models/candy/out.jpg' height="174px">
+  <img src='datas/images/candy.jpg' height='200px'>
+  <img src='datas/pretrain_models/candy/out.jpg' height="300px">
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/udnie.jpg' height='174px'>
-  <img src='datas/pretrain_models/udnie/out.jpg' height="174px">
+  <img src='datas/images/udnie.jpg' height='200px'>
+  <img src='datas/pretrain_models/udnie/out.jpg' height="300px">
 </div>
 
 
@@ -132,9 +132,9 @@ java -Xmx1G -cp $CLASS_PATH \
 	--lr $LEARNING_RATE \
 	--gpu $GPU
 ```
-for now, the training program on support training bash size 1, the program may crash during the training process, 
-can't figure out the reason. but if you encounter this cituasion. you set the `RESUME_MODEL_PATH` to your lastest 
-saved model (a mdoel will be saved every 1000 iters). And use the `--resume-model-path` command line
+for now, the training program only support training batch size 1, the program may crash during the training process, 
+can't figure out the reason. but if you encounter this situasion. you can set the `RESUME_MODEL_PATH` to your lastest 
+saved model (a mdoel will be saved every 1000 iters udring training). And use the `--resume-model-path` command line
 parameter to resume the training.
 
 ## License
