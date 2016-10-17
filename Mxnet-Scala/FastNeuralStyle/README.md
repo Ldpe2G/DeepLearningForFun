@@ -79,9 +79,12 @@ java -Xmx1G -cp $CLASS_PATH \
 ```
 You can run this script on CPU or GPU, 
 
-for cpu set the GPU flag to -1;
+For cpu set the GPU flag to -1;
 
-for gpu plesase specifying the GPU number on which to run.
+For gpu plesase specifying the GPU number on which to run.
+
+Some pretrained style models are in `datas/pretrain_models`
+
 
 ## Training new models
 
@@ -96,7 +99,8 @@ This will download the pretrained vgg model file (~80MB) to the folder `datas/vg
 2, download the [Coco dataset]http://msvocds.blob.core.windows.net/coco2015/test2015.zip
 
 3, use the script `train_fast_nueral_style.sh` under the scripts folder to train on new style image.
-you just need to set the `TRAIN_DATA_PATH` flag to your coco dataset path.
+
+you just need to set the `TRAIN_DATA_PATH` flag to your coco dataset path and `STYLE_IMAGE` flag to your own style images.
 
 ```bash
 # path to the coco dataset,
