@@ -51,12 +51,12 @@ Tested on Ubuntu 14.04
 
 ###Requirements
 
-* [sbt 0.13]http://www.scala-sbt.org/
-* [Mxnet]https://github.com/dmlc/mxnet
+* sbt 0.13 http://www.scala-sbt.org/
+* Mxnet https://github.com/dmlc/mxnet
 
 ###steps
 
-1, compile Mxnet with CUDA, then compile the [scala-pkg]https://github.com/dmlc/mxnet/tree/master/scala-package
+1, compile Mxnet with CUDA, then compile the scala-pkg，doc： https://github.com/dmlc/mxnet/tree/master/scala-package
 
 2, under the Mxnet-Scala/FastNeuralStyle folder 
 ```bah
@@ -96,7 +96,7 @@ bash download_vgg_model.sh
 ```
 This will download the pretrained vgg model file (~80MB) to the folder `datas/vggmodel`.
 
-2, download the [Coco dataset]http://msvocds.blob.core.windows.net/coco2015/test2015.zip
+2, download the Coco dataset：http://msvocds.blob.core.windows.net/coco2015/test2015.zip
 
 3, use the script `train_fast_nueral_style.sh` under the scripts folder to train on new style image.
 
