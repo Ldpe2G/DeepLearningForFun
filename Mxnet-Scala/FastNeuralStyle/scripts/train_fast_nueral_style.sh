@@ -46,6 +46,10 @@ VGG_MODEL=$ROOT/datas/vggmodel/vgg19.params
 
 SAVE_MODEL_PATH=$ROOT/datas/models
 
+if [ ! -d $SAVE_MODEL_PATH ] ; then
+	mkdir -p $SAVE_MODEL_PATH
+fi
+
 STYLE_IMAGE=$ROOT/datas/images/the_scream.jpg
 
 LEARNING_RATE=0.0001
