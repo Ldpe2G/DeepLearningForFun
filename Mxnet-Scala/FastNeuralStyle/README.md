@@ -44,7 +44,11 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 41
   <img src='datas/images/udnie.jpg' height='200px'>
   <img src='datas/pretrain_models/udnie/out.jpg' height="300px">
 </div>
-
+<br>
+<div align='center'>
+  <img src='datas/images/wave_crop.jpg' height='200px'>
+  <img src='datas/pretrain_models/wave_crop/out.jpg' height="300px">
+</div>
 
 ## Setup
 Tested on Ubuntu 14.04
