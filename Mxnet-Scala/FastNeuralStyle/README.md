@@ -136,9 +136,9 @@ java -Xmx1G -cp $CLASS_PATH \
 	--lr $LEARNING_RATE \
 	--gpu $GPU
 ```
-for now, the training program only support training batch size 1, the program may crash during the training process, 
-can't figure out the reason. but if you encounter this situasion. you can set the `RESUME_MODEL_PATH` to your lastest 
-saved model (a mdoel will be saved every 1000 iters udring training). And use the `--resume-model-path` command line
+For now, the training program only support training batch size 1, and the program may crash during the training process, 
+can't figure out the reason. If you encounter this situasion, you can set the `RESUME_MODEL_PATH` to your lastest 
+saved model (a mdoel will be saved every 1000 iters udring training), then use the `--resume-model-path` command line
 parameter to resume the training.
 
 ## License
