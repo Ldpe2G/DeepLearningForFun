@@ -1,9 +1,10 @@
-# MXNET-Scala Human Activity Recognition
-MXNet-scala module implementation of LSTM for Human Activity Recognition.
+# MXNET-Scala Playing Flappy Bird Using Deep Reinforcement Learning
+MXNet-scala module implementation of DQN to Play Flappy Bird.
 
-Based on: https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition
+Based on: https://github.com/li-haoran/DRL-FlappyBird
 
-and got nearly the same results.
+result:
+<img src="./results/optimized.gif"/>
 
 ## Building
 
