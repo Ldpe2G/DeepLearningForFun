@@ -3,7 +3,7 @@ MXNet-scala module implementation of DQN to Play Flappy Bird.
 
 Based on: https://github.com/li-haoran/DRL-FlappyBird
 
-result:
+##result:
 <img src="./results/optimised.gif"/>
 
 ## Setup
@@ -18,7 +18,7 @@ Tested on Ubuntu 14.04
 
 1, compile Mxnet with CUDA, then compile the scala-pkg，doc： https://github.com/dmlc/mxnet/tree/master/scala-package
 
-2, under the Mxnet-Scala/FastNeuralStyle folder 
+2, under the Mxnet-Scala/DRLFlappyBird folder 
 ```bah
  mkdir lib;
 ```
