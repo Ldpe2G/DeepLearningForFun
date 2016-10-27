@@ -45,14 +45,14 @@ object FlappyBirdDQN {
       
       val brain = new BrainDQNMx.BrainDQN(ctx, resizeH, resizeW, pyrd.saveModelPath, pyrd.resumeModelPath) 
       val (observation0, reward0, terminal0) = FlappyBird.frameStep(0)
-	    val observationBinary = preprocess(observation0, resizeH, resizeW)
-	    brain.setInitState(observationBinary)
+      val observationBinary = preprocess(observation0, resizeH, resizeW)
+      brain.setInitState(observationBinary)
 	    
       while (true) {
         val action = brain.getAction()
         val (nextObservation, reward, terminal) = FlappyBird.frameStep(action)
         val nextObservationBinary = preprocess(nextObservation, resizeH, resizeW)
-		    brain.setPerception(nextObservationBinary, action, reward, terminal)
+	brain.setPerception(nextObservationBinary, action, reward, terminal)
       }
 
     } catch {
