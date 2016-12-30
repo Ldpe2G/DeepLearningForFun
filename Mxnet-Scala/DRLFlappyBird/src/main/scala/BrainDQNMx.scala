@@ -124,7 +124,7 @@ object BrainDQNMx {
       this.target.forward(Map("data" -> ndArray))
       val QValue = this.target.getOutputs()(0).copyTo(Context.cpu(0))
       val action = {
-        val tmp = NDArray.argmaxChannel(QValue)
+        val tmp = NDArray.argmax_channel(QValue)
         val result = tmp.toArray(0).toInt
         tmp.dispose()
         result

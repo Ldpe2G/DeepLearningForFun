@@ -177,7 +177,7 @@ object HumanAR {
 
   def getAccAndLoss(pred: NDArray, label: Array[Float], dropNum: Int = 0): (Float, Float) = {
     val shape = pred.shape
-    val maxIdx = NDArray.argmaxChannel(pred).toArray
+    val maxIdx = NDArray.argmax_channel(pred).toArray
     val acc = {
       val sum = maxIdx.drop(dropNum).zip(label.drop(dropNum)).foldLeft(0f){ case (acc, elem) => 
         if (elem._1 == elem._2) acc + 1 else acc
