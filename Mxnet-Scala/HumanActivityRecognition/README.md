@@ -9,12 +9,12 @@ and got nearly the same results.
 
 Tested on Ubuntu 14.04
 
-###Requirements
+### Requirements
 
 * sbt 0.13
 * Mxnet
 
-###steps
+### steps
 
 1, compile Mxnet with CUDA, then compile the scala-pkg;
 
