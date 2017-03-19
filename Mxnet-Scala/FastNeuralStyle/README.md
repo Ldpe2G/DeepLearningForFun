@@ -53,12 +53,12 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 41
 ## Setup
 Tested on Ubuntu 14.04
 
-###Requirements
+### Requirements
 
 * sbt 0.13 http://www.scala-sbt.org/
 * Mxnet https://github.com/dmlc/mxnet
 
-###steps
+### steps
 
 1, compile Mxnet with CUDA, then compile the scala-pkg，doc： https://github.com/dmlc/mxnet/tree/master/scala-package
 
