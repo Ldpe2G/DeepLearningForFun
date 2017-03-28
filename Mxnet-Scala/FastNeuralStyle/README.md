@@ -23,13 +23,13 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 41
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/mosaic.jpg' height='200px'>
+  <img src='datas/images/mosaic.jpg' height='150px'>
   <img src='datas/pretrain_models/mosaic/out.jpg' height="260px">
   <img src='datas/pretrain_models/mosaic/out_mosaic.jpg' height="260px">
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/feathers.jpg' height='200px'>
+  <img src='datas/images/feathers.jpg' height='150px'>
   <img src='datas/pretrain_models/feathers/out.jpg' height="260px">
   <img src='datas/pretrain_models/feathers/out_feathers.jpg' height="260px">
 </div>
@@ -53,7 +53,7 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 41
 </div>
 <br>
 <div align='center'>
-  <img src='datas/images/wave_crop.jpg' height='200px'>
+  <img src='datas/images/wave_crop.jpg' height='150px'>
   <img src='datas/pretrain_models/wave_crop/out.jpg' height="260px">
   <img src='datas/pretrain_models/wave_crop/out_wave_crop.jpg' height="260px">
 </div>
