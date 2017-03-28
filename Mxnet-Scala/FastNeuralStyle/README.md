@@ -18,44 +18,44 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 41
 <br>
 <div align='center'>
   <img src='datas/images/the_scream.jpg' height='200px'>
-  <img src='datas/pretrain_models/scream/out.jpg' height="270px">
-  <img src='datas/pretrain_models/scream/out_scream.jpg' height="270px">
+  <img src='datas/pretrain_models/scream/out.jpg' height="260px">
+  <img src='datas/pretrain_models/scream/out_scream.jpg' height="260px">
 </div>
 <br>
 <div align='center'>
   <img src='datas/images/mosaic.jpg' height='200px'>
-  <img src='datas/pretrain_models/mosaic/out.jpg' height="270px">
-  <img src='datas/pretrain_models/mosaic/out_mosaic.jpg' height="270px">
+  <img src='datas/pretrain_models/mosaic/out.jpg' height="260px">
+  <img src='datas/pretrain_models/mosaic/out_mosaic.jpg' height="260px">
 </div>
 <br>
 <div align='center'>
   <img src='datas/images/feathers.jpg' height='200px'>
-  <img src='datas/pretrain_models/feathers/out.jpg' height="270px">
-  <img src='datas/pretrain_models/feathers/out_feathers.jpg' height="270px">
+  <img src='datas/pretrain_models/feathers/out.jpg' height="260px">
+  <img src='datas/pretrain_models/feathers/out_feathers.jpg' height="260px">
 </div>
 <br>
 <div align='center'>
   <img src='datas/images/la_muse.jpg' height='200px'>
-  <img src='datas/pretrain_models/la_muse/out.jpg' height="270px">
-  <img src='datas/pretrain_models/la_muse/out_la_muse.jpg' height="270px">
+  <img src='datas/pretrain_models/la_muse/out.jpg' height="260px">
+  <img src='datas/pretrain_models/la_muse/out_la_muse.jpg' height="260px">
 </div>
 <br>
 <div align='center'>
   <img src='datas/images/candy.jpg' height='200px'>
-  <img src='datas/pretrain_models/candy/out.jpg' height="270px">
-  <img src='datas/pretrain_models/candy/out_candy.jpg' height="270px">
+  <img src='datas/pretrain_models/candy/out.jpg' height="260px">
+  <img src='datas/pretrain_models/candy/out_candy.jpg' height="260px">
 </div>
 <br>
 <div align='center'>
   <img src='datas/images/udnie.jpg' height='200px'>
-  <img src='datas/pretrain_models/udnie/out.jpg' height="270px">
-  <img src='datas/pretrain_models/udnie/out_udnie.jpg' height="270px">
+  <img src='datas/pretrain_models/udnie/out.jpg' height="260px">
+  <img src='datas/pretrain_models/udnie/out_udnie.jpg' height="260px">
 </div>
 <br>
 <div align='center'>
   <img src='datas/images/wave_crop.jpg' height='200px'>
-  <img src='datas/pretrain_models/wave_crop/out.jpg' height="270px">
-  <img src='datas/pretrain_models/wave_crop/out_wave_crop.jpg' height="270px">
+  <img src='datas/pretrain_models/wave_crop/out.jpg' height="260px">
+  <img src='datas/pretrain_models/wave_crop/out_wave_crop.jpg' height="260px">
 </div>
 
 ## Setup
