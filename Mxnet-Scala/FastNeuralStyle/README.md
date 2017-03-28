@@ -12,7 +12,8 @@ Time: 0.075 seconds in average on NVIDIA GTX 1070 GPU for resolution of 712 x 41
 ## Results:
 
 <div align='center'>
-  <img src='datas/images/chicago.jpg' height="300px">
+  <img src='datas/images/chicago.jpg' height='200px'>
+  <img src='datas/images/amber.jpg' height='200px'>
 </div>
 <br>
 <div align='center'>
