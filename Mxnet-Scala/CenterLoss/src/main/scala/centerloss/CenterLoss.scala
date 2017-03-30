@@ -4,6 +4,7 @@ import ml.dmlc.mxnet.CustomOp
 import ml.dmlc.mxnet.CustomOpProp
 import ml.dmlc.mxnet.Shape
 import ml.dmlc.mxnet.NDArray
+import ml.dmlc.mxnet.DType.DType
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -98,6 +99,11 @@ class CenterLossProp(needTopGrad: Boolean = false)
 
     val outputShape = Shape(1)
     (Array(dataShape, labelShape), Array(outputShape), Array(diffShape, centerShape, sumShape))
+  }
+
+  override def inferType(inType: Array[DType]):
+    (Array[DType], Array[DType], Array[DType]) = {
+    (inType, inType.take(1), Array.fill[DType](3)(inType(0)))
   }
 
   override def createOperator(ctx: String, inShapes: Array[Array[Int]],
