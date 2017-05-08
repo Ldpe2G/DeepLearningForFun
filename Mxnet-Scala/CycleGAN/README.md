@@ -6,7 +6,7 @@ https://github.com/junyanz/CycleGAN
 
 So far, I have tried all the tasks and done a lot of experiments,
 
-but just success in two tasks: "apple2orange" and "".
+but just success in two tasks: "apple2orange" and "photo2ukiuoe".
 
 I think I followed the torch implementation completely and couldn't locate the problem :( .
 
