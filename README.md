@@ -3,6 +3,7 @@
 Implementation of some interesting ideas of deeplearning with Mxnet
 
 ## List of implementations
+* [CycleGAN](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/CycleGAN)
 * [Playing Flappy Bird Using Deep Reinforcement Learning](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/DRLFlappyBird)
 * [Fast Neural Style](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/FastNeuralStyle)
 * [Generative Adversarial Net](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/Gan)
