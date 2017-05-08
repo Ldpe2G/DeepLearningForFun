@@ -4,23 +4,25 @@ MXNet-scala module implementation of cycleGAN[1].
 Based on: 
 https://github.com/junyanz/CycleGAN
 
-So far, I have tried all the tasks and done a lot of experiments., but just success in two tasks: "apple2orange" and "photo2ukiuoe".
+So far, I have tried all the tasks and done a lot of experiments,
 
-I think I have followed the torch implementation completely and couldn't locate the problem :( .
+but just success in two tasks: "apple2orange" and "photo2ukiuoe".
+
+I think I followed the torch implementation completely and couldn't locate the problem :( .
 
 
 ## Results:
 
 <div align='center'>
-  <img src='results/apple2orange.png' height='150px'>
+  <img src='results/apple2orange.png'>
 </div>
 
 <div align='center'>
-  <img src='results/orange2apple.png' height='150px'>
+  <img src='results/orange2apple.png'>
 </div>
 
 <div align='center'>
-  <img src='results/photo2ukiuoe.png' height='150px'>
+  <img src='results/photo2ukiuoe.png'>
 </div>
 
 
