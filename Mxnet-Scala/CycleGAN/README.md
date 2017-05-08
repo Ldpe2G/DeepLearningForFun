@@ -56,7 +56,7 @@ you need to provide the input image file.
 
 If you use the apple2orange model, A means apple, B means orange.
 
-If you use the photo2ukiuoe model, only has on direction, BtoA, B means photo.
+If you use the photo2ukiuoe model which has only one direction, BtoA, B means photo.
 
 ```bash
 # pretrain models are under the $ROOT/datas/pretrain_models directory
