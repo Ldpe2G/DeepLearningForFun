@@ -39,7 +39,7 @@ I think I followed the torch implementation completely and couldn't locate the p
 ```bah
  mkdir lib;
 ```
-3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.1.2-SNAPSHOT.jar into lib folder;
+3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.9.5-SNAPSHOT.jar into lib folder;
 
 4, run `sbt` then compile the project
 
