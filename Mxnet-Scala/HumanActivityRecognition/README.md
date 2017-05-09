@@ -20,7 +20,7 @@ Tested on Ubuntu 14.04
 
 2, cd into Mxnet-Scala/HumanActivityRecognition, then mkdir lib;
 
-3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.1.2-SNAPSHOT.jar into lib folder;
+3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.9.5-SNAPSHOT.jar into lib folder;
 
 4, run sbt, compile the project
 
