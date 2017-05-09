@@ -9,18 +9,18 @@ Based on: https://github.com/tqchen/mxnet-gan
 
 Tested on Ubuntu 14.04
 
-###Requirements
+### Requirements
 
 * sbt 0.13
-* Mxnet
+* Mxnet 
 
-###steps
+### steps
 
 1, compile Mxnet with CUDA, then compile the scala-pkg;
 
 2, cd into Mxnet-Scala/Gan, mkdir lib;
 
-3, then copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.1.2-SNAPSHOT.jar into lib folder
+3, then copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.9.5-SNAPSHOT.jar into lib folder
 
 4, run sbt and compile the project
 
