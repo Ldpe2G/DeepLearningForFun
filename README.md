@@ -1,6 +1,6 @@
 # DeepLearning for fun
 
-Implementation of some interesting ideas of deeplearning with Mxnet
+Implementation of some interesting ideas of deeplearning with MXNet
 
 ## List of implementations
 * [CycleGAN](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/CycleGAN)
