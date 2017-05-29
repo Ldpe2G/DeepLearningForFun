@@ -35,12 +35,12 @@ But the results on the 'cityscapes' and 'facades' were not good enough, so I did
 4, run `sbt` then compile the project
 
 ## Datasets
-you can download the datasets with the `datasets/download_dataset.sh`. you can refer to https://github.com/phillipi/pix2pix
+You can download the datasets with the `datasets/download_dataset.sh`. you can refer to https://github.com/phillipi/pix2pix
 for how to use this script.
 
 ## Training new models
 
-use the `train_pix2pix.sh` script under `scripts` folder.
+Use the `train_pix2pix.sh` script under `scripts` folder.
 If you keep all the default settings, you just need to provide the dataset path, and set the direction 'AtoB' or 'BtoA'
 ```bash
 DATA_PATH=
@@ -53,7 +53,9 @@ I did not release the model because the model size is too large ~200M.
 
 But you can reproduce the results by using the `train_pix2pix.sh` script to train your own model.
 
- You need to provide the input image path, pretrain model path and set the corresponding direction.
+Use the `test_pix2pix.sh` script under `scripts` folder.
+
+You need to provide the input image path, pretrain model path and set the corresponding direction.
 
 ```bash
 PREAREIN_G_MODEL=
