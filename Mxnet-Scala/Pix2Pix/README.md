@@ -4,6 +4,9 @@ MXNet-scala module implementation of Pix2Pix[1].
 Based on: 
 https://github.com/phillipi/pix2pix
 
+I reproduced the results of the 'edge2shoes' and 'edges2handbags' datasets successfully.
+But the results on the 'cityscapes' and 'facades' were not good enough, so I did not show the results.
+
 ## Results:
 
 <div align='center'>
@@ -50,7 +53,7 @@ I did not release the model because the model size is too large ~200M.
 
 But you can reproduce the results by using the `train_pix2pix.sh` script to train your own model.
 
- You just need to provide the input image path, pretrain model path and set the corresponding direction.
+ You need to provide the input image path, pretrain model path and set the corresponding direction.
 
 ```bash
 PREAREIN_G_MODEL=
