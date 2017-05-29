@@ -5,7 +5,7 @@ Based on:
 https://github.com/phillipi/pix2pix
 
 I reproduced the results of the 'edge2shoes' and 'edges2handbags' datasets successfully.
-But the results on the 'cityscapes' and 'facades' were not good enough, so I did not show the results.
+But the results on the 'cityscapes' and 'facades' datasets were not good enough, so I did not show the results of them.
 
 ## Results:
 
