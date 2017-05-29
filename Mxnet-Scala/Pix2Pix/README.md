@@ -49,7 +49,7 @@ DIRECTION=
 
 ## Testing
 
-I did not release the model because the model size is too large ~200M.
+I did not release the pretrained models because the model size is too large ~200M.
 
 But you can reproduce the results by using the `train_pix2pix.sh` script to train your own model.
 
