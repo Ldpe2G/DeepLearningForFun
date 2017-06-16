@@ -3,18 +3,18 @@ MXNet-scala module implementation of DQN to Play Flappy Bird.
 
 Based on: https://github.com/li-haoran/DRL-FlappyBird
 
-##result:
+## result:
 <img src="./results/optimised.gif"/>
 
 ## Setup
 Tested on Ubuntu 14.04
 
-###Requirements
+### Requirements
 
 * sbt 0.13 http://www.scala-sbt.org/
 * Mxnet https://github.com/dmlc/mxnet
 
-###steps
+### steps
 
 1, compile Mxnet with CUDA, then compile the scala-pkg，doc： https://github.com/dmlc/mxnet/tree/master/scala-package
 
