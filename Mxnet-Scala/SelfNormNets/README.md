@@ -38,6 +38,8 @@ mkdir lib
 
 #### logs
 ```
+bash trainSNN_MLP_MNIST.sh
+
 Epoch[0] Train-accuracy=0.86191666
 Epoch[0] Time cost=1646
 Epoch[0] Validation-accuracy=0.9341
@@ -85,9 +87,11 @@ Epoch[14] Time cost=1477
 Epoch[14] Validation-accuracy=0.9749
 ```
 
-### Train CNN
+### Compare selu with relu 
 #### logs
 ```bash
+bash trainSNN_CNN_MNIST.sh
+
 Epoch[0] SNN Train-accuracy=0.88266224
 Epoch[0] ReLU Train-accuracy=0.807926
 Epoch[1] SNN Train-accuracy=0.9415899
