@@ -1,4 +1,4 @@
-# MXNET-Scala Center Loss
+# MXNET-Scala Self-Norm Nets
 MXNet-scala module implementation of Self-normalizing networks[1].
 
 Based on: https://github.com/bioinf-jku/SNNs
