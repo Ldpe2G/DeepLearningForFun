@@ -3,6 +3,7 @@
 Implementation of some interesting ideas of deeplearning with MXNet
 
 ## List of implementations
+* [Self-Normalizing Networks](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/SelfNormNets)
 * [Pix2Pix](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/Pix2Pix)
 * [CycleGAN](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/CycleGAN)
 * [Playing Flappy Bird Using Deep Reinforcement Learning](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/DRLFlappyBird)
