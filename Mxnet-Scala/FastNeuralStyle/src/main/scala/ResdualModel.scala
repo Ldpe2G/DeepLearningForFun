@@ -1,8 +1,8 @@
 
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.Xavier
-import ml.dmlc.mxnet.Symbol
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Context
+import org.apache.mxnet.Xavier
+import org.apache.mxnet.Symbol
 
 /**
  * @author Depeng Liang

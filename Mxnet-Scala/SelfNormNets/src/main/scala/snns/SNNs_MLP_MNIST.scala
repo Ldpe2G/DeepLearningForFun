@@ -2,15 +2,15 @@ package snns
 
 import org.kohsuke.args4j.{CmdLineParser, Option}
 import scala.collection.JavaConverters._
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.IO
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Random
-import ml.dmlc.mxnet.optimizer.SGD
-import ml.dmlc.mxnet.Accuracy
-import ml.dmlc.mxnet.Callback.Speedometer
-import ml.dmlc.mxnet.optimizer.RMSProp
+import org.apache.mxnet.Context
+import org.apache.mxnet.IO
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Random
+import org.apache.mxnet.optimizer.SGD
+import org.apache.mxnet.Accuracy
+import org.apache.mxnet.Callback.Speedometer
+import org.apache.mxnet.optimizer.RMSProp
 
 /**
  * @author Depeng Liang
@@ -77,9 +77,9 @@ object SNNs_MLP_MNIST {
       Random.normal(loc = 0f, scale = Math.sqrt(1.0 / nInput).toFloat, out = execTrain.argDict("fc1_weight"))
       Random.normal(loc = 0f, scale = Math.sqrt(1.0 / nHidden1).toFloat, out = execTrain.argDict("fc2_weight")) 
       Random.normal(loc = 0f, scale = Math.sqrt(1.0 / nHidden2).toFloat, out = execTrain.argDict("out_weight")) 
-      Random.normal(loc = 0f, scale = 0f, out = execTrain.argDict("fc1_bias"))
-      Random.normal(loc = 0f, scale = 0f, out = execTrain.argDict("fc2_bias"))
-      Random.normal(loc = 0f, scale = 0f, out = execTrain.argDict("out_bias"))
+      Random.normal(loc = 0f, scale = 1e-6f, out = execTrain.argDict("fc1_bias"))
+      Random.normal(loc = 0f, scale = 1e-6f, out = execTrain.argDict("fc2_bias"))
+      Random.normal(loc = 0f, scale = 1e-6f, out = execTrain.argDict("out_bias"))
 
       val opt = new RMSProp(learningRate = snst.lr)
       val paramsGrads = execTrain.gradDict.filter{ case (n, d) => n != "data" && n != "label" }

@@ -1,10 +1,10 @@
 
-import ml.dmlc.mxnet.Context
+import org.apache.mxnet.Context
 import LSTMSymbol.LSTMModel
 import scala.collection.mutable.ArrayBuffer
-import ml.dmlc.mxnet.optimizer.Adam
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.optimizer.RMSProp
+import org.apache.mxnet.optimizer.Adam
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.optimizer.RMSProp
 import org.sameersingh.scalaplot.MemXYSeries
 import org.sameersingh.scalaplot.XYData
 import org.sameersingh.scalaplot.XYChart

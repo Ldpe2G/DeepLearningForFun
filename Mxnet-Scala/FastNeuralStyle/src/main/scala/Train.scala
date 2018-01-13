@@ -1,17 +1,17 @@
 
 import org.kohsuke.args4j.{CmdLineParser, Option}
 import scala.collection.JavaConverters._
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.DataBatch
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Executor
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Context
+import org.apache.mxnet.DataBatch
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Executor
 import java.io.File
 import javax.imageio.ImageIO
 import scala.util.Random
-import ml.dmlc.mxnet.optimizer.Adam
-import ml.dmlc.mxnet.FactorScheduler
+import org.apache.mxnet.optimizer.Adam
+import org.apache.mxnet.FactorScheduler
 import org.sameersingh.scalaplot.MemXYSeries
 import org.sameersingh.scalaplot.XYData
 import org.sameersingh.scalaplot.XYChart
@@ -158,14 +158,14 @@ object Train {
             val n = NDArray.norm(loss.getInputGrads()(0))
             trainLosses += n.toScalar / dShape.product
             
-            var xTrain = trainLosses.indices.map(_.toDouble * 20).toArray
-            var yTrainL = trainLosses.toArray.map(_.toDouble)
+            // var xTrain = trainLosses.indices.map(_.toDouble * 20).toArray
+            // var yTrainL = trainLosses.toArray.map(_.toDouble)
       
-            var series = new MemXYSeries(xTrain, yTrainL)
-            var data = new XYData(series)
-            var chart = new XYChart("Training grads over iterations", data)
-            var plotter = new GnuplotPlotter(chart)
-            plotter.pdf(s"${stin.drawLossPath}/", "grad")
+            // var series = new MemXYSeries(xTrain, yTrainL)
+            // var data = new XYData(series)
+            // var chart = new XYChart("Training grads over iterations", data)
+            // var plotter = new GnuplotPlotter(chart)
+            // plotter.pdf(s"${stin.drawLossPath}/", "grad")
             
             println(s"Data Norm : ${n.toScalar / dShape.product}")
             n.dispose()

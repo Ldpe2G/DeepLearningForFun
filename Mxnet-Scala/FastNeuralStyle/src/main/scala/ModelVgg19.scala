@@ -1,9 +1,9 @@
 
-import ml.dmlc.mxnet.Executor
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.Shape
+import org.apache.mxnet.Executor
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Context
+import org.apache.mxnet.Shape
 
 /**
  * @author Depeng Liang

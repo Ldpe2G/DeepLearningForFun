@@ -1,18 +1,18 @@
 package example
 
 import mxgan.Viz._
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.IO
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.CustomMetric
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Context
+import org.apache.mxnet.IO
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.CustomMetric
 import mxgan.Generator
 import mxgan.Encoder
-import ml.dmlc.mxnet.DataBatch
+import org.apache.mxnet.DataBatch
 import mxgan.GANModule
-import ml.dmlc.mxnet.Normal
-import ml.dmlc.mxnet.Xavier
-import ml.dmlc.mxnet.optimizer.Adam
+import org.apache.mxnet.Normal
+import org.apache.mxnet.Xavier
+import org.apache.mxnet.optimizer.Adam
 import mxgan.Viz
 
 object GanCifar10 {
@@ -73,17 +73,20 @@ object GanCifar10 {
       while (imgRecIter.hasNext) {
         dataBatch = imgRecIter.next()
         val realImgs = dataBatch.data(0).copyTo(context)
-        realImgs.set(realImgs * (1.0f / 255.0f) - 0.5f)
+        val realImgsArr = realImgs.toArray.map(x => x * (1.0f / 255.0f) - 0.5f)
+        realImgs.set(realImgsArr)
         gMod.update(new DataBatch(Array(realImgs), dataBatch.label, dataBatch.index, dataBatch.pad))
         gMod.dLabel.set(0f)
         metricAcc.update(Array(gMod.dLabel), gMod.outputsFake)
         gMod.dLabel.set(1f)
         metricAcc.update(Array(gMod.dLabel), gMod.outputsReal)
         
-        if (t % 50 == 0) {
+        if (t % 100 == 0) {
           val (name, value) = metricAcc.get
-          println(s"epoch: $epoch, iter $t, metric=$value")
-          Viz.imshow("gout", gMod.tempOutG(0) + 0.5f, 2, flip = true)
+          println(s"epoch: $epoch, iter $t, metric=${value(0)}")
+          val tmpOut = gMod.tempOutG(0) + 0.5f
+          Viz.imshow("gout", tmpOut, 2, flip = true)
+          tmpOut.dispose()
           val diff = gMod.tempDiffD
           val arr = diff.toArray
           val mean = arr.sum / arr.length
@@ -91,11 +94,14 @@ object GanCifar10 {
             val tmpA = arr.map(a => (a - mean) * (a - mean))
             Math.sqrt(tmpA.sum / tmpA.length).toFloat
           }
-          diff.set((diff - mean) / std + 0.5f)
+          val tmpArr = arr.map(x => (x - mean) / std + 0.5f)
+          diff.set(tmpArr)
           Viz.imshow("diff", diff, flip = true)
+          val tmpImg = realImgs + 0.5f
           Viz.imshow("data", realImgs + 0.5f, flip = true)
+          tmpImg.dispose()
         }
-
+        realImgs.dispose()
         t += 1
       }
     }

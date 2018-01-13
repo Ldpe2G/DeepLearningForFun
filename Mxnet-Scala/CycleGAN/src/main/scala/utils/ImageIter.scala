@@ -1,12 +1,12 @@
 package utils
 
-import ml.dmlc.mxnet.DataIter
+import org.apache.mxnet.DataIter
 import java.io.File
-import ml.dmlc.mxnet.NDArray
+import org.apache.mxnet.NDArray
 import scala.collection.immutable.ListMap
-import ml.dmlc.mxnet.Shape
+import org.apache.mxnet.Shape
 import scala.util.Random
-import ml.dmlc.mxnet.Context
+import org.apache.mxnet.Context
 
 /**
  * @author Depeng Liang

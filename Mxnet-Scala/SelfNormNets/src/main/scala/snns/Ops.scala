@@ -1,8 +1,8 @@
 package snns
 
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.SymbolConversions._
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Shape
+import org.apache.mxnet.SymbolConversions._
 
 object Ops {
 

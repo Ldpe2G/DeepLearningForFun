@@ -1,13 +1,13 @@
 package mxgan
 
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Optimizer
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.Initializer
-import ml.dmlc.mxnet.DataBatch
-import ml.dmlc.mxnet.Random
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Context
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Optimizer
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.Initializer
+import org.apache.mxnet.DataBatch
+import org.apache.mxnet.Random
 
 class GANModule(
               symbolGenerator: Symbol,
@@ -105,7 +105,9 @@ class GANModule(
   private def addTempGradD(): Unit = {
     val keys = this.dGradDict.keys
     for (k <- keys) {
-      this.dGradDict(k).set(this.dGradDict(k) + this.tempGradD(k))
+      val tmp = this.dGradDict(k) + this.tempGradD(k)
+      this.dGradDict(k).set(tmp)
+      tmp.dispose()
     }
   }
   

@@ -2,10 +2,10 @@
 import scala.collection.JavaConverters._
 import org.kohsuke.args4j.CmdLineParser
 import utils.ImageIter
-import ml.dmlc.mxnet.Context
+import org.apache.mxnet.Context
 import utils.Visualizer
 import models.Pix2PixModel
-import ml.dmlc.mxnet.io.PrefetchingIter
+import org.apache.mxnet.io.PrefetchingIter
 
 /**
  * @author Depeng Liang

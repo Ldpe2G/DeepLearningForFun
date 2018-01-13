@@ -1,6 +1,6 @@
 package utils
 
-import ml.dmlc.mxnet.NDArray
+import org.apache.mxnet.NDArray
 import scala.util.Random
 
 class ImagePool(poolSize: Int) {

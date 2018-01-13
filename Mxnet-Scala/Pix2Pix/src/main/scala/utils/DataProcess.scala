@@ -1,9 +1,9 @@
 package utils
 
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.NDArray
+import org.apache.mxnet.Context
+import org.apache.mxnet.NDArray
 import java.io.File
-import ml.dmlc.mxnet.Shape
+import org.apache.mxnet.Shape
 import scala.util.Random
 import org.opencv.highgui.Highgui
 import org.opencv.core.Mat

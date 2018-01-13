@@ -2,18 +2,18 @@ package centerloss
 
 import org.kohsuke.args4j.{CmdLineParser, Option}
 import scala.collection.JavaConverters._
-import ml.dmlc.mxnet.Operator
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Shape
+import org.apache.mxnet.Operator
+import org.apache.mxnet.Context
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Shape
 import scala.collection.immutable.ListMap
-import ml.dmlc.mxnet.Mixed
-import ml.dmlc.mxnet.Normal
-import ml.dmlc.mxnet.Xavier
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.optimizer.SGD
-import ml.dmlc.mxnet.Accuracy
-import ml.dmlc.mxnet.Callback.Speedometer
+import org.apache.mxnet.Mixed
+import org.apache.mxnet.Normal
+import org.apache.mxnet.Xavier
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.optimizer.SGD
+import org.apache.mxnet.Accuracy
+import org.apache.mxnet.Callback.Speedometer
 
 /**
  * @author Depeng Liang
@@ -112,7 +112,7 @@ object Train {
           }
           epochDone = true
         }
-        println(s"Epoch[$epoch] Train-accuracy=${evalMetric.get}")
+        println(s"Epoch[$epoch] Train-accuracy=${evalMetric.get._2(0)}")
         val toc = System.currentTimeMillis
         println(s"Epoch[$epoch] Time cost=${toc - tic}")
 
@@ -127,7 +127,8 @@ object Train {
           evalMetric.update(evalBatch.label, executor.outputs.take(1))
           evalBatch.dispose()
         }
-        println(s"Epoch[$epoch] Validation-accuracy=${evalMetric.get}")
+        
+        println(s"Epoch[$epoch] Validation-accuracy=${evalMetric.get._2(0)}")
       }
       executor.dispose()
     } catch {

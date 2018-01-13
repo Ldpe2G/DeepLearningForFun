@@ -7,7 +7,7 @@ import org.opencv.core.Mat
 import org.opencv.core.CvType
 import org.opencv.core.Size
 import org.opencv.highgui.Highgui
-import ml.dmlc.mxnet.Context
+import org.apache.mxnet.Context
 
 /**
  * @author Depeng Liang
