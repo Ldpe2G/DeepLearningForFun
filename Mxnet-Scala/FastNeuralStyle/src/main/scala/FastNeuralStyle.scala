@@ -1,8 +1,8 @@
 
 import org.kohsuke.args4j.{CmdLineParser, Option}
 import scala.collection.JavaConverters._
-import org.apache.mxnet.Shape
-import org.apache.mxnet.Context
+import ml.dmlc.mxnet.Shape
+import ml.dmlc.mxnet.Context
 import com.sksamuel.scrimage.Image
 import java.io.File
 

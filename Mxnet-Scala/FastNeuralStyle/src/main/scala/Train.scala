@@ -1,17 +1,17 @@
 
 import org.kohsuke.args4j.{CmdLineParser, Option}
 import scala.collection.JavaConverters._
-import org.apache.mxnet.NDArray
-import org.apache.mxnet.Shape
-import org.apache.mxnet.Context
-import org.apache.mxnet.DataBatch
-import org.apache.mxnet.Symbol
-import org.apache.mxnet.Executor
+import ml.dmlc.mxnet.NDArray
+import ml.dmlc.mxnet.Shape
+import ml.dmlc.mxnet.Context
+import ml.dmlc.mxnet.DataBatch
+import ml.dmlc.mxnet.Symbol
+import ml.dmlc.mxnet.Executor
 import java.io.File
 import javax.imageio.ImageIO
 import scala.util.Random
-import org.apache.mxnet.optimizer.Adam
-import org.apache.mxnet.FactorScheduler
+import ml.dmlc.mxnet.optimizer.Adam
+import ml.dmlc.mxnet.FactorScheduler
 import org.sameersingh.scalaplot.MemXYSeries
 import org.sameersingh.scalaplot.XYData
 import org.sameersingh.scalaplot.XYChart

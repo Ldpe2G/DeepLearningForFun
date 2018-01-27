@@ -3,7 +3,7 @@ package mxgan
 import org.opencv.core.Core
 import org.opencv.highgui.Highgui
 import org.opencv.imgproc.Imgproc
-import org.apache.mxnet.NDArray
+import ml.dmlc.mxnet.NDArray
 import visual.Imshow
 import org.opencv.core.Mat
 import org.opencv.core.CvType

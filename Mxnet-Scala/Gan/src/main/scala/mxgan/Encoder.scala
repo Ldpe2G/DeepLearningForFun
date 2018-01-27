@@ -1,7 +1,7 @@
 package mxgan
 
 import Ops.conv2DBnLeaky
-import org.apache.mxnet.Symbol
+import ml.dmlc.mxnet.Symbol
 
 object Encoder {
 

@@ -1,12 +1,12 @@
 package models
 
-import org.apache.mxnet.optimizer.Adam
-import org.apache.mxnet.Shape
-import org.apache.mxnet.NDArray
-import org.apache.mxnet.Context
-import org.apache.mxnet.Executor
-import org.apache.mxnet.Model
-import org.apache.mxnet.Random
+import ml.dmlc.mxnet.optimizer.Adam
+import ml.dmlc.mxnet.Shape
+import ml.dmlc.mxnet.NDArray
+import ml.dmlc.mxnet.Context
+import ml.dmlc.mxnet.Executor
+import ml.dmlc.mxnet.Model
+import ml.dmlc.mxnet.Random
 
 /**
  * @author Depeng Liang

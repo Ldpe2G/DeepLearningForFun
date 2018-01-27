@@ -1,8 +1,8 @@
 package centerloss
 
-import org.apache.mxnet.Shape
-import org.apache.mxnet.IO
-import org.apache.mxnet.DataIter
+import ml.dmlc.mxnet.Shape
+import ml.dmlc.mxnet.IO
+import ml.dmlc.mxnet.DataIter
 
 /**
  * @author Depeng Liang

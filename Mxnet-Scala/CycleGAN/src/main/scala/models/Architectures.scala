@@ -1,7 +1,7 @@
 package models
 
-import org.apache.mxnet.Symbol
-import org.apache.mxnet.Shape
+import ml.dmlc.mxnet.Symbol
+import ml.dmlc.mxnet.Shape
 
 /**
  * @author Depeng Liang

@@ -2,18 +2,18 @@ package centerloss
 
 import org.kohsuke.args4j.{CmdLineParser, Option}
 import scala.collection.JavaConverters._
-import org.apache.mxnet.Operator
-import org.apache.mxnet.Context
-import org.apache.mxnet.Symbol
-import org.apache.mxnet.Shape
+import ml.dmlc.mxnet.Operator
+import ml.dmlc.mxnet.Context
+import ml.dmlc.mxnet.Symbol
+import ml.dmlc.mxnet.Shape
 import scala.collection.immutable.ListMap
-import org.apache.mxnet.Mixed
-import org.apache.mxnet.Normal
-import org.apache.mxnet.Xavier
-import org.apache.mxnet.NDArray
-import org.apache.mxnet.optimizer.SGD
-import org.apache.mxnet.Accuracy
-import org.apache.mxnet.Callback.Speedometer
+import ml.dmlc.mxnet.Mixed
+import ml.dmlc.mxnet.Normal
+import ml.dmlc.mxnet.Xavier
+import ml.dmlc.mxnet.NDArray
+import ml.dmlc.mxnet.optimizer.SGD
+import ml.dmlc.mxnet.Accuracy
+import ml.dmlc.mxnet.Callback.Speedometer
 
 /**
  * @author Depeng Liang

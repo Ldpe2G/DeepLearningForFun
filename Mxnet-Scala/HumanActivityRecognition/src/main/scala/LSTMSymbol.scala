@@ -1,10 +1,10 @@
-import org.apache.mxnet.Executor
-import org.apache.mxnet.NDArray
-import org.apache.mxnet.Symbol
-import org.apache.mxnet.Shape
-import org.apache.mxnet.Normal
-import org.apache.mxnet.Context
-import org.apache.mxnet.Uniform
+import ml.dmlc.mxnet.Executor
+import ml.dmlc.mxnet.NDArray
+import ml.dmlc.mxnet.Symbol
+import ml.dmlc.mxnet.Shape
+import ml.dmlc.mxnet.Normal
+import ml.dmlc.mxnet.Context
+import ml.dmlc.mxnet.Uniform
 
 
 object LSTMSymbol {

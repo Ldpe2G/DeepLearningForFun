@@ -1,13 +1,13 @@
 
-import org.apache.mxnet.Context
-import org.apache.mxnet.Symbol
-import org.apache.mxnet.NDArray
-import org.apache.mxnet.Optimizer
-import org.apache.mxnet.Executor
-import org.apache.mxnet.Shape
-import org.apache.mxnet.Uniform
-import org.apache.mxnet.Initializer
-import org.apache.mxnet.DataBatch
+import ml.dmlc.mxnet.Context
+import ml.dmlc.mxnet.Symbol
+import ml.dmlc.mxnet.NDArray
+import ml.dmlc.mxnet.Optimizer
+import ml.dmlc.mxnet.Executor
+import ml.dmlc.mxnet.Shape
+import ml.dmlc.mxnet.Uniform
+import ml.dmlc.mxnet.Initializer
+import ml.dmlc.mxnet.DataBatch
 
 /**
  * @author Depeng Liang

@@ -3,10 +3,10 @@ import com.sksamuel.scrimage.Image
 import com.sksamuel.scrimage.Pixel
 import com.sksamuel.scrimage.filter.GaussianBlurFilter
 import com.sksamuel.scrimage.nio.JpegWriter
-import org.apache.mxnet.Context
-import org.apache.mxnet.NDArray
+import ml.dmlc.mxnet.Context
+import ml.dmlc.mxnet.NDArray
 import java.io.File
-import org.apache.mxnet.Shape
+import ml.dmlc.mxnet.Shape
 import scala.util.Random
 
 /**
