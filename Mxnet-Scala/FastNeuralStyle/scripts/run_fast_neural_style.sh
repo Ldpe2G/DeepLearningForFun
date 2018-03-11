@@ -40,10 +40,12 @@ $HOME/.ivy2/cache/com.itextpdf.tool/xmlworker/jars/xmlworker-1.1.0.jar
 
 # pretrain models are under the $ROOT/datas/pretrain_models directory
 PREAREIN_MODEL=$ROOT/datas/pretrain_models/la_muse/resdual_0000-0030000.params
+INPUT_IMAGES_PATH=$ROOT/datas/test_images/images
 
-INPUT_IMAGE=$ROOT/datas/images/chicago.jpg
+OUTPUT_PATH=$ROOT/datas/output/la_muse
 
-OUTPUT_PATH=$ROOT/datas/output
+RESIZE_H=1400
+RESIZE_W=1024
 
 
 if [ ! -d $OUTPUT_PATH ] ; then
@@ -56,6 +58,8 @@ GPU=0
 java -Xmx1G -cp $CLASS_PATH \
 	FastNeuralStyle \
 	--model-path  $PREAREIN_MODEL \
-	--input-image $INPUT_IMAGE \
+	--input-images-path $INPUT_IMAGES_PATH \
 	--output-path $OUTPUT_PATH \
+	--resizeh $RESIZE_H \
+	--resizew $RESIZE_W \
 	--gpu $GPU

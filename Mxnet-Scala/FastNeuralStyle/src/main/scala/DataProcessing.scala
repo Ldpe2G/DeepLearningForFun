@@ -66,11 +66,12 @@ object DataProcessing {
     Image(img.shape(3), img.shape(2), pixels.toArray)
   }
 
-  def saveImage(img: NDArray, filename: String, radius: Int): Unit = {
-    val out = postprocessImage(img)
-    val gauss = GaussianBlurFilter(radius).op
-    val result = Image(out.width, out.height)
-    gauss.filter(out.awt, result.awt)
-    result.output(filename)(JpegWriter())
+  def saveImage(out: Image, filename: String, radius: Int): Unit = {
+//    val out = postprocessImage(img)
+//    val gauss = GaussianBlurFilter(radius).op
+//    val result = Image(out.width, out.height)
+//    gauss.filter(out.awt, result.awt)
+    implicit val writer = JpegWriter().withCompression(10)
+    out.output(filename)
   }
 }

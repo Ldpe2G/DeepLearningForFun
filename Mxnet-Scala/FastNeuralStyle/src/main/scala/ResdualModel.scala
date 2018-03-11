@@ -89,11 +89,12 @@ object ResdualModel {
       normOut
   }
 
-  def getModule(prefix: String, dShape: Shape, ctx: Context): Module = {
+  def getModule(prefix: String, dShape: Shape, ctx: Context,
+      training: Boolean = true): Module = {
     val sym = getStyleTransferNetwork(prefix, (dShape(2), dShape(3)))
     val (dataShapes, forTraining) = {
       val dataShape = Map(s"${prefix}_data" -> dShape)
-      (dataShape, true)
+      (dataShape, training)
     }
     val mod = new Module(symbol = sym, context = ctx,
                          dataShapes = dataShapes,
