@@ -1,18 +1,18 @@
 package example
 
 import mxgan.Viz._
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.IO
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.CustomMetric
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Context
+import org.apache.mxnet.IO
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.CustomMetric
 import mxgan.Generator
 import mxgan.Encoder
-import ml.dmlc.mxnet.DataBatch
+import org.apache.mxnet.DataBatch
 import mxgan.GANModule
-import ml.dmlc.mxnet.Normal
-import ml.dmlc.mxnet.Xavier
-import ml.dmlc.mxnet.optimizer.Adam
+import org.apache.mxnet.Normal
+import org.apache.mxnet.Xavier
+import org.apache.mxnet.optimizer.Adam
 import mxgan.Viz
 
 object GanCifar10 {

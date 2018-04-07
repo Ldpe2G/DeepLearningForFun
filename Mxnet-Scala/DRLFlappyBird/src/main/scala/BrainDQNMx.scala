@@ -1,15 +1,15 @@
-import ml.dmlc.mxnet.Context
+import org.apache.mxnet.Context
 import org.opencv.core.Mat
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Xavier
-import ml.dmlc.mxnet.optimizer.Adam
-import ml.dmlc.mxnet.DataBatch
-import ml.dmlc.mxnet.NDArray
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Xavier
+import org.apache.mxnet.optimizer.Adam
+import org.apache.mxnet.DataBatch
+import org.apache.mxnet.NDArray
 import scala.util.Random
 import scala.collection.mutable.ArrayBuffer
 import java.io.File
-import ml.dmlc.mxnet.optimizer.RMSProp
+import org.apache.mxnet.optimizer.RMSProp
 
 /**
  * @author Depeng Liang

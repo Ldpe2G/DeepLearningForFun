@@ -1,7 +1,7 @@
 package mxgan
 
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Shape
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Shape
 import Ops._
 
 object Generator {

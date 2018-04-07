@@ -1,13 +1,13 @@
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Context
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Context
 import scala.io.Source
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Xavier
-import ml.dmlc.mxnet.optimizer.Adam
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Xavier
+import org.apache.mxnet.optimizer.Adam
 import java.io.PrintWriter
-import ml.dmlc.mxnet.optimizer.RMSProp
-import ml.dmlc.mxnet.optimizer.SGD
+import org.apache.mxnet.optimizer.RMSProp
+import org.apache.mxnet.optimizer.SGD
 
 object SVDF {
   

@@ -1,17 +1,17 @@
 package models
 
-import ml.dmlc.mxnet.optimizer.Adam
-import ml.dmlc.mxnet.Normal
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.Executor
-import ml.dmlc.mxnet.Model
-import ml.dmlc.mxnet.optimizer.RMSProp
+import org.apache.mxnet.optimizer.Adam
+import org.apache.mxnet.Normal
+import org.apache.mxnet.Shape
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.Context
+import org.apache.mxnet.Executor
+import org.apache.mxnet.Model
+import org.apache.mxnet.optimizer.RMSProp
 import utils.DataProcess
 import utils.Visualizer
 import org.opencv.highgui.Highgui
-import ml.dmlc.mxnet.Uniform
+import org.apache.mxnet.Uniform
 
 /**
  * @author Depeng Liang

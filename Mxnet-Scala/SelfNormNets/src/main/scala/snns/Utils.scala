@@ -1,6 +1,6 @@
 package snns
 
-import ml.dmlc.mxnet.NDArray
+import org.apache.mxnet.NDArray
 
 object Utils {
   def getSoftMaxLoss(pred: NDArray, label: NDArray): Float = {

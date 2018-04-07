@@ -2,15 +2,15 @@ package snns
 
 import org.kohsuke.args4j.{CmdLineParser, Option}
 import scala.collection.JavaConverters._
-import ml.dmlc.mxnet.Context
-import ml.dmlc.mxnet.IO
-import ml.dmlc.mxnet.Symbol
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.Random
-import ml.dmlc.mxnet.optimizer.SGD
-import ml.dmlc.mxnet.Accuracy
-import ml.dmlc.mxnet.Callback.Speedometer
-import ml.dmlc.mxnet.optimizer.RMSProp
+import org.apache.mxnet.Context
+import org.apache.mxnet.IO
+import org.apache.mxnet.Symbol
+import org.apache.mxnet.Shape
+import org.apache.mxnet.Random
+import org.apache.mxnet.optimizer.SGD
+import org.apache.mxnet.Accuracy
+import org.apache.mxnet.Callback.Speedometer
+import org.apache.mxnet.optimizer.RMSProp
 
 /**
  * @author Depeng Liang

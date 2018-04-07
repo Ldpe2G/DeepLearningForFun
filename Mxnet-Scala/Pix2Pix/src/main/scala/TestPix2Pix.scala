@@ -1,10 +1,10 @@
 import scala.collection.JavaConverters._
 import org.kohsuke.args4j.CmdLineParser
-import ml.dmlc.mxnet.Context
+import org.apache.mxnet.Context
 import utils.Visualizer
 import models.Architectures
 import utils.DataProcess
-import ml.dmlc.mxnet.NDArray
+import org.apache.mxnet.NDArray
 import org.opencv.highgui.Highgui
 
 /**

@@ -1,10 +1,10 @@
 package centerloss
 
-import ml.dmlc.mxnet.CustomOp
-import ml.dmlc.mxnet.CustomOpProp
-import ml.dmlc.mxnet.Shape
-import ml.dmlc.mxnet.NDArray
-import ml.dmlc.mxnet.DType.DType
+import org.apache.mxnet.CustomOp
+import org.apache.mxnet.CustomOpProp
+import org.apache.mxnet.Shape
+import org.apache.mxnet.NDArray
+import org.apache.mxnet.DType.DType
 import scala.collection.mutable.ArrayBuffer
 
 /**
