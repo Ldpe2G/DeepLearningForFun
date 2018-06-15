@@ -1,0 +1,3 @@
+[submodule "MXNet-Cpp/parsingNDArray/dmlc-core"]
+	path = MXNet-Cpp/parsingNDArray/dmlc-core
+	url = https://github.com/dmlc/dmlc-core.git
