@@ -13,13 +13,18 @@ if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
     add_definitions(-DDEBUG)
 endif()
 
+set (CMAKE_EXE_LINKER_FLAGS -pthread)
 add_compile_options(-std=c++11)
 INCLUDE_DIRECTORIES(/usr/local/include)
 LINK_DIRECTORIES(/usr/local/lib /usr/lib)
 
+
 include_directories("${PROJECT_SOURCE_DIR}/dmlc-core/include")
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
+#AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/dmlc-core/src SRC_LIST)
+
+
 ADD_EXECUTABLE(read_nd read_mx_nd.cpp)
-TARGET_LINK_LIBRARIES(read_nd)
+TARGET_LINK_LIBRARIES(read_nd ${PROJECT_SOURCE_DIR}/dmlc-core/build/libdmlc.a)
 

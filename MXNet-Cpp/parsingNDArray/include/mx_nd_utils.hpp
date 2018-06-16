@@ -5,6 +5,9 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <dmlc/base.h>
+#include <dmlc/logging.h>
+#include <dmlc/io.h>
 #include <dmlc/memory_io.h>
 #include <map>
 #include <string>
@@ -161,20 +164,7 @@ enum ReturnType {
 
 int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
 
-  std::ifstream ifs(param_file.c_str(), std::ios::in | std::ios::binary);
-  if (!ifs) {
-    LOG(FATAL) << "Can't open the file. Please check " << param_file;
-  }
-  ifs.seekg(0, std::ios::end);
-  int length_ = ifs.tellg();
-  ifs.seekg(0, std::ios::beg);
-
-  char *buffer_ = new char[sizeof(char) * length_ + 1];
-  buffer_[length_] = '\0';
-  ifs.read(buffer_, length_);
-  ifs.close();
-
-  dmlc::Stream* fi = new dmlc::MemoryFixedSizeStream(static_cast<void *>(buffer_), length_);  // NOLINT(*)
+  dmlc::Stream* fi = dmlc::Stream::Create(param_file.c_str(), "r");
 
   uint64_t header, reserved;
   if (!(fi->Read(&header))) {
