@@ -8,6 +8,14 @@ for example [ncnn](https://github.com/Tencent/ncnn) . You need to first extract 
 This project provides you the facility to parse the .params file and extract the weights in C++.
 
 ## Build The Project
+### Compile dmlc-core
+
+```bash
+cd dmlc-core && mkdir build && cmake .. && make -j
+```
+
+### Compile The Project
+
 ```bash
 mkdir build && cd build && cmake .. && make -j
 ```
