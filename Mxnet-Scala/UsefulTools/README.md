@@ -1,6 +1,6 @@
 # MXNET-Scala Useful Tools
 
-Implementation of the estimates of model size and flop counts for convolutional neural networks with MXNET-Scala.
+Implementation of the estimation of model size and flop counts for convolutional neural networks with MXNET-Scala.
 
 https://github.com/albanie/convnet-burden
 
