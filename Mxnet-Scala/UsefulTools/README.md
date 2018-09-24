@@ -1,4 +1,4 @@
-# MXNET-Scala Some Useful Tools
+# MXNET-Scala Useful Tools
 
 Implementation of the estimates of model size and flop counts for convolutional neural networks with MXNET-Scala.
 
