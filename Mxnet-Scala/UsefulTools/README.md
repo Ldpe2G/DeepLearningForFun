@@ -33,6 +33,21 @@ mkdir lib
 
 run `cal_flops.sh` under scripts folder
 
+```bash
+caffenet
+flops: 723.0072 MFLOPS
+model size: 232.56387 MB
 
+squeezenet1-0
+flops: 861.60394 MFLOPS
+model size: 4.7623596 MB
 
+resnet-101
+flops: 7818.2407 MFLOPS
+model size: 170.28586 MB
+
+resnext-101-64x4d
+flops: 15491.882 MFLOPS
+model size: 319.13058 MB
+```
 
