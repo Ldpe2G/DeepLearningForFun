@@ -1,0 +1,421 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "data", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv1_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv1_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Convolution", 
+      "param": {
+        "cudnn_off": "False", 
+        "cudnn_tune": "off", 
+        "dilate": "(1,1)", 
+        "kernel": "(11,11)", 
+        "no_bias": "False", 
+        "num_filter": "96", 
+        "num_group": "1", 
+        "pad": "(0,0)", 
+        "stride": "(4,4)", 
+        "workspace": "1024"
+      }, 
+      "name": "conv1", 
+      "inputs": [[0, 0], [1, 0], [2, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Activation", 
+      "param": {"act_type": "relu"}, 
+      "name": "relu1", 
+      "inputs": [[3, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Pooling", 
+      "param": {
+        "global_pool": "False", 
+        "kernel": "(3,3)", 
+        "pad": "(0,0)", 
+        "pool_type": "max", 
+        "pooling_convention": "full", 
+        "stride": "(2,2)"
+      }, 
+      "name": "pool1", 
+      "inputs": [[4, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "LRN", 
+      "param": {
+        "alpha": "0.0001", 
+        "beta": "0.75", 
+        "knorm": "1", 
+        "nsize": "5"
+      }, 
+      "name": "norm1", 
+      "inputs": [[5, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv2_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv2_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Convolution", 
+      "param": {
+        "cudnn_off": "False", 
+        "cudnn_tune": "off", 
+        "dilate": "(1,1)", 
+        "kernel": "(5,5)", 
+        "no_bias": "False", 
+        "num_filter": "256", 
+        "num_group": "2", 
+        "pad": "(2,2)", 
+        "stride": "(1,1)", 
+        "workspace": "1024"
+      }, 
+      "name": "conv2", 
+      "inputs": [[6, 0], [7, 0], [8, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Activation", 
+      "param": {"act_type": "relu"}, 
+      "name": "relu2", 
+      "inputs": [[9, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Pooling", 
+      "param": {
+        "global_pool": "False", 
+        "kernel": "(3,3)", 
+        "pad": "(0,0)", 
+        "pool_type": "max", 
+        "pooling_convention": "full", 
+        "stride": "(2,2)"
+      }, 
+      "name": "pool2", 
+      "inputs": [[10, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "LRN", 
+      "param": {
+        "alpha": "0.0001", 
+        "beta": "0.75", 
+        "knorm": "1", 
+        "nsize": "5"
+      }, 
+      "name": "norm2", 
+      "inputs": [[11, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv3_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv3_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Convolution", 
+      "param": {
+        "cudnn_off": "False", 
+        "cudnn_tune": "off", 
+        "dilate": "(1,1)", 
+        "kernel": "(3,3)", 
+        "no_bias": "False", 
+        "num_filter": "384", 
+        "num_group": "1", 
+        "pad": "(1,1)", 
+        "stride": "(1,1)", 
+        "workspace": "1024"
+      }, 
+      "name": "conv3", 
+      "inputs": [[12, 0], [13, 0], [14, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Activation", 
+      "param": {"act_type": "relu"}, 
+      "name": "relu3", 
+      "inputs": [[15, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv4_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv4_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Convolution", 
+      "param": {
+        "cudnn_off": "False", 
+        "cudnn_tune": "off", 
+        "dilate": "(1,1)", 
+        "kernel": "(3,3)", 
+        "no_bias": "False", 
+        "num_filter": "384", 
+        "num_group": "2", 
+        "pad": "(1,1)", 
+        "stride": "(1,1)", 
+        "workspace": "1024"
+      }, 
+      "name": "conv4", 
+      "inputs": [[16, 0], [17, 0], [18, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Activation", 
+      "param": {"act_type": "relu"}, 
+      "name": "relu4", 
+      "inputs": [[19, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv5_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "conv5_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Convolution", 
+      "param": {
+        "cudnn_off": "False", 
+        "cudnn_tune": "off", 
+        "dilate": "(1,1)", 
+        "kernel": "(3,3)", 
+        "no_bias": "False", 
+        "num_filter": "256", 
+        "num_group": "2", 
+        "pad": "(1,1)", 
+        "stride": "(1,1)", 
+        "workspace": "1024"
+      }, 
+      "name": "conv5", 
+      "inputs": [[20, 0], [21, 0], [22, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Activation", 
+      "param": {"act_type": "relu"}, 
+      "name": "relu5", 
+      "inputs": [[23, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Pooling", 
+      "param": {
+        "global_pool": "False", 
+        "kernel": "(3,3)", 
+        "pad": "(0,0)", 
+        "pool_type": "max", 
+        "pooling_convention": "full", 
+        "stride": "(2,2)"
+      }, 
+      "name": "pool5", 
+      "inputs": [[24, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Flatten", 
+      "param": {}, 
+      "name": "flatten_0", 
+      "inputs": [[25, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "fc6_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "fc6_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "FullyConnected", 
+      "param": {
+        "no_bias": "False", 
+        "num_hidden": "4096"
+      }, 
+      "name": "fc6", 
+      "inputs": [[26, 0], [27, 0], [28, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Activation", 
+      "param": {"act_type": "relu"}, 
+      "name": "relu6", 
+      "inputs": [[29, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Dropout", 
+      "param": {"p": "0.5"}, 
+      "name": "drop6", 
+      "inputs": [[30, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "fc7_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "fc7_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "FullyConnected", 
+      "param": {
+        "no_bias": "False", 
+        "num_hidden": "4096"
+      }, 
+      "name": "fc7", 
+      "inputs": [[31, 0], [32, 0], [33, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Activation", 
+      "param": {"act_type": "relu"}, 
+      "name": "relu7", 
+      "inputs": [[34, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "Dropout", 
+      "param": {"p": "0.5"}, 
+      "name": "drop7", 
+      "inputs": [[35, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "fc8_weight", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "fc8_bias", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "FullyConnected", 
+      "param": {
+        "no_bias": "False", 
+        "num_hidden": "1000"
+      }, 
+      "name": "fc8", 
+      "inputs": [[36, 0], [37, 0], [38, 0]], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "null", 
+      "param": {}, 
+      "name": "prob_label", 
+      "inputs": [], 
+      "backward_source_id": -1
+    }, 
+    {
+      "op": "SoftmaxOutput", 
+      "param": {
+        "grad_scale": "1", 
+        "ignore_label": "-1", 
+        "multi_output": "False", 
+        "normalization": "null", 
+        "preserve_shape": "False", 
+        "use_ignore": "False"
+      }, 
+      "name": "prob", 
+      "inputs": [[39, 0], [40, 0]], 
+      "backward_source_id": -1
+    }
+  ], 
+  "arg_nodes": [
+    0, 
+    1, 
+    2, 
+    7, 
+    8, 
+    13, 
+    14, 
+    17, 
+    18, 
+    21, 
+    22, 
+    27, 
+    28, 
+    32, 
+    33, 
+    37, 
+    38, 
+    40
+  ], 
+  "heads": [[41, 0]]
+}
