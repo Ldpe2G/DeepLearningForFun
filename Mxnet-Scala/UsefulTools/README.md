@@ -4,6 +4,8 @@ Implementation of the estimates of model size and flop counts for convolutional 
 
 https://github.com/albanie/convnet-burden
 
+For now, the estimation of flops only consider Layers: Convolution, Deconvolution, FullyConnected, Pooling, relu
+
 ## Building
 
 Tested on Ubuntu 14.04
