@@ -2,6 +2,8 @@
 
 Implementation of the estimates of model size and flop counts for convolutional neural networks with MXNET-Scala.
 
+https://github.com/albanie/convnet-burden
+
 ## Building
 
 Tested on Ubuntu 14.04
