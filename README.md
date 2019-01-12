@@ -13,3 +13,5 @@ Implementation of some interesting ideas of deeplearning with MXNet
 * [Matrix Factorization](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/MatrixFactorization)
 * [Center Loss](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/CenterLoss)
 * [Some Useful Tools](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/UsefulTools)
+* [Quantization Aware Training](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/TrainQuantization
+)
