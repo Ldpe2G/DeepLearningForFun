@@ -1,0 +1,2547 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "data", 
+      "attrs": {"__dtype__": "0"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_1_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv1_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "64", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[0, 0, 0], [1, 0, 0], [2, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad0", 
+      "inputs": [[3, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_1_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_1_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_1_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn1_1", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[4, 0, 0], [5, 0, 0], [6, 0, 0], [7, 0, 1], [8, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad1", 
+      "inputs": [[9, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_1_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_1_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv1_1_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv1_1_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[0, 0, 0], [11, 0, 1], [12, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad2", 
+      "inputs": [[5, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad3", 
+      "inputs": [[6, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad4", 
+      "inputs": [[7, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad5", 
+      "inputs": [[8, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn1_1", 
+      "attrs": {"op_type": "merge_bn1_1"}, 
+      "inputs": [[1, 0, 0], [2, 0, 0], [14, 0, 0], [15, 0, 0], [16, 0, 0], [17, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_1_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv1_1_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv1_1_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[18, 0, 0], [19, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv1_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "64", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[13, 0, 0], [20, 0, 0], [18, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv1_1_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv1_1_merge_two_streams"
+      }, 
+      "inputs": [[10, 0, 0], [21, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu1_1", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[22, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_2_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_2_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv1_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "64", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[23, 0, 0], [24, 0, 0], [25, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad6", 
+      "inputs": [[26, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_2_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_2_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_2_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn1_2_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn1_2", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[27, 0, 0], [28, 0, 0], [29, 0, 0], [30, 0, 1], [31, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad7", 
+      "inputs": [[32, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_2_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_2_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv1_2_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv1_2_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[23, 0, 0], [34, 0, 1], [35, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad8", 
+      "inputs": [[28, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad9", 
+      "inputs": [[29, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad10", 
+      "inputs": [[30, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad11", 
+      "inputs": [[31, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn1_2", 
+      "attrs": {"op_type": "merge_bn1_2"}, 
+      "inputs": [[24, 0, 0], [25, 0, 0], [37, 0, 0], [38, 0, 0], [39, 0, 0], [40, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1_2_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv1_2_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv1_2_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[41, 0, 0], [42, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv1_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "64", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[36, 0, 0], [43, 0, 0], [41, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv1_2_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv1_2_merge_two_streams"
+      }, 
+      "inputs": [[33, 0, 0], [44, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu1_2", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[45, 0, 0]]
+    }, 
+    {
+      "op": "Pooling", 
+      "name": "pool1", 
+      "attrs": {
+        "kernel": "(2,2)", 
+        "pool_type": "max", 
+        "stride": "(2,2)"
+      }, 
+      "inputs": [[46, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_1_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv2_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "128", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[47, 0, 0], [48, 0, 0], [49, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad12", 
+      "inputs": [[50, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_1_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_1_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_1_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2_1", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[51, 0, 0], [52, 0, 0], [53, 0, 0], [54, 0, 1], [55, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad13", 
+      "inputs": [[56, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_1_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_1_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv2_1_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv2_1_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[47, 0, 0], [58, 0, 1], [59, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad14", 
+      "inputs": [[52, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad15", 
+      "inputs": [[53, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad16", 
+      "inputs": [[54, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad17", 
+      "inputs": [[55, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn2_1", 
+      "attrs": {"op_type": "merge_bn2_1"}, 
+      "inputs": [[48, 0, 0], [49, 0, 0], [61, 0, 0], [62, 0, 0], [63, 0, 0], [64, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_1_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv2_1_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv2_1_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[65, 0, 0], [66, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv2_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "128", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[60, 0, 0], [67, 0, 0], [65, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv2_1_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv2_1_merge_two_streams"
+      }, 
+      "inputs": [[57, 0, 0], [68, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu2_1", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[69, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_2_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_2_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv2_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "128", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[70, 0, 0], [71, 0, 0], [72, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad18", 
+      "inputs": [[73, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_2_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_2_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_2_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2_2_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2_2", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[74, 0, 0], [75, 0, 0], [76, 0, 0], [77, 0, 1], [78, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad19", 
+      "inputs": [[79, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_2_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_2_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv2_2_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv2_2_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[70, 0, 0], [81, 0, 1], [82, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad20", 
+      "inputs": [[75, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad21", 
+      "inputs": [[76, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad22", 
+      "inputs": [[77, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad23", 
+      "inputs": [[78, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn2_2", 
+      "attrs": {"op_type": "merge_bn2_2"}, 
+      "inputs": [[71, 0, 0], [72, 0, 0], [84, 0, 0], [85, 0, 0], [86, 0, 0], [87, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv2_2_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv2_2_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv2_2_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[88, 0, 0], [89, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv2_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "128", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[83, 0, 0], [90, 0, 0], [88, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv2_2_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv2_2_merge_two_streams"
+      }, 
+      "inputs": [[80, 0, 0], [91, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu2_2", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[92, 0, 0]]
+    }, 
+    {
+      "op": "Pooling", 
+      "name": "pool2", 
+      "attrs": {
+        "kernel": "(2,2)", 
+        "pool_type": "max", 
+        "stride": "(2,2)"
+      }, 
+      "inputs": [[93, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_1_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv3_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "256", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[94, 0, 0], [95, 0, 0], [96, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad24", 
+      "inputs": [[97, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_1_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_1_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_1_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3_1", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[98, 0, 0], [99, 0, 0], [100, 0, 0], [101, 0, 1], [102, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad25", 
+      "inputs": [[103, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_1_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_1_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_1_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv3_1_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[94, 0, 0], [105, 0, 1], [106, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad26", 
+      "inputs": [[99, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad27", 
+      "inputs": [[100, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad28", 
+      "inputs": [[101, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad29", 
+      "inputs": [[102, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn3_1", 
+      "attrs": {"op_type": "merge_bn3_1"}, 
+      "inputs": [[95, 0, 0], [96, 0, 0], [108, 0, 0], [109, 0, 0], [110, 0, 0], [111, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_1_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_1_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv3_1_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[112, 0, 0], [113, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv3_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "256", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[107, 0, 0], [114, 0, 0], [112, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_1_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv3_1_merge_two_streams"
+      }, 
+      "inputs": [[104, 0, 0], [115, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu3_1", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[116, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_2_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_2_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv3_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "256", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[117, 0, 0], [118, 0, 0], [119, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad30", 
+      "inputs": [[120, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_2_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_2_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_2_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_2_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3_2", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[121, 0, 0], [122, 0, 0], [123, 0, 0], [124, 0, 1], [125, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad31", 
+      "inputs": [[126, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_2_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_2_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_2_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv3_2_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[117, 0, 0], [128, 0, 1], [129, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad32", 
+      "inputs": [[122, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad33", 
+      "inputs": [[123, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad34", 
+      "inputs": [[124, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad35", 
+      "inputs": [[125, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn3_2", 
+      "attrs": {"op_type": "merge_bn3_2"}, 
+      "inputs": [[118, 0, 0], [119, 0, 0], [131, 0, 0], [132, 0, 0], [133, 0, 0], [134, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_2_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_2_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv3_2_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[135, 0, 0], [136, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv3_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "256", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[130, 0, 0], [137, 0, 0], [135, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_2_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv3_2_merge_two_streams"
+      }, 
+      "inputs": [[127, 0, 0], [138, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu3_2", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[139, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_3_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_3_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv3_3", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "256", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[140, 0, 0], [141, 0, 0], [142, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad36", 
+      "inputs": [[143, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_3_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_3_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_3_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3_3_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3_3", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[144, 0, 0], [145, 0, 0], [146, 0, 0], [147, 0, 1], [148, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad37", 
+      "inputs": [[149, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_3_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_3_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_3_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv3_3_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[140, 0, 0], [151, 0, 1], [152, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad38", 
+      "inputs": [[145, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad39", 
+      "inputs": [[146, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad40", 
+      "inputs": [[147, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad41", 
+      "inputs": [[148, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn3_3", 
+      "attrs": {"op_type": "merge_bn3_3"}, 
+      "inputs": [[141, 0, 0], [142, 0, 0], [154, 0, 0], [155, 0, 0], [156, 0, 0], [157, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv3_3_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_3_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv3_3_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[158, 0, 0], [159, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv3_3", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "256", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[153, 0, 0], [160, 0, 0], [158, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv3_3_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv3_3_merge_two_streams"
+      }, 
+      "inputs": [[150, 0, 0], [161, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu3_3", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[162, 0, 0]]
+    }, 
+    {
+      "op": "Pooling", 
+      "name": "pool3", 
+      "attrs": {
+        "kernel": "(2,2)", 
+        "pool_type": "max", 
+        "stride": "(2,2)"
+      }, 
+      "inputs": [[163, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_1_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv4_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[164, 0, 0], [165, 0, 0], [166, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad42", 
+      "inputs": [[167, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_1_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_1_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_1_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4_1", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[168, 0, 0], [169, 0, 0], [170, 0, 0], [171, 0, 1], [172, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad43", 
+      "inputs": [[173, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_1_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_1_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_1_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv4_1_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[164, 0, 0], [175, 0, 1], [176, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad44", 
+      "inputs": [[169, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad45", 
+      "inputs": [[170, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad46", 
+      "inputs": [[171, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad47", 
+      "inputs": [[172, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn4_1", 
+      "attrs": {"op_type": "merge_bn4_1"}, 
+      "inputs": [[165, 0, 0], [166, 0, 0], [178, 0, 0], [179, 0, 0], [180, 0, 0], [181, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_1_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_1_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv4_1_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[182, 0, 0], [183, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv4_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[177, 0, 0], [184, 0, 0], [182, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_1_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv4_1_merge_two_streams"
+      }, 
+      "inputs": [[174, 0, 0], [185, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu4_1", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[186, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_2_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_2_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv4_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[187, 0, 0], [188, 0, 0], [189, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad48", 
+      "inputs": [[190, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_2_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_2_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_2_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_2_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4_2", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[191, 0, 0], [192, 0, 0], [193, 0, 0], [194, 0, 1], [195, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad49", 
+      "inputs": [[196, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_2_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_2_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_2_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv4_2_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[187, 0, 0], [198, 0, 1], [199, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad50", 
+      "inputs": [[192, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad51", 
+      "inputs": [[193, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad52", 
+      "inputs": [[194, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad53", 
+      "inputs": [[195, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn4_2", 
+      "attrs": {"op_type": "merge_bn4_2"}, 
+      "inputs": [[188, 0, 0], [189, 0, 0], [201, 0, 0], [202, 0, 0], [203, 0, 0], [204, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_2_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_2_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv4_2_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[205, 0, 0], [206, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv4_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[200, 0, 0], [207, 0, 0], [205, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_2_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv4_2_merge_two_streams"
+      }, 
+      "inputs": [[197, 0, 0], [208, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu4_2", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[209, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_3_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_3_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv4_3", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[210, 0, 0], [211, 0, 0], [212, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad54", 
+      "inputs": [[213, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_3_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_3_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_3_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4_3_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4_3", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[214, 0, 0], [215, 0, 0], [216, 0, 0], [217, 0, 1], [218, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad55", 
+      "inputs": [[219, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_3_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_3_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_3_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv4_3_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[210, 0, 0], [221, 0, 1], [222, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad56", 
+      "inputs": [[215, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad57", 
+      "inputs": [[216, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad58", 
+      "inputs": [[217, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad59", 
+      "inputs": [[218, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn4_3", 
+      "attrs": {"op_type": "merge_bn4_3"}, 
+      "inputs": [[211, 0, 0], [212, 0, 0], [224, 0, 0], [225, 0, 0], [226, 0, 0], [227, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv4_3_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_3_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv4_3_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[228, 0, 0], [229, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv4_3", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[223, 0, 0], [230, 0, 0], [228, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv4_3_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv4_3_merge_two_streams"
+      }, 
+      "inputs": [[220, 0, 0], [231, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu4_3", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[232, 0, 0]]
+    }, 
+    {
+      "op": "Pooling", 
+      "name": "pool4", 
+      "attrs": {
+        "kernel": "(2,2)", 
+        "pool_type": "max", 
+        "stride": "(2,2)"
+      }, 
+      "inputs": [[233, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_1_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv5_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[234, 0, 0], [235, 0, 0], [236, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad60", 
+      "inputs": [[237, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_1_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_1_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_1_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5_1", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[238, 0, 0], [239, 0, 0], [240, 0, 0], [241, 0, 1], [242, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad61", 
+      "inputs": [[243, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_1_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_1_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_1_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv5_1_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[234, 0, 0], [245, 0, 1], [246, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad62", 
+      "inputs": [[239, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad63", 
+      "inputs": [[240, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad64", 
+      "inputs": [[241, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad65", 
+      "inputs": [[242, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn5_1", 
+      "attrs": {"op_type": "merge_bn5_1"}, 
+      "inputs": [[235, 0, 0], [236, 0, 0], [248, 0, 0], [249, 0, 0], [250, 0, 0], [251, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_1_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_1_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv5_1_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[252, 0, 0], [253, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv5_1", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[247, 0, 0], [254, 0, 0], [252, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_1_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv5_1_merge_two_streams"
+      }, 
+      "inputs": [[244, 0, 0], [255, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu5_1", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[256, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_2_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_2_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv5_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[257, 0, 0], [258, 0, 0], [259, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad66", 
+      "inputs": [[260, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_2_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_2_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_2_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_2_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5_2", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[261, 0, 0], [262, 0, 0], [263, 0, 0], [264, 0, 1], [265, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad67", 
+      "inputs": [[266, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_2_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_2_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_2_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv5_2_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[257, 0, 0], [268, 0, 1], [269, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad68", 
+      "inputs": [[262, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad69", 
+      "inputs": [[263, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad70", 
+      "inputs": [[264, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad71", 
+      "inputs": [[265, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn5_2", 
+      "attrs": {"op_type": "merge_bn5_2"}, 
+      "inputs": [[258, 0, 0], [259, 0, 0], [271, 0, 0], [272, 0, 0], [273, 0, 0], [274, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_2_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_2_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv5_2_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[275, 0, 0], [276, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv5_2", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[270, 0, 0], [277, 0, 0], [275, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_2_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv5_2_merge_two_streams"
+      }, 
+      "inputs": [[267, 0, 0], [278, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu5_2", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[279, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_3_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_3_bias", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "fake_conv5_3", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[280, 0, 0], [281, 0, 0], [282, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad72", 
+      "inputs": [[283, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_3_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_3_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_3_moving_mean", 
+      "attrs": {"__init__": "[\"zero\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5_3_moving_var", 
+      "attrs": {"__init__": "[\"one\", {}]"}, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5_3", 
+      "attrs": {
+        "fix_gamma": "true", 
+        "output_mean_var": "false", 
+        "use_global_stats": "true"
+      }, 
+      "inputs": [[284, 0, 0], [285, 0, 0], [286, 0, 0], [287, 0, 1], [288, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad73", 
+      "inputs": [[289, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_3_in_act_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_3_in_act_moving_max_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_3_in_act_quantizer", 
+      "attrs": {
+        "momentum": "0.95", 
+        "op_type": "conv5_3_in_act_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "0"
+      }, 
+      "inputs": [[280, 0, 0], [291, 0, 1], [292, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad74", 
+      "inputs": [[285, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad75", 
+      "inputs": [[286, 0, 0]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad76", 
+      "inputs": [[287, 0, 1]]
+    }, 
+    {
+      "op": "BlockGrad", 
+      "name": "blockgrad77", 
+      "inputs": [[288, 0, 1]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "merge_bn5_3", 
+      "attrs": {"op_type": "merge_bn5_3"}, 
+      "inputs": [[281, 0, 0], [282, 0, 0], [294, 0, 0], [295, 0, 0], [296, 0, 0], [297, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv5_3_weight_scale_beta", 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_3_weight_quantizer", 
+      "attrs": {
+        "op_type": "conv5_3_weight_quantizer", 
+        "quantize_level": "128", 
+        "quantize_weight": "1"
+      }, 
+      "inputs": [[298, 0, 0], [299, 0, 1]]
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv5_3", 
+      "attrs": {
+        "kernel": "(3,3)", 
+        "no_bias": "false", 
+        "num_filter": "512", 
+        "pad": "(1,1)"
+      }, 
+      "inputs": [[293, 0, 0], [300, 0, 0], [298, 1, 0]]
+    }, 
+    {
+      "op": "Custom", 
+      "name": "conv5_3_merge_two_streams", 
+      "attrs": {
+        "index": "1", 
+        "op_type": "conv5_3_merge_two_streams"
+      }, 
+      "inputs": [[290, 0, 0], [301, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu5_3", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[302, 0, 0]]
+    }, 
+    {
+      "op": "Pooling", 
+      "name": "pool5", 
+      "attrs": {
+        "kernel": "(2,2)", 
+        "pool_type": "max", 
+        "stride": "(2,2)"
+      }, 
+      "inputs": [[303, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "fc6_weight", 
+      "attrs": {
+        "flatten": "true", 
+        "no_bias": "false", 
+        "num_hidden": "512"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "fc6_bias", 
+      "attrs": {
+        "flatten": "true", 
+        "no_bias": "false", 
+        "num_hidden": "512"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "FullyConnected", 
+      "name": "fc6", 
+      "attrs": {
+        "flatten": "true", 
+        "no_bias": "false", 
+        "num_hidden": "512"
+      }, 
+      "inputs": [[304, 0, 0], [305, 0, 0], [306, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu6", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[307, 0, 0]]
+    }, 
+    {
+      "op": "Dropout", 
+      "name": "drop6", 
+      "attrs": {"p": "0.5"}, 
+      "inputs": [[308, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "fc8_weight", 
+      "attrs": {
+        "no_bias": "false", 
+        "num_hidden": "10"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "fc8_bias", 
+      "attrs": {
+        "no_bias": "false", 
+        "num_hidden": "10"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "FullyConnected", 
+      "name": "fc8", 
+      "attrs": {
+        "no_bias": "false", 
+        "num_hidden": "10"
+      }, 
+      "inputs": [[309, 0, 0], [310, 0, 0], [311, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "softmax_label", 
+      "inputs": []
+    }, 
+    {
+      "op": "SoftmaxOutput", 
+      "name": "softmax", 
+      "inputs": [[312, 0, 0], [313, 0, 0]]
+    }
+  ], 
+  "arg_nodes": [
+    0, 
+    1, 
+    2, 
+    5, 
+    6, 
+    7, 
+    8, 
+    11, 
+    12, 
+    19, 
+    24, 
+    25, 
+    28, 
+    29, 
+    30, 
+    31, 
+    34, 
+    35, 
+    42, 
+    48, 
+    49, 
+    52, 
+    53, 
+    54, 
+    55, 
+    58, 
+    59, 
+    66, 
+    71, 
+    72, 
+    75, 
+    76, 
+    77, 
+    78, 
+    81, 
+    82, 
+    89, 
+    95, 
+    96, 
+    99, 
+    100, 
+    101, 
+    102, 
+    105, 
+    106, 
+    113, 
+    118, 
+    119, 
+    122, 
+    123, 
+    124, 
+    125, 
+    128, 
+    129, 
+    136, 
+    141, 
+    142, 
+    145, 
+    146, 
+    147, 
+    148, 
+    151, 
+    152, 
+    159, 
+    165, 
+    166, 
+    169, 
+    170, 
+    171, 
+    172, 
+    175, 
+    176, 
+    183, 
+    188, 
+    189, 
+    192, 
+    193, 
+    194, 
+    195, 
+    198, 
+    199, 
+    206, 
+    211, 
+    212, 
+    215, 
+    216, 
+    217, 
+    218, 
+    221, 
+    222, 
+    229, 
+    235, 
+    236, 
+    239, 
+    240, 
+    241, 
+    242, 
+    245, 
+    246, 
+    253, 
+    258, 
+    259, 
+    262, 
+    263, 
+    264, 
+    265, 
+    268, 
+    269, 
+    276, 
+    281, 
+    282, 
+    285, 
+    286, 
+    287, 
+    288, 
+    291, 
+    292, 
+    299, 
+    305, 
+    306, 
+    310, 
+    311, 
+    313
+  ], 
+  "node_row_ptr": [
+    0, 
+    1, 
+    2, 
+    3, 
+    4, 
+    5, 
+    6, 
+    7, 
+    8, 
+    9, 
+    12, 
+    13, 
+    14, 
+    15, 
+    16, 
+    17, 
+    18, 
+    19, 
+    20, 
+    22, 
+    23, 
+    24, 
+    25, 
+    26, 
+    27, 
+    28, 
+    29, 
+    30, 
+    31, 
+    32, 
+    33, 
+    34, 
+    35, 
+    38, 
+    39, 
+    40, 
+    41, 
+    42, 
+    43, 
+    44, 
+    45, 
+    46, 
+    48, 
+    49, 
+    50, 
+    51, 
+    52, 
+    53, 
+    54, 
+    55, 
+    56, 
+    57, 
+    58, 
+    59, 
+    60, 
+    61, 
+    62, 
+    65, 
+    66, 
+    67, 
+    68, 
+    69, 
+    70, 
+    71, 
+    72, 
+    73, 
+    75, 
+    76, 
+    77, 
+    78, 
+    79, 
+    80, 
+    81, 
+    82, 
+    83, 
+    84, 
+    85, 
+    86, 
+    87, 
+    88, 
+    91, 
+    92, 
+    93, 
+    94, 
+    95, 
+    96, 
+    97, 
+    98, 
+    99, 
+    101, 
+    102, 
+    103, 
+    104, 
+    105, 
+    106, 
+    107, 
+    108, 
+    109, 
+    110, 
+    111, 
+    112, 
+    113, 
+    114, 
+    115, 
+    118, 
+    119, 
+    120, 
+    121, 
+    122, 
+    123, 
+    124, 
+    125, 
+    126, 
+    128, 
+    129, 
+    130, 
+    131, 
+    132, 
+    133, 
+    134, 
+    135, 
+    136, 
+    137, 
+    138, 
+    139, 
+    140, 
+    141, 
+    144, 
+    145, 
+    146, 
+    147, 
+    148, 
+    149, 
+    150, 
+    151, 
+    152, 
+    154, 
+    155, 
+    156, 
+    157, 
+    158, 
+    159, 
+    160, 
+    161, 
+    162, 
+    163, 
+    164, 
+    165, 
+    166, 
+    167, 
+    170, 
+    171, 
+    172, 
+    173, 
+    174, 
+    175, 
+    176, 
+    177, 
+    178, 
+    180, 
+    181, 
+    182, 
+    183, 
+    184, 
+    185, 
+    186, 
+    187, 
+    188, 
+    189, 
+    190, 
+    191, 
+    192, 
+    193, 
+    194, 
+    197, 
+    198, 
+    199, 
+    200, 
+    201, 
+    202, 
+    203, 
+    204, 
+    205, 
+    207, 
+    208, 
+    209, 
+    210, 
+    211, 
+    212, 
+    213, 
+    214, 
+    215, 
+    216, 
+    217, 
+    218, 
+    219, 
+    220, 
+    223, 
+    224, 
+    225, 
+    226, 
+    227, 
+    228, 
+    229, 
+    230, 
+    231, 
+    233, 
+    234, 
+    235, 
+    236, 
+    237, 
+    238, 
+    239, 
+    240, 
+    241, 
+    242, 
+    243, 
+    244, 
+    245, 
+    246, 
+    249, 
+    250, 
+    251, 
+    252, 
+    253, 
+    254, 
+    255, 
+    256, 
+    257, 
+    259, 
+    260, 
+    261, 
+    262, 
+    263, 
+    264, 
+    265, 
+    266, 
+    267, 
+    268, 
+    269, 
+    270, 
+    271, 
+    272, 
+    273, 
+    276, 
+    277, 
+    278, 
+    279, 
+    280, 
+    281, 
+    282, 
+    283, 
+    284, 
+    286, 
+    287, 
+    288, 
+    289, 
+    290, 
+    291, 
+    292, 
+    293, 
+    294, 
+    295, 
+    296, 
+    297, 
+    298, 
+    299, 
+    302, 
+    303, 
+    304, 
+    305, 
+    306, 
+    307, 
+    308, 
+    309, 
+    310, 
+    312, 
+    313, 
+    314, 
+    315, 
+    316, 
+    317, 
+    318, 
+    319, 
+    320, 
+    321, 
+    322, 
+    323, 
+    324, 
+    325, 
+    328, 
+    329, 
+    330, 
+    331, 
+    332, 
+    333, 
+    334, 
+    335, 
+    336, 
+    338, 
+    339, 
+    340, 
+    341, 
+    342, 
+    343, 
+    344, 
+    345, 
+    346, 
+    347, 
+    348, 
+    350, 
+    351, 
+    352, 
+    353, 
+    354, 
+    355
+  ], 
+  "heads": [[314, 0, 0]], 
+  "attrs": {"mxnet_version": ["int", 10500]}
+}
