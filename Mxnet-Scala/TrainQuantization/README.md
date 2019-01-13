@@ -1,5 +1,5 @@
 # MXNET-Scala TrainQuantization
-Simpfly implementation of Quantization Aware Training[1] with MXNet-scala module. 
+Simpfly implementation of Quantization Aware Training[1][2] with MXNet-scala module. 
 
 
 ## Setup
@@ -62,3 +62,5 @@ Currently there is memory leak some where in the code, but I can't figure out th
 
 ## Reference
 [1] Quantizing deep convolutional networks for efficient inference: A whitepaper. https://arxiv.org/pdf/1806.08342.pdf
+[2] Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference. 
+ https://arxiv.org/pdf/1712.05877.pdf
