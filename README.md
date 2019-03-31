@@ -1,3 +1,5 @@
+[![996.ICU](https://img.shields.io/badge/link-996.icu-red.svg)](ttps://996.icu)
+
 # DeepLearning for fun
 
 Implementation of some interesting ideas of deeplearning with MXNet
