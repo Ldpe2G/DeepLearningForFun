@@ -25,7 +25,7 @@ cd Mxnet-Scala/UsefulTools
 mkdir lib
 ```
 
-3, copy your compiled `mxnet-full_2.11-linux-x86_64-gpu-1.3.1-SNAPSHOT.jar` into lib folder;
+3, copy the compiled `mxnet-full_2.11-INTERNAL.jar` into lib folder;
 
 4, run sbt, compile the project
 
@@ -35,19 +35,22 @@ run `cal_flops.sh` under scripts folder
 
 ```bash
 caffenet
-flops: 723.0072 MFLOPS
+flops: 723.0072 MFLOPs
 model size: 232.56387 MB
 
 squeezenet1-0
-flops: 861.60394 MFLOPS
+flops: 861.60394 MFLOPs
 model size: 4.7623596 MB
 
 resnet-101
-flops: 7818.2407 MFLOPS
+flops: 7818.2407 MFLOPs
 model size: 170.28586 MB
 
 resnext-101-64x4d
-flops: 15491.882 MFLOPS
+flops: 15491.882 MFLOPs
 model size: 319.13058 MB
-```
 
+fcn32s-symbol.json
+flops: 120265.786832 MFLOPs ~ 120GFLOPs
+model size: 519.38214 MB
+```

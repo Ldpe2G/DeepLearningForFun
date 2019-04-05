@@ -70,7 +70,7 @@ object CalFlops {
       
       val (labelShapes, labelNames): (scala.Option[IndexedSeq[DataDesc]], IndexedSeq[String]) = {
         if (cafl.labelShapes.length == 0) {
-          (None, null)
+          (None, IndexedSeq.empty[String])
         } else {
           val shapes = cafl.labelShapes.map { s =>
             val tmp = s.trim().split(",")
@@ -93,7 +93,7 @@ object CalFlops {
       val (argParams, auxParams) = module.getParams
       
       
-      var totalFlops = 0f
+      var totalFlops:Double = 0f
       
       val conf = JSON.parseFull(network.toJson) match {
         case None => null
@@ -119,7 +119,6 @@ object CalFlops {
           case "Convolution" => {
             val internalSym = network.getInternals().get(name + "_output")
             val (internalLabelShapes, internalLabelNames) = getInternalLabelInfo(internalSym, labelShapes)
-            
             val tmpModel = new Module(internalSym, dataNames, internalLabelNames)
             tmpModel.bind(dataShapes, internalLabelShapes, forTraining = false)
             tmpModel.initParams()
@@ -127,8 +126,9 @@ object CalFlops {
             
             // support conv1d NCW and conv2d NCHW layout
             val outShapeProdut = if (outShape.length == 3) outShape(2) else outShape(2) * outShape(3)
-            totalFlops += outShapeProdut * argParams(name + "_weight").shape.product * outShape(0)
             
+            totalFlops += outShapeProdut.toDouble * argParams(name + "_weight").shape.product * outShape(0)
+
             if (argParams.contains(name + "_bias")) {
               totalFlops += outShape.product
             }
@@ -139,7 +139,7 @@ object CalFlops {
               inputNode("name").asInstanceOf[String]
             }
             
-            val internalSym = network.getInternals().get(inputLayerName)
+            val internalSym = network.getInternals().get(inputLayerName + "_output")
             val (internalLabelShapes, internalLabelNames) = getInternalLabelInfo(internalSym, labelShapes)
 
             val tmpModel = new Module(internalSym, dataNames, internalLabelNames)
@@ -147,7 +147,7 @@ object CalFlops {
             tmpModel.initParams()
             val inputShape = tmpModel.getOutputsMerged()(0).shape
 
-            totalFlops += inputShape(2) * inputShape(3) * argParams(name + "_weight").shape.product * inputShape(0)
+            totalFlops += inputShape(2).toDouble * inputShape(3) * argParams(name + "_weight").shape.product * inputShape(0)
             
             if (argParams.contains(name + "_bias")) {
               val internalSym = network.getInternals().get(name + "_output")
@@ -165,7 +165,7 @@ object CalFlops {
             totalFlops += argParams(name + "_weight").shape.product * dataShapes(0).shape(0)
             if (argParams.contains(name + "_bias")) {
               val numFilter = argParams(name + "_bias").shape(0)
-              totalFlops += numFilter * dataShapes(0).shape(0)
+              totalFlops += numFilter.toDouble * dataShapes(0).shape(0)
             }
           }
 
@@ -200,7 +200,7 @@ object CalFlops {
               val outShape = tmpModel.getOutputsMerged()(0).shape
               val kernelP = str2Tuple(attrs("kernel")).map(_.toInt).reduce(_ * _)
               
-              totalFlops += outShape.product * kernelP
+              totalFlops += outShape.product.toDouble * kernelP
             }
           }
           case "BatchNorm" => {}
@@ -257,11 +257,11 @@ object CalFlops {
 class CalFlops {
   @Option(name = "--ds", handler = classOf[StringArrayOptionHandler],
       required = true, usage = "the network json file to calculate flops.")
-  private val dataShapes: Array[String] = Array[String]()
+  private var dataShapes: Array[String] = Array[String]()
   @Option(name = "--ls", handler = classOf[StringArrayOptionHandler],
       usage = "the network json file to calculate flops.")
-  private val labelShapes: Array[String] = Array[String]()
+  private var labelShapes: Array[String] = Array[String]()
   @Option(name = "--symbol", usage = "the network json file to calculate flops.")
-  private val symbol: String = ""
+  private var symbol: String = ""
 }
 
