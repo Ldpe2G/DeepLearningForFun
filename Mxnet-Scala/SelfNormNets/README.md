@@ -22,7 +22,7 @@ cd Mxnet-Scala/SelfNormNets
 mkdir lib
 ```
 
-3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.10.1-SNAPSHOT.jar into lib folder;
+3, copy the compiled mxnet-full_2.11-INTERNAL.jar into lib folder;
 
 4, run sbt, compile the project
 
