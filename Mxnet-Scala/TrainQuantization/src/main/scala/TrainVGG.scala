@@ -19,105 +19,112 @@ object TrainVGG {
       parser.parseArgument(args.toList.asJava)
       assert(trgg.dataPath != null)
       
-      var sym = VggSym.getVgg16Symbol(numClasses = 10)
-      var argParams: Map[String, NDArray] = null
-      var auxParams: Map[String, NDArray] = null
+      ResourceScope.using() {
 
-      if (trgg.finetuneModuleEpoch > -1) {
-        val (symm, argParamss, auxParamss) = Model.loadCheckpoint(trgg.finetuneModulePrefix, trgg.finetuneModuleEpoch)
-        sym = symm
-        argParams = argParamss
-        auxParams = auxParamss
-      }
+        var sym = VggSym.getVgg16Symbol(numClasses = 10)
+        var argParams: Map[String, NDArray] = null
+        var auxParams: Map[String, NDArray] = null
 
-      val dataShape = Shape(trgg.batchSize, 3, 32, 32)
-      val context = if (trgg.gpu == -1) Context.cpu() else Context.gpu(trgg.gpu)
+        if (trgg.finetuneModuleEpoch > -1) {
+          val (symm, argParamss, auxParamss) = Model.loadCheckpoint(trgg.finetuneModulePrefix, trgg.finetuneModuleEpoch)
+          sym = symm
+          argParams = argParamss
+          auxParams = auxParamss
+        }
 
-      val params = Map(
-        "path_imgrec" -> s"${trgg.dataPath}/train.rec",
-        "shuffle" -> "True",
-        "data_shape" -> "(3, 32, 32)",
-        "fill_value" -> "0",
-        "batch_size" -> s"${trgg.batchSize}",
-        "data_name" -> "data",
-        "label_name" -> "softmax_label"
-      )
-      val trainData = IO.ImageRecordIter(params)
-      
-      val valParams = Map(
-        "path_imgrec" -> s"${trgg.dataPath}/test.rec",
-        "shuffle" -> "False",
-        "data_shape" -> "(3, 32, 32)",
-        "batch_size" -> s"${trgg.batchSize}",
-        "data_name" -> "data",
-        "label_name" -> "softmax_label"
-      )
-      val valData = IO.ImageRecordIter(valParams)
-      
-      val module = new Module(sym, dataNames = IndexedSeq("data"), labelNames = IndexedSeq("softmax_label"), contexts = context)
-      import org.apache.mxnet.DataDesc._
-      module.bind(trainData.provideDataDesc, Some(trainData.provideLabelDesc), forTraining = true)
-      module.initParams(initializer = new Xavier(rndType = "uniform", factorType = "avg", magnitude = 2.34f),
-                        argParams = argParams, auxParams = auxParams)
-      module.initOptimizer(optimizer = new Adam(learningRate = trgg.lr, wd = 0.001f))
+        val dataShape = Shape(trgg.batchSize, 3, 32, 32)
+        val context = if (trgg.gpu == -1) Context.cpu() else Context.gpu(trgg.gpu)
 
-      val metric = new Accuracy()
-      
-      var bestAcc = 0f
-      for (epoch <- trgg.finetuneModuleEpoch + 1 until trgg.trainEpoch) {
-        metric.reset()
-        val tic = System.currentTimeMillis
+        val params = Map(
+          "path_imgrec" -> s"${trgg.dataPath}/train.rec",
+          "shuffle" -> "True",
+          "data_shape" -> "(3, 32, 32)",
+          "fill_value" -> "0",
+          "batch_size" -> s"${trgg.batchSize}",
+          "data_name" -> "data",
+          "label_name" -> "softmax_label"
+        )
+        val trainData = IO.ImageRecordIter(params)
+        
+        val valParams = Map(
+          "path_imgrec" -> s"${trgg.dataPath}/test.rec",
+          "shuffle" -> "False",
+          "data_shape" -> "(3, 32, 32)",
+          "batch_size" -> s"${trgg.batchSize}",
+          "data_name" -> "data",
+          "label_name" -> "softmax_label"
+        )
+        val valData = IO.ImageRecordIter(valParams)
+        
+        val module = new Module(sym, dataNames = IndexedSeq("data"), labelNames = IndexedSeq("softmax_label"), contexts = context)
+        import org.apache.mxnet.DataDesc._
+        module.bind(trainData.provideDataDesc, Some(trainData.provideLabelDesc), forTraining = true)
+        module.initParams(initializer = new Xavier(rndType = "uniform", factorType = "avg", magnitude = 2.34f),
+                          argParams = argParams, auxParams = auxParams)
+        module.initOptimizer(optimizer = new Adam(learningRate = trgg.lr, wd = 0.001f))
 
-        var nBatch = 0
-        while (trainData.hasNext) {
-          val dataBatch = trainData.next()
-          
-          module.forwardBackward(dataBatch)
-          module.update()
-          module.updateMetric(metric, dataBatch.label)
-          
-          if (nBatch % 100 == 0) {
-            val (name, value) = metric.get
-            logger.info(s"Epoch[$epoch] Batch[$nBatch] Train-${name.head}=${value.head}")
+        val metric = new Accuracy()
+        
+        var bestAcc = 0f
+
+        ResourceScope.using() {
+          for (epoch <- trgg.finetuneModuleEpoch + 1 until trgg.trainEpoch) {
+            metric.reset()
+            val tic = System.currentTimeMillis
+
+            var nBatch = 0
+            ResourceScope.using() {
+              while (trainData.hasNext) {
+                val dataBatch = trainData.next()
+                
+                module.forwardBackward(dataBatch)
+                module.update()
+                module.updateMetric(metric, dataBatch.label)
+                
+                if (nBatch % 100 == 0) {
+                  val (name, value) = metric.get
+                  logger.info(s"Epoch[$epoch] Batch[$nBatch] Train-${name.head}=${value.head}")
+                }
+                
+                dataBatch.dispose()
+                
+                nBatch += 1
+                
+              }
+              // one epoch of training is finished
+              val (name, value) = metric.get
+              logger.info(s"Epoch[$epoch] Train-${name.head}=${value.head}")
+              val toc = System.currentTimeMillis
+              logger.info(s"Epoch[$epoch] Time cost=${toc - tic}")
+
+              // sync aux params across devices
+              val (argParamsSync, auxParamsSync) = module.getParams
+              module.setParams(argParamsSync, auxParamsSync)
+
+              // evaluation on validation set
+              valData.reset()
+              metric.reset()
+
+              while (valData.hasNext) {
+                val dataBatch = valData.next()
+                
+                module.forward(dataBatch, isTrain = Some(false))
+                metric.update(dataBatch.label, module.getOutputsMerged())
+                
+                dataBatch.dispose()
+              }
+              val (name2, value2) = metric.get
+              logger.info(s"Epoch[$epoch] Validation-${name2.head}=${value2.head}")
+              if (value2.head > bestAcc) {
+                bestAcc = value2.head
+                module.saveCheckpoint(prefix = s"${trgg.modelPath}_acc_${bestAcc}", epoch)
+              }
+              // end of 1 epoch, reset the data-iter for another epoch
+              trainData.reset()
+            }
           }
-          
-          dataBatch.dispose()
-          
-          nBatch += 1
-          
         }
-
-        // one epoch of training is finished
-        val (name, value) = metric.get
-        logger.info(s"Epoch[$epoch] Train-${name.head}=${value.head}")
-        val toc = System.currentTimeMillis
-        logger.info(s"Epoch[$epoch] Time cost=${toc - tic}")
-
-        // sync aux params across devices
-        val (argParamsSync, auxParamsSync) = module.getParams
-        module.setParams(argParamsSync, auxParamsSync)
-
-        // evaluation on validation set
-        valData.reset()
-        metric.reset()
-        while (valData.hasNext) {
-          val dataBatch = valData.next()
-          
-          module.forward(dataBatch, isTrain = Some(false))
-          metric.update(dataBatch.label, module.getOutputsMerged())
-          
-          dataBatch.dispose()
-        }
-        val (name2, value2) = metric.get
-        logger.info(s"Epoch[$epoch] Validation-${name2.head}=${value2.head}")
-        if (value2.head > bestAcc) {
-          bestAcc = value2.head
-          module.saveCheckpoint(prefix = s"${trgg.modelPath}_acc_${bestAcc}", epoch)
-        }
-        // end of 1 epoch, reset the data-iter for another epoch
-        trainData.reset()
       }
-  
       
       
     } catch {

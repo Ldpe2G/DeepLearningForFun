@@ -17,7 +17,7 @@ Tested on Ubuntu 14.04
 2, under the Mxnet-Scala/TrainQuantization folder:
 ```bash
  mkdir lib;
- ln -s $MXNET_HOME/scala-package/assembly/linux-x86_64-gpu/target/mxnet-full_2.11-linux-x86_64-gpu-1.5.0-SNAPSHOT.jar lib
+ ln -s $MXNET_HOME/scala-package/assembly/target/mxnet-full_2.11-INTERNAL.jar lib
 ```
 
 3, run `sbt` and then compile the project
@@ -56,9 +56,6 @@ Using the script `test_quantize_vgg16_cifar10.sh` under the scripts folder to te
 FINETUNE_MODEL_EPOCH=57
 FINETUNE_MODEL_PREFIX=$ROOT/models/cifar10_quantize_vgg16_acc_0.877504
 ```
-
-## Warning
-Currently there is memory leak some where in the code, but I can't figure out the reason. You will see the memory usage keep increasing when you run the tranining script. So remenber to stop the traning script when memory usage is too high, and you can resume the training process with saved model previously.
 
 ## Reference
 [1] Quantizing deep convolutional networks for efficient inference: A whitepaper. https://arxiv.org/pdf/1806.08342.pdf

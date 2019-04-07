@@ -7,6 +7,7 @@ import org.apache.mxnet.NDArray
 import org.apache.mxnet.DType.DType
 import org.apache.mxnet.NDArrayCollector
 import org.apache.mxnet.Operator
+import org.apache.mxnet.ResourceScope
 
 /**
  * @author Depeng Liang
@@ -17,7 +18,7 @@ object QuantizeOps {
   
     override def forward(isTrain: Boolean, req: Array[String],
         inData: Array[NDArray], outData: Array[NDArray], aux: Array[NDArray]): Unit = {
-      NDArrayCollector.auto().withScope {
+      ResourceScope.using() {
         if (this.quantizeWeight == 1) {
           val scale = aux(0)
           val abs = NDArray.api.abs(inData(0))
@@ -51,7 +52,7 @@ object QuantizeOps {
     override def backward(req: Array[String], outGrad: Array[NDArray],
       inData: Array[NDArray], outData: Array[NDArray],
       inGrad: Array[NDArray], aux: Array[NDArray]): Unit = {
-        NDArrayCollector.auto().withScope {
+        ResourceScope.using() {
           if (this.quantizeWeight == 0) {
             val scale = aux(0)
             val movingMax = aux(1)
@@ -178,7 +179,7 @@ object QuantizeOps {
   
     override def forward(isTrain: Boolean, req: Array[String],
         inData: Array[NDArray], outData: Array[NDArray], aux: Array[NDArray]): Unit = {
-      NDArrayCollector.auto().withScope {
+      ResourceScope.using() {
         val weight = inData(0)
         val bias = inData(1)
         val gamma = inData(2)
