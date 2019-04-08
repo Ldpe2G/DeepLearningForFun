@@ -1,7 +1,8 @@
 package mxgan
 
 import Ops.conv2DBnLeaky
-import org.apache.mxnet.Symbol
+import org.apache.mxnet._
+import org.apache.mxnet.util.OptionConversion._
 
 object Encoder {
 
@@ -9,16 +10,16 @@ object Encoder {
   def lenet(): Symbol = {
     val data = Symbol.Variable("data")
     // 28 x 28
-    val conv1 = Symbol.Convolution("conv1")()(Map("data" -> data, "kernel" -> "(5,5)", "num_filter" -> 20))
-    val tanh1 = Symbol.Activation()()(Map("data" -> conv1, "act_type" -> "tanh"))
-    val pool1 = Symbol.Pooling()()(Map("data" -> tanh1, "pool_type" -> "max", "kernel" -> "(2,2)", "stride" -> "(2,2)"))
+    val conv1 = Symbol.api.Convolution(data, kernel = Shape(5,5), num_filter = 20, name = "conv1")
+    val tanh1 = Symbol.api.tanh(conv1)
+    val pool1 = Symbol.api.Pooling(tanh1, pool_type = "max", kernel = Shape(2,2), stride = Shape(2,2))
     // second conv
-    val conv2 = Symbol.Convolution("conv2")()(Map("data" -> pool1, "kernel" -> "(5,5)", "num_filter" -> 50))
-    val tanh2 = Symbol.Activation()()(Map("data" -> conv2, "act_type" -> "tanh"))
-    val pool2 = Symbol.Pooling()()(Map("data" -> tanh2, "pool_type" -> "max", "kernel" -> "(2,2)", "stride" -> "(2,2)"))
-    var d5 = Symbol.Flatten()()(Map("data" -> pool2))
-    d5 = Symbol.FullyConnected("fc1")()(Map("data" -> d5, "num_hidden" -> 500))
-    d5 = Symbol.Activation()()(Map("data" -> d5, "act_type" -> "tanh"))
+    val conv2 = Symbol.api.Convolution(pool1, kernel = Shape(5,5), num_filter = 50, name = "conv2")
+    val tanh2 = Symbol.api.tanh(conv2)
+    val pool2 = Symbol.api.Pooling(tanh2, pool_type = "max", kernel = Shape(2,2), stride = Shape(2,2))
+    var d5 = Symbol.api.Flatten(pool2)
+    d5 = Symbol.api.FullyConnected(d5, num_hidden = 500, name = "fc1")
+    d5 = Symbol.api.tanh(d5)
     d5    
   }
 
@@ -26,14 +27,14 @@ object Encoder {
   def dcgan(ngf: Int = 128): Symbol = {
     val data = Symbol.Variable("data")
     // 128, 16, 16
-    var net = Symbol.Convolution("e1_conv")()(Map("data" -> data, "kernel" -> "(4, 4)",
-                                          "stride" -> "(2, 2)", "pad" -> "(1, 1)", "num_filter" -> ngf))
-    net = Symbol.LeakyReLU("e1_act")()(Map("data" -> net, "slope" -> 0.2f, "act_type" -> "leaky"))
+    var net = Symbol.api.Convolution(data, kernel = Shape(4, 4),
+                                     stride = Shape(2, 2), pad = Shape(1, 1), num_filter = ngf, name = "e1_conv")
+    net = Symbol.api.LeakyReLU(net, slope = 0.2f, act_type = "leaky", name = "e1_act")
     // 256, 8, 8
     net = conv2DBnLeaky(net, prefix = "e2", kernel = (4, 4), stride = (2, 2), pad = (1, 1), numFilter = ngf * 2)
     // 512, 4, 4
     net = conv2DBnLeaky(net,  prefix="e3", kernel = (4, 4), stride = (2, 2), pad = (1, 1), numFilter = ngf * 4)
-    net = Symbol.Flatten()()(Map("data" -> net))
+    net = Symbol.api.Flatten(net)
     net
   }
 

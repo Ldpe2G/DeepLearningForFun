@@ -8,6 +8,7 @@ import org.apache.mxnet.NDArray
 import org.apache.mxnet.Initializer
 import org.apache.mxnet.DataBatch
 import org.apache.mxnet.Random
+import org.apache.mxnet.util.OptionConversion._
 
 class GANModule(
               symbolGenerator: Symbol,
@@ -37,8 +38,8 @@ class GANModule(
   // discriminator
   private val batchSize = dataShape(0)
   private var encoder = symbolEncoder
-  encoder = Symbol.FullyConnected("fc_dloss")()(Map("data" -> encoder, "num_hidden" -> 1))
-  encoder = Symbol.LogisticRegressionOutput("dloss")()(Map("data" -> encoder))
+  encoder = Symbol.api.FullyConnected(encoder, num_hidden = 1, name = "fc_dloss")
+  encoder = Symbol.api.LogisticRegressionOutput(encoder, name = "dloss")
   
   private val dDataShape = Map("data" -> dataShape)
   private val dLabelShape = Map("dloss_label" -> Shape(batchSize))

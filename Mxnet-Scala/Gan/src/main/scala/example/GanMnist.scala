@@ -13,6 +13,7 @@ import org.apache.mxnet.Xavier
 import org.apache.mxnet.optimizer.Adam
 import org.apache.mxnet.DataBatch
 import mxgan.Viz
+import org.apache.mxnet.ResourceScope
 
 object GanMnist {
 
@@ -66,35 +67,40 @@ object GanMnist {
     
     var t = 0
     var dataBatch: DataBatch = null
-    for (epoch <- 0 until numEpoch) {
-      mnistIter.reset()
-      metricAcc.reset()
-      t = 0
-      while (mnistIter.hasNext) {
-        dataBatch = mnistIter.next()
-        gMod.update(dataBatch)
-        gMod.dLabel.set(0f)
-        metricAcc.update(Array(gMod.dLabel), gMod.outputsFake)
-        gMod.dLabel.set(1f)
-        metricAcc.update(Array(gMod.dLabel), gMod.outputsReal)
-        
-        if (t % 50 == 0) {
-          val (name, value) = metricAcc.get
-          println(s"epoch: $epoch, iter $t, metric=${value(0)}")
-          Viz.imshow("gout", gMod.tempOutG(0), 2, flip = true)
-          val diff = gMod.tempDiffD
-          val arr = diff.toArray
-          val mean = arr.sum / arr.length
-          val std = {
-            val tmpA = arr.map(a => (a - mean) * (a - mean))
-            Math.sqrt(tmpA.sum / tmpA.length).toFloat
+    
+    ResourceScope.using() {
+      for (epoch <- 0 until numEpoch) {
+        mnistIter.reset()
+        metricAcc.reset()
+        t = 0
+        ResourceScope.using() {
+          while (mnistIter.hasNext) {
+            dataBatch = mnistIter.next()
+            gMod.update(dataBatch)
+            gMod.dLabel.set(0f)
+            metricAcc.update(Array(gMod.dLabel), gMod.outputsFake)
+            gMod.dLabel.set(1f)
+            metricAcc.update(Array(gMod.dLabel), gMod.outputsReal)
+            
+            if (t % 50 == 0) {
+              val (name, value) = metricAcc.get
+              println(s"epoch: $epoch, iter $t, metric=${value(0)}")
+              Viz.imshow("gout", gMod.tempOutG(0), 2, flip = true)
+              val diff = gMod.tempDiffD
+              val arr = diff.toArray
+              val mean = arr.sum / arr.length
+              val std = {
+                val tmpA = arr.map(a => (a - mean) * (a - mean))
+                Math.sqrt(tmpA.sum / tmpA.length).toFloat
+              }
+              diff.set((diff - mean) / std + 0.5f)
+              Viz.imshow("diff", diff, flip = true)
+              Viz.imshow("data", dataBatch.data(0), flip = true)
+            }
+    
+            t += 1
           }
-          diff.set((diff - mean) / std + 0.5f)
-          Viz.imshow("diff", diff, flip = true)
-          Viz.imshow("data", dataBatch.data(0), flip = true)
         }
-
-        t += 1
       }
     }
   }

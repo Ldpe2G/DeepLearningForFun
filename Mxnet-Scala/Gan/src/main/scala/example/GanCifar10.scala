@@ -14,6 +14,7 @@ import org.apache.mxnet.Normal
 import org.apache.mxnet.Xavier
 import org.apache.mxnet.optimizer.Adam
 import mxgan.Viz
+import org.apache.mxnet.ResourceScope
 
 object GanCifar10 {
   
@@ -66,43 +67,47 @@ object GanCifar10 {
 
     var t = 0
     var dataBatch: DataBatch = null
-    for (epoch <- 0 until numEpoch) {
-      imgRecIter.reset()
-      metricAcc.reset()
-      t = 0
-      while (imgRecIter.hasNext) {
-        dataBatch = imgRecIter.next()
-        val realImgs = dataBatch.data(0).copyTo(context)
-        val realImgsArr = realImgs.toArray.map(x => x * (1.0f / 255.0f) - 0.5f)
-        realImgs.set(realImgsArr)
-        gMod.update(new DataBatch(Array(realImgs), dataBatch.label, dataBatch.index, dataBatch.pad))
-        gMod.dLabel.set(0f)
-        metricAcc.update(Array(gMod.dLabel), gMod.outputsFake)
-        gMod.dLabel.set(1f)
-        metricAcc.update(Array(gMod.dLabel), gMod.outputsReal)
-        
-        if (t % 100 == 0) {
-          val (name, value) = metricAcc.get
-          println(s"epoch: $epoch, iter $t, metric=${value(0)}")
-          val tmpOut = gMod.tempOutG(0) + 0.5f
-          Viz.imshow("gout", tmpOut, 2, flip = true)
-          tmpOut.dispose()
-          val diff = gMod.tempDiffD
-          val arr = diff.toArray
-          val mean = arr.sum / arr.length
-          val std = {
-            val tmpA = arr.map(a => (a - mean) * (a - mean))
-            Math.sqrt(tmpA.sum / tmpA.length).toFloat
+    ResourceScope.using() {
+      for (epoch <- 0 until numEpoch) {
+        imgRecIter.reset()
+        metricAcc.reset()
+        t = 0
+        ResourceScope.using() {
+          while (imgRecIter.hasNext) {
+            dataBatch = imgRecIter.next()
+            val realImgs = dataBatch.data(0).copyTo(context)
+            val realImgsArr = realImgs.toArray.map(x => x * (1.0f / 255.0f) - 0.5f)
+            realImgs.set(realImgsArr)
+            gMod.update(new DataBatch(Array(realImgs), dataBatch.label, dataBatch.index, dataBatch.pad))
+            gMod.dLabel.set(0f)
+            metricAcc.update(Array(gMod.dLabel), gMod.outputsFake)
+            gMod.dLabel.set(1f)
+            metricAcc.update(Array(gMod.dLabel), gMod.outputsReal)
+            
+            if (t % 100 == 0) {
+              val (name, value) = metricAcc.get
+              println(s"epoch: $epoch, iter $t, metric=${value(0)}")
+              val tmpOut = gMod.tempOutG(0) + 0.5f
+              Viz.imshow("gout", tmpOut, 2, flip = true)
+              tmpOut.dispose()
+              val diff = gMod.tempDiffD
+              val arr = diff.toArray
+              val mean = arr.sum / arr.length
+              val std = {
+                val tmpA = arr.map(a => (a - mean) * (a - mean))
+                Math.sqrt(tmpA.sum / tmpA.length).toFloat
+              }
+              val tmpArr = arr.map(x => (x - mean) / std + 0.5f)
+              diff.set(tmpArr)
+              Viz.imshow("diff", diff, flip = true)
+              val tmpImg = realImgs + 0.5f
+              Viz.imshow("data", realImgs + 0.5f, flip = true)
+              tmpImg.dispose()
+            }
+            realImgs.dispose()
+            t += 1
           }
-          val tmpArr = arr.map(x => (x - mean) / std + 0.5f)
-          diff.set(tmpArr)
-          Viz.imshow("diff", diff, flip = true)
-          val tmpImg = realImgs + 0.5f
-          Viz.imshow("data", realImgs + 0.5f, flip = true)
-          tmpImg.dispose()
         }
-        realImgs.dispose()
-        t += 1
       }
     }
   }
