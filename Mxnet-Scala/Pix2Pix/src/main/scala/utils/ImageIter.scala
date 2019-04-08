@@ -7,6 +7,7 @@ import scala.collection.immutable.ListMap
 import org.apache.mxnet.Shape
 import scala.util.Random
 import org.apache.mxnet.Context
+import org.apache.mxnet._
 
 /**
  * @author Depeng Liang
@@ -63,4 +64,10 @@ class ImageIter(dataPath: String, opt: Options.OptTrain, ctx: Context, dataName:
 
   // The name and shape of label provided by this iterator
   override def provideLabel: ListMap[String, Shape] = ListMap[String, Shape]()
+
+  override def provideDataDesc: IndexedSeq[org.apache.mxnet.DataDesc] =
+    IndexedSeq(DataDesc(dataName, Shape(opt.batchSize, opt.inputNC, opt.cropSize, opt.cropSize),
+               DType.Float32, Layout.NCHW))
+
+  override def provideLabelDesc: IndexedSeq[org.apache.mxnet.DataDesc] = IndexedSeq[org.apache.mxnet.DataDesc]()
 }
