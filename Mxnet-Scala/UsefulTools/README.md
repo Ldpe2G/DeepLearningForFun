@@ -4,7 +4,9 @@ Implementation of the estimation of model size and flop counts for convolutional
 
 https://github.com/albanie/convnet-burden
 
-For now, the estimation of flops only consider Layers: Convolution, Deconvolution, FullyConnected, Pooling, relu
+The estimation of flops only consider Layers: Convolution, Deconvolution, FullyConnected, Pooling, relu
+
+[Python Version](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/MXNet-Python/CalculateFlopsTool)
 
 ## Building
 
