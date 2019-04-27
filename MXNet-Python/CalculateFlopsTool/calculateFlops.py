@@ -206,8 +206,6 @@ if __name__ == '__main__':
     model_size = 0.0
     for k,v in arg_params.items():
         if k not in data_names and k not in label_names:
-            print(k)
-            print(v.shape)
             model_size += product(v.shape) * np.dtype(v.dtype()).itemsize
 
     print('flops: ', str(total_flops / 1000000), ' MFLOPS')
