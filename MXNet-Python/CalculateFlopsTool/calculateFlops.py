@@ -123,19 +123,25 @@ if __name__ == '__main__':
         
             total_flops += input_shape[2] * input_shape[3] * product(arg_params[layer_name + '_weight'].shape) * data_shapes[0][1][0]
 
+            del shape_dict
+
             if layer_name + "_bias" in arg_params:
                 internal_sym = sym.get_internals()[layer_name + '_output']
                 internal_label_names, internal_label_shapes = get_internal_label_info(internal_sym, internal_label_shapes)
 
-                tmp_model = mx.mod.Module(
-                    context=devs, symbol=internal_sym, data_names=data_names, label_names=internal_label_names)
-                tmp_model.bind(data_shapes=data_shapes, label_shapes=internal_label_shapes, for_training=False)
-                # tmp_model.init_params()
-                out_shape = tmp_model.get_outputs()[0].shape
+                shape_dict = {}
+                for k,v in data_shapes:
+                    shape_dict[k] = v
+                if internal_label_shapes != None:
+                    for k,v in internal_label_shapes:
+                        shape_dict[k] = v
+
+                _, out_shapes, _ = internal_sym.infer_shape(**shape_dict)
+                out_shapes = out_shapes[0]
 
                 total_flops += product(out_shape)
 
-            del shape_dict
+                del shape_dict
 
         if op == 'FullyConnected':
             total_flops += product(arg_params[layer_name + '_weight'].shape) * data_shapes[0][1][0]
