@@ -95,9 +95,13 @@ if __name__ == '__main__':
             _, out_shapes, _ = internal_sym.infer_shape(**shape_dict)
             out_shape = out_shapes[0]
 
+            num_group = 1
+            if "num_group" in attrs:
+                num_group = int(attrs['num_group'])
+
             # support conv1d NCW and conv2d NCHW layout
             out_shape_produt = out_shape[2] if len(out_shape) == 3 else out_shape[2] * out_shape[3]
-            total_flops += out_shape_produt * product(arg_params[layer_name + '_weight'].shape) * data_shapes[0][1][0]
+            total_flops += out_shape_produt * product(arg_params[layer_name + '_weight'].shape) * data_shapes[0][1][0] / num_group
 
             if layer_name + "_bias" in arg_params:
                 total_flops += product(out_shape)
@@ -120,8 +124,12 @@ if __name__ == '__main__':
 
             _, out_shapes, _ = internal_sym.infer_shape(**shape_dict)
             input_shape = out_shapes[0]
+
+            num_group = 1
+            if "num_group" in attrs:
+                num_group = int(attrs['num_group'])
         
-            total_flops += input_shape[2] * input_shape[3] * product(arg_params[layer_name + '_weight'].shape) * data_shapes[0][1][0]
+            total_flops += input_shape[2] * input_shape[3] * product(arg_params[layer_name + '_weight'].shape) * data_shapes[0][1][0] / num_group
 
             del shape_dict
 
@@ -210,6 +218,8 @@ if __name__ == '__main__':
 
     
     model_size = 0.0
+    if label_names == None:
+        label_names = list()
     for k,v in arg_params.items():
         if k not in data_names and k not in label_names:
             model_size += product(v.shape) * np.dtype(v.dtype()).itemsize
