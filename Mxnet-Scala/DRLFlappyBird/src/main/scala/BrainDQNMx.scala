@@ -10,6 +10,7 @@ import scala.util.Random
 import scala.collection.mutable.ArrayBuffer
 import java.io.File
 import org.apache.mxnet.optimizer.RMSProp
+import org.apache.mxnet.util.OptionConversion._
 
 /**
  * @author Depeng Liang
@@ -52,25 +53,21 @@ object BrainDQNMx {
       val data = Symbol.Variable("data")
       val yInput = Symbol.Variable("yInput")
       val actionInput = Symbol.Variable("actionInput")
-      val conv1 = Symbol.Convolution("conv1")()(Map("data" -> data,
-          "kernel" -> "(8,8)", "stride" -> "(4,4)", "pad" -> "(2,2)", "num_filter" -> 32))
-      val relu1 = Symbol.Activation("relu1")()(Map("data" -> conv1, "act_type" -> "relu"))
-      val pool1 = Symbol.Pooling("pool1")()(Map("data" -> relu1,
-          "kernel" -> "(2,2)", "stride" -> "(2,2)", "pool_type" -> "max"))
-      val conv2 = Symbol.Convolution("conv2")()(Map("data" -> pool1,
-          "kernel" -> "(4,4)", "stride" -> "(2,2)", "pad" -> "(1,1)", "num_filter" -> 64))
-      val relu2 = Symbol.Activation("relu2")()(Map("data" -> conv2, "act_type" -> "relu"))
-      val conv3 = Symbol.Convolution("conv3")()(Map("data" -> relu2,
-          "kernel" -> "(3,3)", "stride" -> "(1,1)", "pad" -> "(1,1)", "num_filter" -> 64))
-      val relu3 = Symbol.Activation("relu3")()(Map("data" -> conv3, "act_type" -> "relu"))
-      val flat  = Symbol.Flatten()()(Map("data" -> relu3))
-      val fc1 = Symbol.FullyConnected("fc1")()(Map("data" -> flat, "num_hidden" -> 512))
-      val relu4 = Symbol.Activation("relu4")()(Map("data" -> fc1, "act_type" -> "relu"))
-      val Qvalue = Symbol.FullyConnected("qvalue")()(Map("data" -> relu4, "num_hidden" -> ACTIONS))
+      val conv1 = Symbol.api.Convolution(data, kernel = Shape(8,8), stride = Shape(4,4), pad = Shape(2,2), num_filter = 32, name = "conv1")
+      val relu1 = Symbol.api.relu(conv1, name = "relu1")
+      val pool1 = Symbol.api.Pooling(relu1, kernel = Shape(2,2), stride = Shape(2,2), pool_type = "max", name = "pool1")
+      val conv2 = Symbol.api.Convolution(pool1, kernel = Shape(4,4), stride = Shape(2,2), pad = Shape(1,1), num_filter = 64, name = "conv2")
+      val relu2 = Symbol.api.relu(conv2, name = "relu2")
+      val conv3 = Symbol.api.Convolution(relu2, kernel = Shape(3,3), stride = Shape(1,1), pad = Shape(1,1), num_filter = 64, name = "conv3")
+      val relu3 = Symbol.api.relu(conv3, name = "relu3")
+      val flat  = Symbol.api.Flatten(relu3)
+      val fc1 = Symbol.api.FullyConnected(flat, num_hidden = 512, name = "fc1")
+      val relu4 = Symbol.api.relu(fc1, name = "relu4")
+      val Qvalue = Symbol.api.FullyConnected(relu4, num_hidden = ACTIONS, name = "qvalue")
       val temp = Qvalue * actionInput
-      val coeff = Symbol.sum("temp1")()(Map("data" -> temp, "axis" -> 1))
+      val coeff = Symbol.api.sum(temp, axis = Shape(1), name = "temp1")
       val output = Symbol.pow(coeff - yInput, 2)
-      val loss=Symbol.MakeLoss()()(Map("data" -> output))
+      val loss=Symbol.api.MakeLoss(output)
       
       if (predict) {
         Qvalue
