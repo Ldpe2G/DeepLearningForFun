@@ -1,12 +1,15 @@
 ROOT=$(cd "$(dirname $0)/.."; pwd)
 
 # put your mxnet jar file in the $ROOT/lib folder
-MXNET_JAR_FILE=$ROOT/lib/mxnet-full_2.11-linux-x86_64-gpu-1.2.0-SNAPSHOT.jar
+MXNET_JAR_FILE=$ROOT/lib/mxnet-full_2.11-INTERNAL.jar
 
 CLASS_PATH=$MXNET_JAR_FILE:$ROOT/target/scala-2.11/classes/:\
 $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar:\
 $HOME/.ivy2/cache/com.sksamuel.scrimage/scrimage-core_2.11/jars/scrimage-core_2.11-2.1.7.jar:\
-$HOME/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.7.jar:\
+$HOME/.ivy2/cache/args4j/args4j/bundles/args4j-2.33.jar:\
+$HOME/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar:\
+$HOME/.ivy2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.6.2.jar:\
+$HOME/.ivy2/cache/nu.pattern/opencv/jars/opencv-2.4.9-7.jar:\
 $HOME/.ivy2/cache/com.twelvemonkeys.imageio/imageio-core/jars/imageio-core-3.2.1.jar:\
 $HOME/.ivy2/cache/com.twelvemonkeys.common/common-lang/jars/common-lang-3.2.1.jar:\
 $HOME/.ivy2/cache/com.twelvemonkeys.common/common-io/jars/common-io-3.2.1.jar:\
@@ -30,17 +33,11 @@ $HOME/.ivy2/cache/com.twelvemonkeys.imageio/imageio-psd/jars/imageio-psd-3.2.1.j
 $HOME/.ivy2/cache/com.twelvemonkeys.imageio/imageio-sgi/jars/imageio-sgi-3.2.1.jar:\
 $HOME/.ivy2/cache/com.twelvemonkeys.imageio/imageio-tiff/jars/imageio-tiff-3.2.1.jar:\
 $HOME/.ivy2/cache/com.twelvemonkeys.imageio/imageio-tga/jars/imageio-tga-3.2.1.jar:\
-$HOME/.ivy2/cache/com.twelvemonkeys.imageio/imageio-thumbsdb/jars/imageio-thumbsdb-3.2.1.jar:\
-$HOME/.ivy2/cache/args4j/args4j/bundles/args4j-2.33.jar:\
-$HOME/.ivy2/cache/org.sameersingh.scalaplot/scalaplot/jars/scalaplot-0.0.4.jar:\
-$HOME/.ivy2/cache/jfree/jfreechart/jars/jfreechart-1.0.13.jar:\
-$HOME/.ivy2/cache/jfree/jcommon/jars/jcommon-1.0.16.jar:\
-$HOME/.ivy2/cache/com.itextpdf/itextpdf/jars/itextpdf-5.1.2.jar:\
-$HOME/.ivy2/cache/com.itextpdf.tool/xmlworker/jars/xmlworker-1.1.0.jar
+$HOME/.ivy2/cache/com.twelvemonkeys.imageio/imageio-thumbsdb/jars/imageio-thumbsdb-3.2.1.jar
 
 # path to the coco dataset,
 # you can download by : http://msvocds.blob.core.windows.net/coco2015/test2015.zip
-TRAIN_DATA_PATH=
+TRAIN_DATA_PATH=/home/ldpe2g/DataSets/Coco/test2015
 
 VGG_MODEL=$ROOT/datas/vggmodel/vgg19.params
 
@@ -50,7 +47,7 @@ if [ ! -d $SAVE_MODEL_PATH ] ; then
 	mkdir -p $SAVE_MODEL_PATH
 fi
 
-STYLE_IMAGE=$ROOT/datas/images/feathers.jpg
+STYLE_IMAGE=$ROOT/datas/images/starry_night.jpg
 
 LEARNING_RATE=0.0001
 
@@ -62,7 +59,7 @@ RESUME_MODEL_PATH=
 # -1 for cpu
 GPU=0
 
-java -Xmx1G -cp $CLASS_PATH \
+java -Xmx29G  -cp $CLASS_PATH \
 	Train \
 	--data-path $TRAIN_DATA_PATH \
 	--vgg-model-path $VGG_MODEL \

@@ -12,11 +12,9 @@ import javax.imageio.ImageIO
 import scala.util.Random
 import org.apache.mxnet.optimizer.Adam
 import org.apache.mxnet.FactorScheduler
-import org.sameersingh.scalaplot.MemXYSeries
-import org.sameersingh.scalaplot.XYData
-import org.sameersingh.scalaplot.XYChart
 import scala.collection.mutable.ArrayBuffer
-import org.sameersingh.scalaplot.gnuplot.GnuplotPlotter
+import org.opencv.core.Core
+import org.apache.mxnet.ResourceScope
 
 /**
  * @author Depeng Liang
@@ -56,126 +54,142 @@ object Train {
       
      require(stin.batchSize == 1, "now only support batch size 1")
       
-      // params
-      val vggParams = NDArray.load2Map(stin.vggModelPath)
-      val styleWeight = stin.styleWeight
-      val contentWeight = stin.contentWeight
-      val dShape = Shape(stin.batchSize, 3, stin.imageSize, stin.imageSize)
-      val clipNorm = 0.05f * dShape.product
-      val modelPrefix = "resdual"
-      val ctx = if (stin.gpu == -1) Context.cpu() else Context.gpu(stin.gpu)
-
-      // init style
-      val styleNp = DataProcessing.preprocessStyleImage(stin.styleImage, dShape, ctx)
-      var styleMod = Basic.getStyleModule("style", dShape, ctx, vggParams)
-
-      styleMod.forward(Array(styleNp))
-      val styleArray = styleMod.getOutputs().map(_.copyTo(Context.cpu()))
-      styleMod.dispose()
-      styleMod = null
-
-      // content
-      val contentMod = Basic.getContentModule("content", dShape, ctx, vggParams)
-
-      // loss
-      val (loss, gScale) = Basic.getLossModule("loss", dShape, ctx, vggParams)
-      val extraArgs = (0 until styleArray.length)
-                                  .map( i => s"target_gram_$i" -> styleArray(i)).toMap
-      loss.setParams(extraArgs)
-      var gradArray = Array[NDArray]()
-      for (i <- 0 until styleArray.length) {
-        gradArray = gradArray :+ (NDArray.ones(Shape(1), ctx) * (styleWeight / gScale(i)))
-      }
-      gradArray = gradArray :+ (NDArray.ones(Shape(1), ctx) * contentWeight)
-
-      // generator
-      val generator = ResdualModel.getModule("res", dShape, ctx)
-      if (stin.resumeModelPath != null) {
-        generator.loadParams(stin.resumeModelPath)
-      }
-      
-      val optimizer = new Adam(
-          learningRate = stin.lr,
-          wd = 0.005f)
-      generator.initOptimizer(optimizer)
-
-      var filelist = Random.shuffle(new File(stin.dataPath).list().toList)
-      val numImage = filelist.length
-      println(s"Dataset size: $numImage")
-
-      val tvWeight = stin.tvWeight
-
-      val startEpoch = 0
-      val endEpoch = 3
-
-      val trainLosses = ArrayBuffer[Float]()
-
-      val tmpData = NDArray.empty(ctx, dShape.toArray: _*)
-      // train
-      for (i <- startEpoch until endEpoch) {
-        filelist = Random.shuffle(filelist)
-        for (idx <- 0 until filelist.length by stin.batchSize) {
-          var dataArray = Array[NDArray]()
-
-          val datas = (idx until idx + stin.batchSize).map { i => 
-            DataProcessing.preprocessContentImage(s"${stin.dataPath}/${filelist(i)}", dShape, ctx)
-          }
-          
-          tmpData.set(datas.foldLeft(Array[Float]()) { (acc, elem) => acc ++ elem.toArray})
-          
-          
-          dataArray = dataArray :+ tmpData
-          // get content
-          contentMod.forward(Array(tmpData))
-          // set target content
-          loss.setParams(Map("target_content" -> contentMod.getOutputs()(0)))
-          // gen_forward
-          generator.forward(dataArray.takeRight(1))
-          dataArray = dataArray :+ generator.getOutputs()(0)
-          // loss forward
-          loss.forward(dataArray.takeRight(1))
-          loss.backward(gradArray)
-          val lossGrad = loss.getInputGrads()(0)
-
-          val grad = NDArray.zeros(tmpData.shape, ctx)
-          
-          val tvGradExecutor = getTvGradExecutor(generator.getOutputs()(0), ctx, tvWeight)
-          tvGradExecutor.forward()
-          grad += lossGrad + tvGradExecutor.outputs(0)
-          val gNorm = NDArray.norm(grad)
-          if (gNorm.toScalar > clipNorm) {
-            grad *= clipNorm / gNorm.toScalar
-          }
-          generator.backward(Array(grad))
-          generator.update()
-          gNorm.dispose()
-          tvGradExecutor.dispose()
-          
-          grad.dispose()
-          
-          if (idx % 20 == 0) {
-            println(s"Epoch $i: Image $idx")
-            val n = NDArray.norm(loss.getInputGrads()(0))
-            trainLosses += n.toScalar / dShape.product
+     ResourceScope.using() {
+        // params
+        val vggParams = NDArray.load2Map(stin.vggModelPath)
+        val styleWeight = stin.styleWeight
+        val contentWeight = stin.contentWeight
+        val dShape = Shape(stin.batchSize, 3, stin.imageSize, stin.imageSize)
+        val clipNorm = 0.05f * dShape.product
+        val modelPrefix = "resdual"
+        val ctx = if (stin.gpu == -1) Context.cpu() else Context.gpu(stin.gpu)
+  
+        // init style
+        val styleNp = DataProcessing.preprocessStyleImage(stin.styleImage, dShape, ctx)
+        var styleMod = Basic.getStyleModule("style", dShape, ctx, vggParams)
+  
+        styleMod.forward(Array(styleNp))
+        val styleArray = styleMod.getOutputs().map(_.copyTo(Context.cpu()))
+        styleMod.dispose()
+        styleMod = null
+  
+        // content
+        val contentMod = Basic.getContentModule("content", dShape, ctx, vggParams)
+  
+        // loss
+        val (loss, gScale) = Basic.getLossModule("loss", dShape, ctx, vggParams)
+        val extraArgs = (0 until styleArray.length)
+                                    .map( i => s"target_gram_$i" -> styleArray(i)).toMap
+        loss.setParams(extraArgs)
+        var gradArray = Array[NDArray]()
+        for (i <- 0 until styleArray.length) {
+          gradArray = gradArray :+ (NDArray.ones(Shape(1), ctx) * (styleWeight / gScale(i)))
+        }
+        gradArray = gradArray :+ (NDArray.ones(Shape(1), ctx) * contentWeight)
+  
+        // generator
+        val generator = ResdualModel.getModule("res", dShape, ctx)
+        if (stin.resumeModelPath != null) {
+          generator.loadParams(stin.resumeModelPath)
+        }
+        
+        val optimizer = new Adam(
+            learningRate = stin.lr,
+            wd = 0.005f)
+        generator.initOptimizer(optimizer)
+  
+        var filelist = Random.shuffle(new File(stin.dataPath).list().toList)
+        val numImage = filelist.length
+        println(s"Dataset size: $numImage")
+  
+        val tvWeight = stin.tvWeight
+  
+        val startEpoch = 0
+        val endEpoch = 3
+  
+        val trainLosses = ArrayBuffer[Float]()
+        
+        import visual.Imshow
+        val showMap = Map(
+          "content_image" -> new Imshow("content_image"),
+          "style_image" -> new Imshow("style_image"),
+          "styled_content_image" -> new Imshow("styled_content_image"))
+  
+        val tmpData = NDArray.empty(ctx, dShape.toArray: _*)
+        
+        ResourceScope.using() {
+          // train
+          for (i <- startEpoch until endEpoch) {
+            filelist = Random.shuffle(filelist)
             
-            // var xTrain = trainLosses.indices.map(_.toDouble * 20).toArray
-            // var yTrainL = trainLosses.toArray.map(_.toDouble)
+            ResourceScope.using() {
+              for (idx <- 0 until filelist.length by stin.batchSize) {
+                ResourceScope.using() {
+                  var dataArray = Array[NDArray]()
       
-            // var series = new MemXYSeries(xTrain, yTrainL)
-            // var data = new XYData(series)
-            // var chart = new XYChart("Training grads over iterations", data)
-            // var plotter = new GnuplotPlotter(chart)
-            // plotter.pdf(s"${stin.drawLossPath}/", "grad")
-            
-            println(s"Data Norm : ${n.toScalar / dShape.product}")
-            n.dispose()
+                  val datas = (idx until idx + stin.batchSize).map { i => 
+                    DataProcessing.preprocessContentImage(s"${stin.dataPath}/${filelist(i)}", dShape, ctx)
+                  }
+                
+                  tmpData.set(datas.foldLeft(Array[Float]()) { (acc, elem) => acc ++ elem.toArray})
+                
+                  dataArray = dataArray :+ tmpData
+                  // get content
+                  contentMod.forward(Array(tmpData))
+                  // set target content
+                  loss.setParams(Map("target_content" -> contentMod.getOutputs()(0)))
+                  // gen_forward
+                  generator.forward(dataArray.takeRight(1))
+                  dataArray = dataArray :+ generator.getOutputs()(0)
+                  // loss forward
+                  loss.forward(dataArray.takeRight(1))
+                  loss.backward(gradArray)
+                  val lossGrad = loss.getInputGrads()(0)
+      
+                  val grad = NDArray.zeros(tmpData.shape, ctx)
+                
+                  val tvGradExecutor = getTvGradExecutor(generator.getOutputs()(0), ctx, tvWeight)
+                  tvGradExecutor.forward()
+                  grad += lossGrad + tvGradExecutor.outputs(0)
+                  val gNorm = NDArray.norm(grad)
+                  if (gNorm.toScalar > clipNorm) {
+                    grad *= clipNorm / gNorm.toScalar
+                  }
+                  generator.backward(Array(grad))
+                  generator.update()
+                  gNorm.dispose()
+                  tvGradExecutor.dispose()
+                
+                  grad.dispose()
+                
+                  if (idx % 20 == 0) {
+                    println(s"Epoch $i: Image $idx")
+                    val n = NDArray.norm(loss.getInputGrads()(0))
+                    trainLosses += n.toScalar / dShape.product
+      
+                    println(s"Data Norm : ${n.toScalar / dShape.product}")
+                    n.dispose()
+                  
+                    if (stin.batchSize == 1) {
+                      val conentImage = DataProcessing.imageToMat(DataProcessing.postprocessImage(datas(0)))
+                      val styleImage = DataProcessing.imageToMat(DataProcessing.postprocessImage(styleNp))
+                      val styledContentImage = DataProcessing.imageToMat(DataProcessing.postprocessImage(generator.getOutputs()(0)))
+                                  
+                      showMap("content_image").showImage(conentImage)
+                      showMap("style_image").showImage(styleImage)
+                      showMap("styled_content_image").showImage(styledContentImage)
+                    }
+                  }
+                  if (idx % 1000 == 0) {
+                    generator.saveParams(
+                        s"${stin.saveModelPath}/${modelPrefix}_" +
+                        s"${"%04d".format(i)}-${"%07d".format(idx)}.params")
+                  }
+//                  datas.foreach(_.dispose())
+                }
+              }
+            }
           }
-          if (idx % 1000 == 0) {
-            generator.saveParams(
-                  s"${stin.saveModelPath}/${modelPrefix}_" +
-                  s"${"%04d".format(i)}-${"%07d".format(idx)}.params")
-          }
-          datas.foreach(_.dispose())
         }
       }
     } catch {

@@ -3,6 +3,7 @@ import org.apache.mxnet.Shape
 import org.apache.mxnet.Context
 import org.apache.mxnet.Xavier
 import org.apache.mxnet.Symbol
+import org.apache.mxnet.util.OptionConversion._
 
 /**
  * @author Depeng Liang
@@ -16,12 +17,10 @@ object ResdualModel {
   def convFactory(data: Symbol, numFilter: Int, kernel: (Int, Int),
       stride: (Int, Int), pad: (Int, Int), actType: String = "relu",
       convType: ConvType = ConvWitAct): Symbol = {
-    val conv = Symbol.Convolution()()(Map("data" -> data,
-      "num_filter" -> numFilter, "kernel" -> s"$kernel",
-      "stride" -> s"$stride", "pad" -> s"$pad"))
-    val bn = Symbol.BatchNorm()()(Map("data" -> conv))
+    val conv = Symbol.api.Convolution(data, num_filter = numFilter, kernel = Shape(kernel._1, kernel._2), stride = Shape(stride._1, stride._2), pad = Shape(pad._1, pad._2))
+    val bn = Symbol.api.BatchNorm(conv)
     val relu = convType match {
-      case ConvWitAct => Symbol.Activation()()(Map("data" -> bn, "act_type" -> actType))
+      case ConvWitAct => Symbol.api.Activation(bn, act_type = actType)
       case ConvWithoutAct => bn
     }
     relu
@@ -39,53 +38,41 @@ object ResdualModel {
   def getStyleTransferNetwork(prefix: String, imHw: (Int, Int)): Symbol = {
     val data = Symbol.Variable(s"${prefix}_data")
 
-    var conv = Symbol.Convolution()()(Map(
-      "data" -> data, "num_filter" -> 32, "kernel" -> "(9, 9)",
-      "stride" -> "(1, 1)", "pad" -> "(4, 4)", "no_bias" -> false))
-    var bn = Symbol.BatchNorm()()(Map("data" -> conv))
-    var relu = Symbol.Activation()()(Map("data" -> bn, "act_type" -> "relu"))
+    var conv = Symbol.api.Convolution(data, num_filter = 32, kernel = Shape(9, 9), stride = Shape(1, 1), pad = Shape(4, 4), no_bias = false)
+    var bn = Symbol.api.BatchNorm(conv)
+    var relu = Symbol.api.relu(bn)
     
-    conv = Symbol.Convolution()()(Map(
-      "data" -> conv, "num_filter" -> 64, "kernel" -> "(3, 3)",
-      "stride" -> "(2, 2)", "pad" -> "(1, 1)", "no_bias" -> false))
-    bn = Symbol.BatchNorm()()(Map("data" -> conv))
-    relu = Symbol.Activation()()(Map("data" -> bn, "act_type" -> "relu"))
+    conv = Symbol.api.Convolution(conv, num_filter = 64, kernel = Shape(3, 3), stride = Shape(2, 2), pad = Shape(1, 1), no_bias = false)
+    bn = Symbol.api.BatchNorm(conv)
+    relu = Symbol.api.relu(bn)
     
-    conv = Symbol.Convolution()()(Map(
-      "data" -> conv, "num_filter" -> 128, "kernel" -> "(3, 3)",
-      "stride" -> "(2, 2)", "pad" -> "(1, 1)", "no_bias" -> false))
-    bn = Symbol.BatchNorm()()(Map("data" -> conv))
-    relu = Symbol.Activation()()(Map("data" -> bn, "act_type" -> "relu"))
-      
+    conv = Symbol.api.Convolution(conv, num_filter = 128, kernel = Shape(3, 3), stride = Shape(2, 2), pad = Shape(1, 1), no_bias = false)
+    bn = Symbol.api.BatchNorm(conv)
+    relu = Symbol.api.relu(bn)
+
     var res = buildResBlock(conv, 128)
     res = buildResBlock(res, 128)
     res = buildResBlock(res, 128)
     res = buildResBlock(res, 128)
     res = buildResBlock(res, 128)
     
-    var deConv = Symbol.Deconvolution()()(Map("data" -> res,
-        "target_shape" -> s"(${imHw._1 / 2}, ${imHw._2 / 2})", "num_filter" -> 64,
-        "kernel" -> "(4, 4)", "stride" -> "(2, 2)", "no_bias" -> true))
-    bn = Symbol.BatchNorm()()(Map("data" -> deConv))
-    relu = Symbol.Activation()()(Map("data" -> bn, "act_type" -> "relu"))
+    var deConv = Symbol.api.Deconvolution(res, target_shape = Shape(imHw._1 / 2, imHw._2 / 2), num_filter =  64, kernel = Shape(4, 4), stride = Shape(2, 2), no_bias = true)
+    bn = Symbol.api.BatchNorm(deConv)
+    relu = Symbol.api.relu(bn)
     
-    deConv = Symbol.Deconvolution()()(Map("data" -> relu,
-        "target_shape" -> s"(${imHw._1}, ${imHw._2})", "num_filter" -> 32,
-        "kernel" -> "(3, 3)", "stride" -> "(2, 2)", "no_bias" -> true))
-    bn = Symbol.BatchNorm()()(Map("data" -> deConv))
-    relu = Symbol.Activation()()(Map("data" -> bn, "act_type" -> "relu"))
+    deConv = Symbol.api.Deconvolution(relu, target_shape = Shape(imHw._1, imHw._2), num_filter = 32, kernel = Shape(3, 3), stride = Shape(2, 2), no_bias = true)
+    bn = Symbol.api.BatchNorm(deConv)
+    relu = Symbol.api.relu(bn)
 
-    conv = Symbol.Convolution()()(Map(
-      "data" -> relu, "num_filter" -> 3, "kernel" -> "(9, 9)",
-      "stride" -> "(1, 1)", "pad" -> "(4, 4)", "no_bias" -> false))
-      var out = Symbol.Activation()()(Map("data" -> conv, "act_type" -> "tanh"))
-      
+    conv = Symbol.api.Convolution(relu, num_filter = 3, kernel = Shape(9, 9), stride = Shape(1, 1), pad = Shape(4, 4), no_bias = false)
+    var out = Symbol.api.tanh(conv)
+
      val rawOut = (out * 128) + 128
-     val norm = Symbol.SliceChannel()(rawOut)(Map("num_outputs" -> 3))
+     val norm = Symbol.api.SliceChannel(rawOut, num_outputs = 3)
      val rCh = norm.get(0) - 123.68f
      val gCh = norm.get(1) - 116.779f
      val bCh = norm.get(2) - 103.939f
-     val normOut = Symbol.Concat()(rCh, gCh, bCh)()
+     val normOut = Symbol.api.Concat(Array(rCh, gCh, bCh), num_args = 3)
       normOut
   }
 

@@ -14,7 +14,9 @@ libraryDependencies ++= Seq(
 	"com.sksamuel.scrimage" % "scrimage-filters_2.11" % "2.1.7",
 	"com.sksamuel.scrimage" % "scrimage-io-extra_2.11" % "2.1.7",
 	"args4j" % "args4j" % "2.33",
-       "org.sameersingh.scalaplot" % "scalaplot" % "0.0.4"
+      "org.slf4j" % "slf4j-simple" % "1.6.2" % Test,
+      "org.slf4j" % "slf4j-api" % "1.6.2",
+      "nu.pattern" % "opencv" % "2.4.9-7"
 )
 
 

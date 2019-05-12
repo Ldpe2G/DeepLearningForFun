@@ -74,7 +74,7 @@ Tested on Ubuntu 14.04
 ```bah
  mkdir lib;
 ```
-3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.9.5-SNAPSHOT.jar into lib folder;
+3, copy the compiled mxnet-full_2.11-INTERNAL.jar into lib folder;
 
 4, run `sbt` then compile the project
 

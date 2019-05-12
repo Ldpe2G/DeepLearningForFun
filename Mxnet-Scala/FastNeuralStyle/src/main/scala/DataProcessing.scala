@@ -8,11 +8,21 @@ import org.apache.mxnet.NDArray
 import java.io.File
 import org.apache.mxnet.Shape
 import scala.util.Random
+import org.opencv.core.Core
+import org.opencv.highgui.Highgui
+import org.opencv.imgproc.Imgproc
+import org.apache.mxnet.NDArray
+import org.opencv.core.Mat
+import org.opencv.core.CvType
+import java.util.ArrayList
+import org.opencv.core.Size
 
 /**
  * @author Depeng Liang
  */
 object DataProcessing {
+  
+  nu.pattern.OpenCV.loadShared()
 
   def preprocessContentImage(path: String,
       dShape: Shape = null, ctx: Context): NDArray = {
@@ -64,6 +74,31 @@ object DataProcessing {
     val pixels = for (i <- 0 until spatialSize)
       yield Pixel(r(i).toInt, g(i).toInt, b(i).toInt, 255)
     Image(img.shape(3), img.shape(2), pixels.toArray)
+  }
+  
+  def imageToMat(image: Image): Mat = {
+    val rgbs = image.iterator.toArray.map { p =>
+        (p.red, p.green, p.blue)
+      }
+    
+    val rA = rgbs.map(_._1.toByte)
+    val gA = rgbs.map(_._2.toByte)
+    val bA = rgbs.map(_._3.toByte)
+    
+    val rr = new Mat(image.height, image.width, CvType.CV_8U)
+    rr.put(0, 0, rA)
+    val gg = new Mat(image.height, image.width, CvType.CV_8U)
+    gg.put(0, 0, gA)
+    val bb = new Mat(image.height, image.width, CvType.CV_8U)
+    bb.put(0, 0, bA)
+
+    val result = new Mat()
+    val layers = new ArrayList[Mat]()
+    layers.add(bb)
+    layers.add(gg)
+    layers.add(rr)
+    Core.merge(layers, result)
+    result
   }
 
   def saveImage(out: Image, filename: String, radius: Int): Unit = {
