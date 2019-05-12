@@ -17,7 +17,7 @@ python calculateFlops.py -s symbols/caffenet-symbol.json -ds  data,1,3,224,224 -
 ('model size: ', '232.563873291', ' MB')
 
 
-python calculateFlops.py -s symbols/caffenet-symbol.json -ds  data,1,3,224,224 -ls prob_label,1,1000
+python calculateFlops.py -s symbols/squeezenet_v1.0-symbol.json -ds  data,1,3,224,224 -ls prob_label,1,1000
 
 ('flops: ', '861.603864', ' MFLOPS')
 ('model size: ', '4.76235961914', ' MB')
