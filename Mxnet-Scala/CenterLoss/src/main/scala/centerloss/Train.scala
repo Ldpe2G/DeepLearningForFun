@@ -14,6 +14,7 @@ import org.apache.mxnet.NDArray
 import org.apache.mxnet.optimizer.SGD
 import org.apache.mxnet.Accuracy
 import org.apache.mxnet.Callback.Speedometer
+import org.apache.mxnet.util.OptionConversion._
 
 /**
  * @author Depeng Liang
@@ -33,20 +34,22 @@ object Train {
 
       val data = Symbol.Variable("data")
       val label = Symbol.Variable("label")
-      val fc1 = Symbol.FullyConnected("fc1")()(Map("data" -> data, "num_hidden" -> 128))
-      val act1 = Symbol.Activation("relu1")()(Map("data" -> fc1, "act_type" -> "relu"))
-      val fc2 = Symbol.FullyConnected("fc2")()(Map("data" -> act1, "num_hidden" -> 64))
-      val act2 = Symbol.Activation("relu2")()(Map("data" -> fc2, "act_type" -> "relu"))
-      
-      val fc3 = Symbol.FullyConnected("fc3")()(Map("data" -> act2, "num_hidden" -> 10))
-      val mlp = Symbol.SoftmaxOutput("softmax")()(Map("data" -> fc3, "label" -> label))
+      val fc1 = Symbol.api.FullyConnected(data, num_hidden = 128, name = "fc1")
+      val act1 = Symbol.api.relu(fc1, name = "relu1")
+      val fc2 = Symbol.api.FullyConnected(act1, num_hidden = 64, name = "fc2")
+      val act2 = Symbol.api.relu(fc2, name = "relu2")
+
+      val fc3 = Symbol.api.FullyConnected(act2, num_hidden = 10, name = "fc3")
+      val mlp = Symbol.api.SoftmaxOutput(fc3, label = label, name = "softmax")
 
       val net = if (useCenterLoss) {
-        val fc4 = Symbol.FullyConnected("fc4")()(Map("data" -> act2, "num_hidden" -> 4))
+        val fc4 = Symbol.api.FullyConnected(act2, num_hidden = 4, name = "fc4")
         val centerLabel = Symbol.Variable("center_label")
-        val centerLoss = Symbol.Custom("center_loss")()(Map("data" -> fc4, "label" -> centerLabel,
-          "op_type" -> "centerloss", "num_class" -> 10, "alpha" -> 0.5f, "scale" -> 1.0f))
-          
+        val wargs = scala.collection.mutable.Map[String, Any](
+            "data" -> fc4, "label" -> centerLabel, "num_class" -> 10, "alpha" -> 0.5f, "scale" -> 1.0f
+        )
+        val centerLoss = Symbol.api.Custom(op_type = "centerloss", name = "center_loss", kwargs = wargs)
+
         Symbol.Group(mlp, centerLoss)
       } else mlp
 
@@ -143,13 +146,13 @@ object Train {
 
 class Train {
   @Option(name = "--batch-size", usage = "the training batch size, default 100")
-  private val batchSize: Int = 100
+  private var batchSize: Int = 100
   @Option(name = "--data-path", usage = "the mnist data path")
-  private val dataPath: String = null
+  private var dataPath: String = null
   @Option(name = "--gpu", usage = "which gpu card to use, default is -1, means using cpu")
-  private val gpu: Int = -1
+  private var gpu: Int = -1
   @Option(name = "--lr", usage = "init learning rate")
-  private val lr: Float = 0.001f
+  private var lr: Float = 0.001f
   @Option(name = "--with-center-loss", usage = "whether train with center loss, default 1 means use center loss, set to 0 if not")
-  private val withCenterLoss: Int = 1
+  private var withCenterLoss: Int = 1
 }

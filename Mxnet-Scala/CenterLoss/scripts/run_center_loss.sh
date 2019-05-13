@@ -1,11 +1,13 @@
 ROOT=$(cd "$(dirname $0)/.."; pwd)
 
 # put your mxnet jar file in the $ROOT/lib folder
-MXNET_JAR_FILE=$ROOT/lib/mxnet-full_2.11-linux-x86_64-gpu-1.2.0-SNAPSHOT.jar
+MXNET_JAR_FILE=$ROOT/lib/mxnet-full_2.11-INTERNAL.jar
 
 CLASS_PATH=$MXNET_JAR_FILE:$ROOT/target/scala-2.11/classes/:\
 $HOME/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar:\
-$HOME/.ivy2/cache/args4j/args4j/bundles/args4j-2.33.jar
+$HOME/.ivy2/cache/args4j/args4j/bundles/args4j-2.33.jar:\
+$HOME/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar:\
+$HOME/.ivy2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.6.2.jar
 
 
 # path to the mnist dataset
