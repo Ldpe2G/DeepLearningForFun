@@ -33,13 +33,13 @@ I think I followed the torch implementation completely and couldn't locate the p
 
 ### steps
 
-1, compile Mxnet with CUDA, then compile the scala-pkg，doc： https://github.com/dmlc/mxnet/tree/master/scala-package
+1, compile MXNet with CUDA, then compile the scala-pkg，doc： https://github.com/dmlc/mxnet/tree/master/scala-package
 
 2, under the Mxnet-Scala/CycleGAN folder 
 ```bah
  mkdir lib;
 ```
-3, copy your compiled mxnet-full_2.11-linux-x86_64-gpu-0.10.0-SNAPSHOT.jar into lib folder;
+3, copy the compiled mxnet-full_2.11-INTERNAL.jar into lib folder;
 
 4, run `sbt` then compile the project
 

@@ -57,5 +57,8 @@ class ImageIter(dataPath: String, opt: Options.OptTrain, ctx: Context, dataName:
 
   // The name and shape of label provided by this iterator
   override def provideLabel: ListMap[String, Shape] = ListMap[String, Shape]()
-
+  
+  override def provideDataDesc: IndexedSeq[org.apache.mxnet.DataDesc] = null
+  
+  override def provideLabelDesc: IndexedSeq[org.apache.mxnet.DataDesc] = null
 }
