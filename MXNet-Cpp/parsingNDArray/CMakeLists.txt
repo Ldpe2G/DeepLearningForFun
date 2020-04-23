@@ -22,9 +22,8 @@ LINK_DIRECTORIES(/usr/local/lib /usr/lib)
 include_directories("${PROJECT_SOURCE_DIR}/dmlc-core/include")
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-#AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/dmlc-core/src SRC_LIST)
-
+add_subdirectory(dmlc-core)
 
 ADD_EXECUTABLE(read_nd read_mx_nd.cpp)
-TARGET_LINK_LIBRARIES(read_nd ${PROJECT_SOURCE_DIR}/dmlc-core/build/libdmlc.a)
+TARGET_LINK_LIBRARIES(read_nd dmlc)
 

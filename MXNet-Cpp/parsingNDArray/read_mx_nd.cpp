@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
 
   std::string param_file = argc > 1 ? argv[1] : "../testData/test-0000.params";
 
-  std::vector<parsend::NDArray *> ndarrays;
+  std::vector<parsend::NDArray *> ndarrays; // remember to release memeory
 
   // load parameters
   int32_t r = parsend::loadNDArray(ndarrays, param_file);
@@ -50,6 +50,10 @@ int main(int argc, char** argv) {
   result[100] += bias[0];
 
   std::cout << "result: " << result[100] << std::endl;
+
+  for (int i = 0; i < ndarrays.size(); ++i) {
+    delete ndarrays[i];
+  }
 
   return 0;
 }
