@@ -1,11 +1,10 @@
 # Parsing MXNet Parameter File In C++
 
-This small project aims to extract parameters from pretrained MXNet .params file in C++, and only depends on the [dmlc-core](https://github.com/dmlc/dmlc-core) project. 
+This small project aims to extract parameters from pretrained MXNet `.params` file in C++, and only depends on the [dmlc-core](https://github.com/dmlc/dmlc-core) project. 
 
-If you want to run your MXNet pretrained model on mobile devices with other light weight frameworks,
-for example [ncnn](https://github.com/Tencent/ncnn) . You need to first extract the pretrained parameters from the .params file.
+If you want to run your MXNet pretrained model on mobile devices with other light weight frameworks, you need to first extract the pretrained parameters from the `.params` file.
 
-This project provides you the facility to parse the .params file and extract the weights in C++.
+This project shows how to parse the `.params` file and extract the weights.
 
 ## Build The Project
 
