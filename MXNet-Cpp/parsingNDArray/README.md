@@ -8,16 +8,11 @@ for example [ncnn](https://github.com/Tencent/ncnn) . You need to first extract 
 This project provides you the facility to parse the .params file and extract the weights in C++.
 
 ## Build The Project
-### Compile dmlc-core
-
-```bash
-cd dmlc-core && mkdir build && cmake .. && make -j
-```
 
 ### Compile The Project
 
 ```bash
-mkdir build && cd build && cmake .. && make -j
+mkdir build && cd build && cmake .. && make -j4
 ```
 
 ## Testing
@@ -43,6 +38,5 @@ And the forward result will be the same as the output of python script.
 
 
 ## Some Limitations & Future Works
-1. This tool has only been tested on the lastest MXNet version V 1.2.0, which may not work with older MXNet version.
+1. This tool has only been tested on the lastest MXNet version V 2.0.0;
 2. I have only implemented the parsing of normal storage type NDArray, if your .params file contains sparse NDArray, this tool will fail to parse the file.
-3. For now this project has to depend on the dmlc-core project, which I want to remove the dependency in the future improvement.
