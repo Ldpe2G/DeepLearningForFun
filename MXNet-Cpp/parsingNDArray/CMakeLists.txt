@@ -18,12 +18,6 @@ add_compile_options(-std=c++11)
 INCLUDE_DIRECTORIES(/usr/local/include)
 LINK_DIRECTORIES(/usr/local/lib /usr/lib)
 
-
-include_directories("${PROJECT_SOURCE_DIR}/dmlc-core/include")
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-add_subdirectory(dmlc-core)
-
 ADD_EXECUTABLE(read_nd read_mx_nd.cpp)
-TARGET_LINK_LIBRARIES(read_nd dmlc)
-

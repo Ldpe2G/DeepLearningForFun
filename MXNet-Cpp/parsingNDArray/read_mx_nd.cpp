@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
   std::vector<parsend::NDArray *> ndarrays; // remember to release memeory
 
   // load parameters
-  int32_t r = parsend::loadNDArray(ndarrays, param_file);
+  int32_t r = parsend::loadNDArrayV2(ndarrays, param_file);
   if (r == parsend::kSuccess) {
     std::cout <<  "C++ read nd file successfully." <<std::endl;
   }

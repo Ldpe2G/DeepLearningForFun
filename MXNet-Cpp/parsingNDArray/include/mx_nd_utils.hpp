@@ -1,14 +1,9 @@
 #ifndef PARSE_MX_ND_UTILS_HPP
 #define PARSE_MX_ND_UTILS_HPP
 
-#include <stdio.h>
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include <dmlc/base.h>
-#include <dmlc/logging.h>
-#include <dmlc/io.h>
-#include <dmlc/memory_io.h>
 #include <map>
 #include <string>
 
@@ -39,9 +34,9 @@ size_t num_aux_data(NDArrayStorageType stype) {
   size_t num = 0;
   switch (stype) {
     case kDefaultStorage: num = 0; break;
-    case kCSRStorage: LOG(FATAL) << "Not supported storage type" << stype; break; //num = 2; break;
-    case kRowSparseStorage: LOG(FATAL) << "Not supported storage type" << stype; break; //num = 1; break;
-     default: LOG(FATAL) << "Unknown storage type" << stype; break;
+    case kCSRStorage: std::cout << "Not supported storage type" << stype; break; //num = 2; break;
+    case kRowSparseStorage: std::cout << "Not supported storage type" << stype; break; //num = 1; break;
+     default: std::cout << "Unknown storage type" << stype; break;
   }
   return num;
 }
@@ -90,7 +85,7 @@ std::string type2str(int type) {
     case kInt8: typeStr = "int8"; break;
     case kInt64: typeStr = "int64"; break;
     default:
-      LOG(FATAL) << "Unknown data type";
+      std::cout << "Unknown data type";
   }
   return typeStr;
 }
@@ -140,7 +135,7 @@ std::string type2str(int type) {
     }                                               \
     break;                                          \
   default:                                          \
-    LOG(FATAL) << "Unknown type enum " << type;     \
+    std::cout << "Unknown type enum " << type;     \
   }
 
 /*! \brief get data type size from type enum */
@@ -162,27 +157,33 @@ enum ReturnType {
   kFailure = 1
 };
 
-int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
+static bool Read(std::FILE *fp, void *ptr, size_t size) {
+  return std::fread(ptr, 1, size, fp) == size;
+} 
 
-  dmlc::Stream* fi = dmlc::Stream::Create(param_file.c_str(), "r");
+int32_t loadNDArrayV2(std::vector<NDArray *>& ndarrays, std::string param_file) {
+
+  std::FILE *fp = fopen(param_file.c_str(), "rb");
 
   uint64_t header, reserved;
-  if (!(fi->Read(&header))) {
-    LOG(INFO) << "Invalid NDArray file format";
+  if (!Read(fp, (void*)(&header), sizeof(uint64_t))) {
+    std::cout << "Invalid NDArray file format";
     return kFailure;
   }
-  if(!(fi->Read(&reserved))) {
-    LOG(INFO) << "Invalid NDArray file format";
+
+  if (!Read(fp, (void*)(&reserved), sizeof(uint64_t))) {
+    std::cout << "Invalid NDArray file format";
     return kFailure;
   }
+
   if (header != kMXAPINDArrayListMagic) {
-    LOG(INFO) << "Invalid NDArray file format";
+    std::cout << "Invalid NDArray file format";
     return kFailure;
   }
 
   uint64_t nd_size;
-  if (fi->Read(&nd_size, sizeof(nd_size)) != sizeof(nd_size)) {
-    LOG(INFO) << "read param error.";
+  if (!Read(fp, (void*)(&nd_size), sizeof(uint64_t))) {
+    std::cout << "read param error.";
     return kFailure;
   }
 
@@ -196,44 +197,36 @@ int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
     ndarrays[i] = nd;
 
     uint32_t magic;
-    if (fi->Read(&magic, sizeof(uint32_t)) != sizeof(uint32_t)) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, (void*)(&magic), sizeof(uint32_t))) {
+      std::cout << "read param error.";
       return kFailure;
     }
-#if defined(DEBUG)
-    LOG(INFO) << "magic code: " << magic;
-#endif
+
     if (magic != NDARRAY_V2_MAGIC) {
-      LOG(INFO) << "parsing ndarray with V1 format, not support yet!!";
+      std::cout << "parsing ndarray not V2 format, not support yet!!";
       return kFailure;
     }
 
     // load storage type
     int32_t stype;
-    if (fi->Read(&stype, sizeof(stype)) != sizeof(stype)) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, (void*)(&stype), sizeof(int32_t))) {
+      std::cout << "read param error.";
       return kFailure;
     }
 
     const int32_t nad = num_aux_data(static_cast<NDArrayStorageType>(stype));
-#if defined(DEBUG)
-    LOG(INFO) << "storage type: " << nad;
-#endif
 
     // load shape
     uint32_t ndim_{0};
-    if (fi->Read(&ndim_, sizeof(ndim_)) != sizeof(ndim_)) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, (void*)(&ndim_), sizeof(uint32_t))) {
+      std::cout << "read param error.";
       return kFailure;
     }
 
     size_t nread = sizeof(int64_t) * ndim_;
-#if defined(DEBUG)
-    LOG(INFO) << "shape dim: " << ndim_ << ", nread: " << nread;
-#endif
     int64_t *data_heap_ = new int64_t[ndim_];
-    if (fi->Read(data_heap_, nread) != nread) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, (void*)data_heap_, nread)) {
+      std::cout << "read param error.";
       return kFailure;
     }
 
@@ -241,8 +234,6 @@ int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
     for (uint32_t i=0; i<ndim_;++i) {
       size *= data_heap_[i];
       nd->shape.push_back(data_heap_[i]);
-      // nd->shape += std::to_string(data_heap_[i]);
-      // if (i < ndim_ - 1) nd->shape += "x";
     }
 
     delete[] data_heap_;
@@ -250,29 +241,23 @@ int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
     // load context 
     DeviceType dev_type;
     int32_t dev_id;
-    if (fi->Read(&dev_type, sizeof(dev_type)) != sizeof(dev_type)) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, (void*)(&dev_type), sizeof(dev_type))) {
+      std::cout << "read param error.";
       return kFailure;
     }
 
-    if (fi->Read(&dev_id, sizeof(int32_t)) != sizeof(int32_t)) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, (void*)(&dev_id), sizeof(int32_t))) {
+      std::cout << "read param error.";
       return kFailure;
     }
-
-#if defined(DEBUG)
-    LOG(INFO) << "dev type: " << dev_type << ", dev id: " << dev_id;
-#endif
 
     // load type flag
     int32_t type_flag;
-    if (fi->Read(&type_flag, sizeof(type_flag)) != sizeof(type_flag)) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, (void*)(&type_flag), sizeof(int32_t))) {
+      std::cout << "read param error.";
       return kFailure;
     }
-#if defined(DEBUG)
-    LOG(INFO) << "type flag: " << type_flag;
-#endif
+
     nd->type = type2str(type_flag);
 
     size_t all_size = size * mshadow_sizeof(type_flag);
@@ -281,12 +266,12 @@ int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
     // int ret = posix_memalign(&(nd->data), alignment_, all_size);
     nd->data = (void *)malloc(all_size);
     if (nd->data == NULL) {
-      LOG(INFO) << "Failed to allocate CPU Memory";
+      std::cout << "Failed to allocate CPU Memory";
       return kFailure;
     }
 
-    if (fi->Read(nd->data, all_size) != all_size) {
-      LOG(INFO) << "read param error.";
+    if (!Read(fp, nd->data, nd->numOfBytes)) {
+      std::cout << "read param error.";
       return kFailure;
     }
 
@@ -294,24 +279,41 @@ int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
 
   // read nd names
   std::vector<std::string> keys;
-  if (!(fi->Read(&keys))) {
-    LOG(INFO) << "Invalid NDArray file format";
+  uint64_t keysLen;
+  if (!Read(fp, (void*)(&keysLen), sizeof(uint64_t))) {
+    std::cout << "read param error.";
     return kFailure;
   }
+  keys.resize(keysLen);
+
+  for (uint64_t k = 0; k < keysLen; ++k) {
+     uint64_t stringLen;
+     if (!Read(fp, (void*)(&stringLen), sizeof(uint64_t))) {
+      std::cout << "read param error.";
+      return kFailure;
+    }
+    size_t size = static_cast<size_t>(stringLen);
+    keys[k].resize(size);
+    if (size != 0) {
+      size_t nbytes = sizeof(char) * size;
+      if (!Read(fp, (void*)(&(keys[k][0])), nbytes)) {
+        std::cout << "read param error.";
+        return kFailure;
+      }
+    }
+  }
+
   if (keys.size() != 0 && keys.size() != ndarrays.size()) {
-    LOG(INFO) << "Invalid NDArray file format";
+    std::cout << "Invalid NDArray file format";
     return kFailure;
   }
 
   for (size_t i = 0; i < nd_size; ++i) {
     std::string name(keys[i].c_str() + 4);
     ndarrays[i]->name = name;
-#if defined(DEBUG)
-    LOG(INFO) << ndarrays[i]->name << ", shape: " << ndarrays[i]->shape;
-#endif
   }
 
-  delete fi;
+  std::fclose(fp);
   return kSuccess;
 }
 
