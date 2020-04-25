@@ -3,57 +3,63 @@
     {
       "op": "null", 
       "name": "data", 
+      "attrs": {"__profiler_scope__": "<unk>:"}, 
       "inputs": []
     }, 
     {
       "op": "null", 
-      "name": "fc1_weight", 
+      "name": "conv_weight", 
       "attrs": {
-        "no_bias": "False", 
-        "num_hidden": "100"
+        "__init__": "[\"normal\", {\"sigma\": 0.01}]", 
+        "__profiler_scope__": "<unk>:"
       }, 
       "inputs": []
     }, 
     {
       "op": "null", 
-      "name": "fc1_bias", 
+      "name": "conv_bias", 
       "attrs": {
-        "no_bias": "False", 
-        "num_hidden": "100"
+        "__init__": "[\"normal\", {\"sigma\": 0.01}]", 
+        "__profiler_scope__": "<unk>:"
       }, 
       "inputs": []
     }, 
     {
-      "op": "FullyConnected", 
-      "name": "fc1", 
+      "op": "Convolution", 
+      "name": "conv", 
       "attrs": {
+        "__profiler_scope__": "<unk>:", 
+        "kernel": "(3, 3)", 
         "no_bias": "False", 
-        "num_hidden": "100"
+        "num_filter": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)"
       }, 
       "inputs": [[0, 0, 0], [1, 0, 0], [2, 0, 0]]
     }, 
     {
       "op": "null", 
-      "name": "fc2_weight", 
+      "name": "fc_weight", 
       "attrs": {
-        "no_bias": "False", 
-        "num_hidden": "1"
+        "__init__": "[\"normal\", {\"sigma\": 0.01}]", 
+        "__profiler_scope__": "<unk>:"
       }, 
       "inputs": []
     }, 
     {
       "op": "null", 
-      "name": "fc2_bias", 
+      "name": "fc_bias", 
       "attrs": {
-        "no_bias": "False", 
-        "num_hidden": "1"
+        "__init__": "[\"normal\", {\"sigma\": 0.01}]", 
+        "__profiler_scope__": "<unk>:"
       }, 
       "inputs": []
     }, 
     {
       "op": "FullyConnected", 
-      "name": "fc2", 
+      "name": "fc", 
       "attrs": {
+        "__profiler_scope__": "<unk>:", 
         "no_bias": "False", 
         "num_hidden": "1"
       }, 
@@ -63,5 +69,5 @@
   "arg_nodes": [0, 1, 2, 4, 5], 
   "node_row_ptr": [0, 1, 2, 3, 4, 5, 6, 7], 
   "heads": [[6, 0, 0]], 
-  "attrs": {"mxnet_version": ["int", 10200]}
+  "attrs": {"mxnet_version": ["int", 20000]}
 }

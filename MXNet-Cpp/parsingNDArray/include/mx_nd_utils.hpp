@@ -25,7 +25,7 @@ public:
   uint32_t numOfBytes = 0;
   std::string name = "";
   std::string type = "";
-  std::string shape = "";
+  std::vector<int64_t> shape;
 };
 
 enum NDArrayStorageType {
@@ -240,8 +240,9 @@ int32_t loadNDArray(std::vector<NDArray *>& ndarrays, std::string param_file) {
     int64_t size = 1;
     for (uint32_t i=0; i<ndim_;++i) {
       size *= data_heap_[i];
-      nd->shape += std::to_string(data_heap_[i]);
-      if (i < ndim_ - 1) nd->shape += "x";
+      nd->shape.push_back(data_heap_[i]);
+      // nd->shape += std::to_string(data_heap_[i]);
+      // if (i < ndim_ - 1) nd->shape += "x";
     }
 
     delete[] data_heap_;
