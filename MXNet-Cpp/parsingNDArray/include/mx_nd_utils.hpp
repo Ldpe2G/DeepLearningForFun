@@ -14,7 +14,9 @@ namespace parsend {
 class NDArray {
 public:
   NDArray() {}
-  ~NDArray() {}
+  ~NDArray() {
+    if (data != NULL) free(data);
+  }
 
   void* data = NULL;
   uint32_t numOfBytes = 0;
