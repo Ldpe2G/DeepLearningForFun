@@ -5,7 +5,7 @@
 This work is based on two repos: [li-haoran/DRL-FlappyBird](https://github.com/li-haoran/DRL-FlappyBird) and [songrotek/DRL-FlappyBird](https://github.com/songrotek/DRL-FlappyBird.git)
 
 ## screenshots
-<img src="./play.gif"/>
+<img src="play.gif"/>
 
 ## Requirements
 
