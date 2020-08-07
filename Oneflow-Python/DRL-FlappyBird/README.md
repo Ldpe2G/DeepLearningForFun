@@ -26,7 +26,7 @@ bash ruh_flappy_bird.sh
 
 ## Train from scratch
  
-Comment the line showing below in `ruhn_flappy_bird.sh` then run the script.
+Comment the line showing below in `run_flappy_bird.sh` then run the script.
 
 ```bash
 python3 FlappyBirdDQN.py \
