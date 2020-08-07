@@ -24,7 +24,7 @@ Tested on Ubuntu 20
 bash ruh_flappy_bird.sh
 ```
 
-## Train from scrash
+## Train from scratch
  
 Comment the line showing below in `ruhn_flappy_bird.sh` then run the script.
 
