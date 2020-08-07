@@ -31,7 +31,7 @@ Comment the line showing below in `ruhn_flappy_bird.sh` then run the script.
 ```bash
 python3 FlappyBirdDQN.py \
     --checkpoints_path $CHECKPOINTS_PATH \
-    # --pretrain_models $CHECKPOINTS_PATH
+    #--pretrain_models $PRETRAIN_MODEL_PATH
 ```
 
 It will take about at least 30000 time steps before the model can learn to play the game, be patients :).
