@@ -2,9 +2,13 @@
 
 # DeepLearning for fun
 
-Implementation of some interesting ideas of deeplearning with MXNet
+Implementation of some interesting ideas of deeplearning with [Oneflow](https://github.com/Oneflow-Inc/oneflow) or [MXNet](https://github.com/apache/incubator-mxnet)
 
-## List of implementations
+## List of implementations with Oneflow
+* [Playing Flappy Bird Using Deep Reinforcement Learning](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Oneflow-Python/DRL-FlappyBird)
+
+
+## List of implementations with MXNet
 * [Self-Normalizing Networks](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/SelfNormNets)
 * [Pix2Pix](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/Pix2Pix)
 * [CycleGAN](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/CycleGAN)
