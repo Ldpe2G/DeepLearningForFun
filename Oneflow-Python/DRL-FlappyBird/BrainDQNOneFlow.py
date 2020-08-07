@@ -23,7 +23,7 @@ DEVICE_NUM = 1
 def dataPrep(data):
     # at the begining data.shape = (80, 80, 4) or (80, 80, 1)
     if data.shape[2] > 1:
-        mean = np.array([128, 128, 128,128])
+        mean = np.array([128, 128, 128, 128])
         reshaped_mean = mean.reshape(1, 1, 4)
     else:
         mean=np.array([128])
@@ -32,94 +32,94 @@ def dataPrep(data):
     # convert hwc -> chw 
     data = np.swapaxes(data, 0, 2)
     data = np.swapaxes(data, 1, 2)
-    data = np.expand_dims(data, axis=0)
+    data = np.expand_dims(data, axis = 0)
     # before return data.shape = (1, 4, 80, 80) or (1, 1, 80, 80)
     return data
 
 # get QNet parameters
 def getQNetParams(var_name_prefix: str = "QNet",
-                  is_train=True):
+                  is_train: bool = True):
     weight_init = flow.variance_scaling_initializer(scale = 1.0, mode = "fan_in", distribution = "truncated_normal", data_format = "NCHW")
-    bias_init = flow.constant_initializer(value=0.)
+    bias_init = flow.constant_initializer(value = 0.)
 
     conv_prefix = "_conv1"
     conv1_weight = flow.get_variable(
         var_name_prefix + conv_prefix + "_weight",
-        shape=(32, 4, 8, 8),
-        dtype=flow.float32,
-        initializer=weight_init,
-        trainable=is_train        
+        shape = (32, 4, 8, 8),
+        dtype = flow.float32,
+        initializer = weight_init,
+        trainable = is_train        
     )
     conv1_bias = flow.get_variable(
         var_name_prefix + conv_prefix + "_bias",
-        shape=(32,),
-        dtype=flow.float32,
-        initializer=bias_init,
-        trainable=is_train
+        shape = (32,),
+        dtype = flow.float32,
+        initializer = bias_init,
+        trainable = is_train
     )
 
     conv_prefix = "_conv2"
     conv2_weight = flow.get_variable(
         var_name_prefix + conv_prefix + "_weight",
-        shape=(64, 32, 4, 4),
-        dtype=flow.float32,
-        initializer=weight_init,
-        trainable=is_train        
+        shape = (64, 32, 4, 4),
+        dtype = flow.float32,
+        initializer = weight_init,
+        trainable = is_train        
     )
     conv2_bias = flow.get_variable(
         var_name_prefix + conv_prefix + "_bias",
-        shape=(64,),
-        dtype=flow.float32,
-        initializer=bias_init,
-        trainable=is_train
+        shape = (64,),
+        dtype = flow.float32,
+        initializer = bias_init,
+        trainable = is_train
     )
 
     conv_prefix = "_conv3"
     conv3_weight = flow.get_variable(
         var_name_prefix + conv_prefix + "_weight",
-        shape=(64, 64, 4, 4),
-        dtype=flow.float32,
-        initializer=weight_init,
-        trainable=is_train        
+        shape = (64, 64, 4, 4),
+        dtype = flow.float32,
+        initializer = weight_init,
+        trainable = is_train        
     )
     conv3_bias = flow.get_variable(
         var_name_prefix + conv_prefix + "_bias",
-        shape=(64,),
-        dtype=flow.float32,
-        initializer=bias_init,
-        trainable=is_train
+        shape = (64,),
+        dtype = flow.float32,
+        initializer = bias_init,
+        trainable = is_train
     )
 
     fc_prefix = "_fc1"
     fc1_weight = flow.get_variable(
         var_name_prefix + fc_prefix + "_weight",
-        shape=(512, 64 * 5 * 5),
-        dtype=flow.float32,
-        initializer=weight_init,
-        trainable=is_train        
+        shape = (512, 64 * 5 * 5),
+        dtype = flow.float32,
+        initializer = weight_init,
+        trainable = is_train        
     )
     fc1_bias = flow.get_variable(
         var_name_prefix + fc_prefix + "_bias",
-        shape=(512,),
-        dtype=flow.float32,
-        initializer=bias_init,
-        trainable=is_train
+        shape = (512,),
+        dtype = flow.float32,
+        initializer = bias_init,
+        trainable = is_train
     )
 
     fc_prefix = "_fc2"
     fc2_weight = flow.get_variable(
         var_name_prefix + fc_prefix + "_weight",
-        shape=(ACTIONS_NUM, 512),
-        dtype=flow.float32,
-        initializer=weight_init,
-        trainable=is_train        
+        shape = (ACTIONS_NUM, 512),
+        dtype = flow.float32,
+        initializer = weight_init,
+        trainable = is_train        
     )
     fc2_bias = flow.get_variable(
         var_name_prefix + fc_prefix + "_bias",
-        shape=(ACTIONS_NUM,),
-        dtype=flow.float32,
-        initializer=bias_init,
-        trainable=is_train
+        shape = (ACTIONS_NUM,),
+        dtype = flow.float32,
+        initializer = bias_init,
+        trainable = is_train
     )
 
     return conv1_weight, conv1_bias, conv2_weight, conv2_bias, conv3_weight, conv3_bias, fc1_weight, fc1_bias, fc2_weight, fc2_bias
@@ -127,7 +127,7 @@ def getQNetParams(var_name_prefix: str = "QNet",
 
 def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtype = flow.float32),
                  var_name_prefix: str = "QNet",
-                 is_train=True) -> tp.Numpy:
+                 is_train: bool = True) -> tp.Numpy:
     
     conv1_weight, conv1_bias, conv2_weight, conv2_bias, conv3_weight, conv3_bias, fc1_weight, fc1_bias, fc2_weight, fc2_bias = \
         getQNetParams(var_name_prefix = var_name_prefix, is_train = is_train)
@@ -242,7 +242,7 @@ class OfBrainDQN:
 
         self.check_point = flow.train.CheckPoint()
         if self.pretrain_models != '':
-            self.check_point.load("pretrain_models")
+            self.check_point.load(self.pretrain_models)
         else:
             self.check_point.init()
         
@@ -251,8 +251,8 @@ class OfBrainDQN:
         minibatch = random.sample(self.replayMemory, BATCH_SIZE)
         # state_batch.shape = (BATCH_SIZE, 4, 80, 80)
         state_batch = np.squeeze([data[0] for data in minibatch])
-        action_batch =  np.squeeze([data[1] for data in minibatch])
-        reward_batch =  np.squeeze([data[2] for data in minibatch])
+        action_batch = np.squeeze([data[1] for data in minibatch])
+        reward_batch = np.squeeze([data[2] for data in minibatch])
         next_state_batch = np.squeeze([data[3] for data in minibatch])
 
         next_input_images = np.array(next_state_batch).astype(np.float32)

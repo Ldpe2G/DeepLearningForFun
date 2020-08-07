@@ -8,5 +8,5 @@ fi
 
 python3 FlappyBirdDQN.py \
     --checkpoints_path $CHECKPOINTS_PATH \
-    --pretrain_models $CHECKPOINTS_PATH
+    --pretrain_models $PRETRAIN_MODEL_PATH
     
