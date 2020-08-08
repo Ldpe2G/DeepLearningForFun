@@ -1,6 +1,6 @@
 # Playing Flappy Bird Using Deep Reinforcement Learning
 
-[Oneflow](https://github.com/Oneflow-inc/oneflow/) framework implementation of DQN to play the Flappy Bird game.
+Implementation of DQN to play the Flappy Bird game with [Oneflow](https://github.com/Oneflow-inc/oneflow/) framework .
 
 This work is based on two repos: [li-haoran/DRL-FlappyBird](https://github.com/li-haoran/DRL-FlappyBird) and [songrotek/DRL-FlappyBird](https://github.com/songrotek/DRL-FlappyBird.git)
 
