@@ -9,7 +9,13 @@ This work is based on two repos: [li-haoran/DRL-FlappyBird](https://github.com/l
 
 ## Requirements
 
-Tested on Ubuntu 20
+Tested on
+| Spec                        |                                                             |
+|-----------------------------|-------------------------------------------------------------|
+| Operating System            | Ubuntu 20                                             |
+| GPU                         | Nvidia GTX 1070                                          |
+| CUDA Version                | 10.2                                                        |
+| Driver Version              | 440.100                                                      |
 
 * python3
     - pygame
@@ -26,7 +32,7 @@ bash ruh_flappy_bird.sh
 
 ## Train from scratch
  
-Comment the line showing below in `run_flappy_bird.sh` then run the script.
+Comment the line showing below in `run_flappy_bird.sh` then run the script
 
 ```bash
 python3 FlappyBirdDQN.py \
