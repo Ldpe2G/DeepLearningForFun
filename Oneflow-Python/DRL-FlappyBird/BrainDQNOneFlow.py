@@ -4,6 +4,8 @@ import random
 from collections import deque
 import oneflow as flow
 import oneflow.typing as tp
+from threading import Thread, Lock
+import threading
 
 # Hyper Parameters:
 FRAME_PER_ACTION = 1
@@ -245,39 +247,58 @@ class OfBrainDQN:
             self.check_point.load(self.pretrain_models)
         else:
             self.check_point.init()
+
+        self.time_step_mutex = Lock()
+        self.predict_QNet_mutex = Lock()
+        self.replay_memory_mutex = Lock()
+        self.train_thread = Thread(target = self.trainQNetwork)
+        self.thread_started = False
         
     def trainQNetwork(self):
-        # Step 1: obtain random minibatch from replay memory
-        minibatch = random.sample(self.replayMemory, BATCH_SIZE)
-        # state_batch.shape = (BATCH_SIZE, 4, 80, 80)
-        state_batch = np.squeeze([data[0] for data in minibatch])
-        action_batch = np.squeeze([data[1] for data in minibatch])
-        reward_batch = np.squeeze([data[2] for data in minibatch])
-        next_state_batch = np.squeeze([data[3] for data in minibatch])
 
-        next_input_images = np.array(next_state_batch).astype(np.float32)
-        # Step 2: calculate y_batch
-        Qvalue_batch = self.predictQNet(next_input_images)
-        y_batch = np.zeros((BATCH_SIZE,))
-        terminal = np.squeeze([data[4] for data in minibatch])
-        y_batch[:] = reward_batch
-        if (terminal == False).shape[0] > 0:
-            y_batch[terminal == False] += (GAMMA * np.max(Qvalue_batch, axis=1))[terminal == False]
+        while True:
+            self.replay_memory_mutex.acquire()
+            # Step 1: obtain random minibatch from replay memory
+            minibatch = random.sample(self.replayMemory, BATCH_SIZE)
+            self.replay_memory_mutex.release()
 
-        input_images = np.array(state_batch).astype(np.float32)
-        action_input = np.array(action_batch).astype(np.float32)
-        y_input = np.array(y_batch).astype(np.float32)
-        # do forward, backward and update parameters
-        self.trainQNet(input_images, y_input, action_input)
+            # state_batch.shape = (BATCH_SIZE, 4, 80, 80)
+            state_batch = np.squeeze([data[0] for data in minibatch])
+            action_batch = np.squeeze([data[1] for data in minibatch])
+            reward_batch = np.squeeze([data[2] for data in minibatch])
+            next_state_batch = np.squeeze([data[3] for data in minibatch])
 
-        # save network every 100 iterations
-        if self.timeStep % 100 == 0:
-            if not os.path.exists(self.check_point_dir):
-                os.mkdir(self.check_point_dir)
-            self.check_point.save('%s/network-dqn_of_%d' % (self.check_point_dir, self.timeStep))
+            # Step 2: calculate y_batch
+            self.predict_QNet_mutex.acquire()
+            Qvalue_batch = self.predictQNet(next_state_batch)
+            self.predict_QNet_mutex.release()
 
-        if self.timeStep % UPDATE_TIME == 0:
-            self.copyQNetToQnetT()
+            terminal = np.squeeze([data[4] for data in minibatch])
+            y_batch = reward_batch.astype(np.float32)
+            terminal_false = terminal == False
+            if (terminal_false).shape[0] > 0:
+                y_batch[terminal_false] += (GAMMA * np.max(Qvalue_batch, axis=1))[terminal_false]
+
+            # do forward, backward and update parameters
+            self.trainQNet(state_batch, y_batch, action_batch)
+
+            self.time_step_mutex.acquire()
+            localTimeStep = self.timeStep
+            self.time_step_mutex.release()
+
+            # save network every 100 iterations
+            if localTimeStep % 100 == 0:
+                if not os.path.exists(self.check_point_dir):
+                    os.mkdir(self.check_point_dir)
+                save_path = '%s/network-dqn_of_%d' % (self.check_point_dir, localTimeStep)
+                if not os.path.exists(save_path):
+                    self.check_point.save(save_path)
+
+            if localTimeStep % UPDATE_TIME == 0:
+                self.predict_QNet_mutex.acquire()
+                self.copyQNetToQnetT()
+                self.predict_QNet_mutex.release()
+            
 
     def setInitState(self, observation):
         # temp.shape = (1, 4, 80, 80)
@@ -288,12 +309,17 @@ class OfBrainDQN:
         # discard the first channel of currentState and append nextObervation
         # newState.shape = (1, 4, 80, 80)
         newState = np.append(self.currentState[:, 1:, :, :], dataPrep(nextObservation), axis = 1)
-        self.replayMemory.append((self.currentState, action, reward, newState, terminal))
+        self.replay_memory_mutex.acquire()
+        self.replayMemory.append(
+            (self.currentState.astype(np.float32), action.astype(np.float32), reward, newState.astype(np.float32), terminal))
+        self.replay_memory_mutex.release()
+
         if len(self.replayMemory) > MAX_REPLAY_MEMORY:
             self.replayMemory.popleft()
-        if self.timeStep > OBSERVE:
+        if self.timeStep > OBSERVE and not self.thread_started:
             # Train the network
-            self.trainQNetwork()
+            self.train_thread.start()
+            self.thread_started = True
 
         # print info
         state = ""
@@ -308,14 +334,19 @@ class OfBrainDQN:
             print("TIMESTEP", self.timeStep, "/ STATE", state, "/ EPSILON", self.epsilon)
 
         self.currentState = newState
+        self.time_step_mutex.acquire()
         self.timeStep += 1
+        self.time_step_mutex.release()
 
     def getAction(self):
         
         input_images = np.repeat(self.currentState, BATCH_SIZE, axis = 0).astype(np.float32)
+
+        self.predict_QNet_mutex.acquire()
         Qvalue = np.squeeze(self.predictQNet(input_images))
+        self.predict_QNet_mutex.release()
+
         Qvalue = Qvalue[0]
-        
         action = np.zeros(ACTIONS_NUM)
         action_index = 0
         if self.timeStep % FRAME_PER_ACTION == 0:
