@@ -7,15 +7,15 @@ This work is based on two repos: [li-haoran/DRL-FlappyBird](https://github.com/l
 ## screenshots
 <img src="play.gif"/>
 
-## Requirements
-
-Tested on
+## Tested on
 | Spec                        |                                                             |
 |-----------------------------|-------------------------------------------------------------|
 | Operating System            | Ubuntu 20                                             |
 | GPU                         | Nvidia GTX 1070                                          |
 | CUDA Version                | 10.2                                                        |
 | Driver Version              | 440.100                                                      |
+
+## Requirements
 
 * python3
     - pygame
