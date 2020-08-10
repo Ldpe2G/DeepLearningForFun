@@ -40,7 +40,7 @@ python3 FlappyBirdDQN.py \
     #--pretrain_models $PRETRAIN_MODEL_PATH
 ```
 
-It will take about at least 20000 time steps before the model can learn to play the game, be patients :).
+It will take about at least 40000 time steps before the model can learn to play the game, be patients :).
 
 
 
