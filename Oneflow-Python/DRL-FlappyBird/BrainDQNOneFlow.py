@@ -142,6 +142,7 @@ def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtyp
         data_format = "NCHW"
     )
     conv1 = flow.nn.bias_add(conv1, conv1_bias, "NCHW")
+    conv1 = flow.layers.batch_normalization(inputs = conv1, axis = 1, name = "conv1_bn")
     conv1 = flow.nn.relu(conv1)
 
     pool1 = flow.nn.max_pool2d(conv1, 2, 2, "VALID", "NCHW")
@@ -154,6 +155,7 @@ def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtyp
         data_format = "NCHW"
     )
     conv2 = flow.nn.bias_add(conv2, conv2_bias, "NCHW")
+    conv2 = flow.layers.batch_normalization(inputs = conv2, axis = 1, name = "conv2_bn")
     conv2 = flow.nn.relu(conv2)
     
     conv3 = flow.nn.compat_conv2d(
@@ -164,12 +166,14 @@ def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtyp
         data_format = "NCHW"
     )
     conv3 = flow.nn.bias_add(conv3, conv3_bias, "NCHW")
+    conv3 = flow.layers.batch_normalization(inputs = conv3, axis = 1, name = "conv3_bn")
     conv3 = flow.nn.relu(conv3)
 
     # conv3.shape = (32, 64, 5, 5), after reshape become (32, 64 * 5 * 5)
     conv3_flatten = flow.reshape(conv3, (BATCH_SIZE, -1))
     fc1 = flow.matmul(a = conv3_flatten, b = fc1_weight, transpose_b = True)
     fc1 = flow.nn.bias_add(fc1, fc1_bias)
+    fc1 = flow.layers.batch_normalization(inputs = fc1, axis = 1, name = "fc1_bn")
     fc1 = flow.nn.relu(fc1)
 
     fc2 = flow.matmul(a = fc1, b = fc2_weight, transpose_b = True)
@@ -197,7 +201,7 @@ def trainQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtype =
         out = createOfQNet(input_image, var_name_prefix = "QNet", is_train = True)
         Q_Action = flow.math.reduce_sum(out * action_input, axis = 1)
         cost = flow.math.reduce_mean(flow.math.square(y_input - Q_Action))
-        learning_rate = 0.0002
+        learning_rate = 0.000001
         beta1 = 0.9
         flow.optimizer.Adam(flow.optimizer.PiecewiseConstantScheduler([], [learning_rate]), beta1 = beta1).minimize(cost)
 

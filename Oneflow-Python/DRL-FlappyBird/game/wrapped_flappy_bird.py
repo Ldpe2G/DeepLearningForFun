@@ -221,6 +221,6 @@ def pixelCollision(rect1, rect2, hitmask1, hitmask2):
 
     for x in range(rect.width):
         for y in range(rect.height):
-            if hitmask1[x1+x][y1+y] and hitmask2[x2+x][y2+y]:
+            if hitmask1[x1 + x][y1 + y] and hitmask2[x2 + x][y2 + y]:
                 return True
     return False

@@ -8,7 +8,6 @@ from BrainDQNOneFlow import OfBrainDQN
 # preprocess raw image to get 80 * 80 gray image
 def preprocess(observation):
     observation = cv2.cvtColor(cv2.resize(observation, (80, 80)), cv2.COLOR_BGR2GRAY)
-    ret, observation = cv2.threshold(observation, 1, 255, cv2.THRESH_BINARY)
     return np.reshape(observation, (80, 80, 1))
 
 def playFlappyBird(args):
@@ -22,9 +21,8 @@ def playFlappyBird(args):
 
     # observation0.shape = ((288, 512, 3), reward0: Float, terminal: Boolean
     observation0, reward0, terminal = flappyBird.frame_step(action0)
-    observation0 = cv2.cvtColor(cv2.resize(observation0, (80, 80)), cv2.COLOR_BGR2GRAY)
     # observation0.shape = (80, 80)
-    ret, observation0 = cv2.threshold(observation0, 1, 255, cv2.THRESH_BINARY)
+    observation0 = cv2.cvtColor(cv2.resize(observation0, (80, 80)), cv2.COLOR_BGR2GRAY)
     brain.setInitState(observation0)
 
     # Step 3.2: run the game
