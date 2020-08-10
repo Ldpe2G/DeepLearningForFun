@@ -5,10 +5,11 @@ sys.path.append("game/")
 import wrapped_flappy_bird as game
 from BrainDQNOneFlow import OfBrainDQN
 
-# preprocess raw image to get 80 * 80 gray image
+# preprocess raw image to get 64 * 64 gray image
 def preprocess(observation):
-    observation = cv2.cvtColor(cv2.resize(observation, (80, 80)), cv2.COLOR_BGR2GRAY)
-    return np.reshape(observation, (80, 80, 1))
+    observation = cv2.cvtColor(cv2.resize(observation, (64, 64)), cv2.COLOR_BGR2GRAY)
+    ret, observation = cv2.threshold(observation, 1, 255, cv2.THRESH_BINARY)
+    return np.reshape(observation, (64, 64, 1))
 
 def playFlappyBird(args):
     # Step 1: init BrainDQN
@@ -21,8 +22,9 @@ def playFlappyBird(args):
 
     # observation0.shape = ((288, 512, 3), reward0: Float, terminal: Boolean
     observation0, reward0, terminal = flappyBird.frame_step(action0)
-    # observation0.shape = (80, 80)
-    observation0 = cv2.cvtColor(cv2.resize(observation0, (80, 80)), cv2.COLOR_BGR2GRAY)
+    # observation0.shape = (64, 64)
+    observation0 = cv2.cvtColor(cv2.resize(observation0, (64, 64)), cv2.COLOR_BGR2GRAY)
+    ret, observation0 = cv2.threshold(observation0, 1, 255, cv2.THRESH_BINARY)
     brain.setInitState(observation0)
 
     # Step 3.2: run the game

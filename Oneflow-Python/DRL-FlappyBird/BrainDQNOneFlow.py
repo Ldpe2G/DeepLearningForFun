@@ -23,7 +23,7 @@ DEVICE_TAG = "gpu"
 DEVICE_NUM = 1
 
 def dataPrep(data):
-    # at the begining data.shape = (80, 80, 4) or (80, 80, 1)
+    # at the begining data.shape = (64, 64, 4) or (64, 64, 1)
     if data.shape[2] > 1:
         mean = np.array([128, 128, 128, 128])
         reshaped_mean = mean.reshape(1, 1, 4)
@@ -35,7 +35,7 @@ def dataPrep(data):
     data = np.swapaxes(data, 0, 2)
     data = np.swapaxes(data, 1, 2)
     data = np.expand_dims(data, axis = 0)
-    # before return data.shape = (1, 4, 80, 80) or (1, 1, 80, 80)
+    # before return data.shape = (1, 4, 64, 64) or (1, 1, 64, 64)
     return data
 
 # get QNet parameters
@@ -47,7 +47,7 @@ def getQNetParams(var_name_prefix: str = "QNet",
     conv_prefix = "_conv1"
     conv1_weight = flow.get_variable(
         var_name_prefix + conv_prefix + "_weight",
-        shape = (32, 4, 8, 8),
+        shape = (32, 4, 3, 3),
         dtype = flow.float32,
         initializer = weight_init,
         trainable = is_train        
@@ -63,30 +63,14 @@ def getQNetParams(var_name_prefix: str = "QNet",
     conv_prefix = "_conv2"
     conv2_weight = flow.get_variable(
         var_name_prefix + conv_prefix + "_weight",
-        shape = (64, 32, 4, 4),
+        shape = (32, 32, 3, 3),
         dtype = flow.float32,
         initializer = weight_init,
         trainable = is_train        
     )
     conv2_bias = flow.get_variable(
         var_name_prefix + conv_prefix + "_bias",
-        shape = (64,),
-        dtype = flow.float32,
-        initializer = bias_init,
-        trainable = is_train
-    )
-
-    conv_prefix = "_conv3"
-    conv3_weight = flow.get_variable(
-        var_name_prefix + conv_prefix + "_weight",
-        shape = (64, 64, 4, 4),
-        dtype = flow.float32,
-        initializer = weight_init,
-        trainable = is_train        
-    )
-    conv3_bias = flow.get_variable(
-        var_name_prefix + conv_prefix + "_bias",
-        shape = (64,),
+        shape = (32,),
         dtype = flow.float32,
         initializer = bias_init,
         trainable = is_train
@@ -95,7 +79,7 @@ def getQNetParams(var_name_prefix: str = "QNet",
     fc_prefix = "_fc1"
     fc1_weight = flow.get_variable(
         var_name_prefix + fc_prefix + "_weight",
-        shape = (512, 64 * 5 * 5),
+        shape = (512, 32 * 16 * 16),
         dtype = flow.float32,
         initializer = weight_init,
         trainable = is_train        
@@ -124,20 +108,20 @@ def getQNetParams(var_name_prefix: str = "QNet",
         trainable = is_train
     )
 
-    return conv1_weight, conv1_bias, conv2_weight, conv2_bias, conv3_weight, conv3_bias, fc1_weight, fc1_bias, fc2_weight, fc2_bias
+    return conv1_weight, conv1_bias, conv2_weight, conv2_bias, fc1_weight, fc1_bias, fc2_weight, fc2_bias
 
 
-def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtype = flow.float32),
+def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 64, 64), dtype = flow.float32),
                  var_name_prefix: str = "QNet",
                  is_train: bool = True) -> tp.Numpy:
     
-    conv1_weight, conv1_bias, conv2_weight, conv2_bias, conv3_weight, conv3_bias, fc1_weight, fc1_bias, fc2_weight, fc2_bias = \
+    conv1_weight, conv1_bias, conv2_weight, conv2_bias, fc1_weight, fc1_bias, fc2_weight, fc2_bias = \
         getQNetParams(var_name_prefix = var_name_prefix, is_train = is_train)
 
     conv1 = flow.nn.compat_conv2d(
         input_image,
         conv1_weight,
-        strides = [4, 4],
+        strides = [1, 1],
         padding = "same",
         data_format = "NCHW"
     )
@@ -145,12 +129,12 @@ def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtyp
     conv1 = flow.layers.batch_normalization(inputs = conv1, axis = 1, name = "conv1_bn")
     conv1 = flow.nn.relu(conv1)
 
-    pool1 = flow.nn.max_pool2d(conv1, 2, 2, "VALID", "NCHW")
+    pool1 = flow.nn.max_pool2d(conv1, 2, 2, "VALID", "NCHW", name = "pool1")
 
     conv2 = flow.nn.compat_conv2d(
         pool1,
         conv2_weight,
-        strides = [2, 2],
+        strides = [1, 1],
         padding = "same",
         data_format = "NCHW"
     )
@@ -158,20 +142,11 @@ def createOfQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtyp
     conv2 = flow.layers.batch_normalization(inputs = conv2, axis = 1, name = "conv2_bn")
     conv2 = flow.nn.relu(conv2)
     
-    conv3 = flow.nn.compat_conv2d(
-        conv2,
-        conv3_weight,
-        strides = [1, 1],
-        padding = "same",
-        data_format = "NCHW"
-    )
-    conv3 = flow.nn.bias_add(conv3, conv3_bias, "NCHW")
-    conv3 = flow.layers.batch_normalization(inputs = conv3, axis = 1, name = "conv3_bn")
-    conv3 = flow.nn.relu(conv3)
+    pool2 = flow.nn.max_pool2d(conv2, 2, 2, "VALID", "NCHW", name = "pool2")
 
-    # conv3.shape = (32, 64, 5, 5), after reshape become (32, 64 * 5 * 5)
-    conv3_flatten = flow.reshape(conv3, (BATCH_SIZE, -1))
-    fc1 = flow.matmul(a = conv3_flatten, b = fc1_weight, transpose_b = True)
+    # conv3.shape = (32, 32, 16, 16), after reshape become (32, 32 * 16 * 16)
+    pool2_flatten = flow.reshape(pool2, (BATCH_SIZE, -1))
+    fc1 = flow.matmul(a = pool2_flatten, b = fc1_weight, transpose_b = True)
     fc1 = flow.nn.bias_add(fc1, fc1_bias)
     fc1 = flow.layers.batch_normalization(inputs = fc1, axis = 1, name = "fc1_bn")
     fc1 = flow.nn.relu(fc1)
@@ -194,19 +169,19 @@ def get_predict_config():
     return func_config
 
 @flow.global_function("train", get_train_config())
-def trainQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtype = flow.float32),
+def trainQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 64, 64), dtype = flow.float32),
               y_input: tp.Numpy.Placeholder((BATCH_SIZE,), dtype = flow.float32),
               action_input: tp.Numpy.Placeholder((BATCH_SIZE, 2), dtype = flow.float32)):
     with flow.scope.placement(DEVICE_TAG, "0:0-%d" % (DEVICE_NUM - 1)):
         out = createOfQNet(input_image, var_name_prefix = "QNet", is_train = True)
         Q_Action = flow.math.reduce_sum(out * action_input, axis = 1)
         cost = flow.math.reduce_mean(flow.math.square(y_input - Q_Action))
-        learning_rate = 0.000001
+        learning_rate = 0.0002
         beta1 = 0.9
         flow.optimizer.Adam(flow.optimizer.PiecewiseConstantScheduler([], [learning_rate]), beta1 = beta1).minimize(cost)
 
 @flow.global_function("predict", get_predict_config())
-def predictQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtype = flow.float32)) -> tp.Numpy:
+def predictQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 64, 64), dtype = flow.float32)) -> tp.Numpy:
     with flow.scope.placement(DEVICE_TAG, "0:0-%d" % (DEVICE_NUM - 1)):
         out = createOfQNet(input_image, var_name_prefix = "QNetT", is_train = False)
         return out
@@ -215,17 +190,15 @@ def predictQNet(input_image: tp.Numpy.Placeholder((BATCH_SIZE, 4, 80, 80), dtype
 @flow.global_function("predict", get_predict_config())
 def copyQNetToQnetT():
     with flow.scope.placement(DEVICE_TAG, "0:0-%d" % (DEVICE_NUM - 1)):
-        t_conv1_weight, t_conv1_bias, t_conv2_weight, t_conv2_bias, t_conv3_weight, t_conv3_bias, t_fc1_weight, t_fc1_bias, t_fc2_weight, t_fc2_bias = \
+        t_conv1_weight, t_conv1_bias, t_conv2_weight, t_conv2_bias, t_fc1_weight, t_fc1_bias, t_fc2_weight, t_fc2_bias = \
             getQNetParams(var_name_prefix = "QNet", is_train = True)
-        p_conv1_weight, p_conv1_bias, p_conv2_weight, p_conv2_bias, p_conv3_weight, p_conv3_bias, p_fc1_weight, p_fc1_bias, p_fc2_weight, p_fc2_bias = \
+        p_conv1_weight, p_conv1_bias, p_conv2_weight, p_conv2_bias, p_fc1_weight, p_fc1_bias, p_fc2_weight, p_fc2_bias = \
             getQNetParams(var_name_prefix = "QNetT", is_train = False)
 
         flow.assign(p_conv1_weight, t_conv1_weight)
         flow.assign(p_conv1_bias, t_conv1_bias)
         flow.assign(p_conv2_weight, t_conv2_weight)
         flow.assign(p_conv2_bias, t_conv2_bias)
-        flow.assign(p_conv3_weight, t_conv3_weight)
-        flow.assign(p_conv3_bias, t_conv3_bias)
         flow.assign(p_fc1_weight, t_fc1_weight)
         flow.assign(p_fc1_bias, t_fc1_bias)
         flow.assign(p_fc2_weight, t_fc2_weight)
