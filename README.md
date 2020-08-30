@@ -6,7 +6,7 @@ Implementation of some interesting ideas of deeplearning with [Oneflow](https://
 
 ## List of implementations with Oneflow
 * [Playing Flappy Bird Using Deep Reinforcement Learning](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Oneflow-Python/DRL-FlappyBird)
-
+* [Fast Neural Style](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Oneflow-Python/FastNeuralStyle)
 
 ## List of implementations with MXNet
 * [Self-Normalizing Networks](https://github.com/Ldpe2G/DeepLearningForFun/tree/master/Mxnet-Scala/SelfNormNets)
