@@ -57,7 +57,7 @@ The results are not as good as the pytorch version but not bad anyway :)
 | Driver Version              | 440.100                                                      |
 
 ## Requirements
-
+* [git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)
 * python3
     - numpy
     - opencv
@@ -65,7 +65,7 @@ The results are not as good as the pytorch version but not bad anyway :)
 
 ## Test Pretrained Style Transfer Model on Images
 
-`tar zxf pretrain_models.tar.gz`(in order to get the pretrain models correctly during git clone, users need to install [git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)) to get the pretrain_models then use the script `infer.sh` to stylize image:
+`tar zxf pretrain_models.tar.gz`(in order to get the pretrain_models.tar.gz correctly during git clone, users need to install [git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)) to get the pretrain_models then use the script `infer.sh` to stylize image:
 
 ```bash
 MODEL_LOAD_DIR="pretrain_models/sketch_lr_0.001000_cw_10000.000000_sw_10000000000.000000_epoch_0_iter_4400_loss_3008.877197/"
