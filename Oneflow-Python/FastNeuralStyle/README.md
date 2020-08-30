@@ -1,4 +1,4 @@
-# Implementation of [Fast Neural Style](https://arxiv.org/abs/1603.08155) with Oneflow framework .
+# Implementation of [Fast Neural Style](https://arxiv.org/abs/1603.08155) with [Oneflow](https://github.com/Oneflow-inc/oneflow) framework.
 
 This work is based on the repo: https://github.com/pytorch/examples/tree/master/fast_neural_style
 
