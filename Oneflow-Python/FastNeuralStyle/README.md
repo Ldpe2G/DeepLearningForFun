@@ -17,6 +17,36 @@ The results are not as good as the pytorch version but not bad anyway :)
   <img src='images/output-images/sketch_amber.jpg' height="260px">
 </div>
 
+<div align='center'>
+  <img src='images/style-images/mosaic.jpg' height='200px'>
+  <img src='images/output-images/mosaic_chicago.jpg' height="260px">
+  <img src='images/output-images/mosaic_amber.jpg' height="260px">
+</div>
+
+<div align='center'>
+  <img src='images/style-images/rain-princess.jpg' height='200px'>
+  <img src='images/output-images/rain-princess_chicago.jpg' height="260px">
+  <img src='images/output-images/rain-princess_amber.jpg' height="260px">
+</div>
+
+<div align='center'>
+  <img src='images/style-images/starry_night.jpg' height='200px'>
+  <img src='images/output-images/starry_night_chicago.jpg' height="260px">
+  <img src='images/output-images/starry_night_amber.jpg' height="260px">
+</div>
+
+<div align='center'>
+  <img src='images/style-images/the_scream.jpg' height='200px'>
+  <img src='images/output-images/the_scream_chicago.jpg' height="260px">
+  <img src='images/output-images/the_scream_amber.jpg' height="260px">
+</div>
+
+<div align='center'>
+  <img src='images/style-images/wave_crop.jpg' height='200px'>
+  <img src='images/output-images/wave_crop_chicago.jpg' height="260px">
+  <img src='images/output-images/wave_crop_amber.jpg' height="260px">
+</div>
+
 
 ## Tested on
 | Spec                        |                                                             |
