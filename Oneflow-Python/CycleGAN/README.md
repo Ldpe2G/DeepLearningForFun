@@ -45,7 +45,7 @@ This work is based on the repo: https://github.com/junyanz/pytorch-CycleGAN-and-
 
 1, download datasets with the script：https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/datasets/download_cyclegan_dataset.sh
 
-2, using the script `train.sh` to train on new style image
+2, using the script `train.sh` to train on new tasks
 
 Something users need to configure:
 
