@@ -67,6 +67,16 @@ The results are not as good as the pytorch version but not bad anyway :)
     - opencv
 * [Oneflow](https://github.com/Oneflow-inc/oneflow)
 
+
+## Pretrain Models
+
+[mosaic](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/cv/fast_neural_style/FastNeuralStyle_mosaic.zip)
+[rain_princess](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/cv/fast_neural_style/FastNeuralStyle_rain_princess.zip)
+[scream](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/cv/fast_neural_style/FastNeuralStyle_scream.zip)
+[sketch](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/cv/fast_neural_style/FastNeuralStyle_sketch.zip)
+[starry_night](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/cv/fast_neural_style/FastNeuralStyle_starry_night.zip)
+[wave_crop](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/cv/fast_neural_style/FastNeuralStyle_wave_crop.zip)
+
 ## Test Pretrained Style Transfer Model on Images
 
 `tar zxf pretrain_models.tar.gz`(in order to get the pretrain_models.tar.gz correctly during git clone, users need to install [git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)) to get the pretrain_models then use the script `infer.sh` to stylize image:
