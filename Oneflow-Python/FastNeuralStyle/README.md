@@ -56,8 +56,8 @@ The results are not as good as the pytorch version but not bad anyway :)
 | CUDA Version                | 10.2                                                        |
 | Driver Version              | 440.100                                                      |
 
+
 ## Requirements
-* [git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)
 * python3
     - numpy
     - opencv
