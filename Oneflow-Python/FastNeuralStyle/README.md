@@ -62,11 +62,9 @@ The results are not as good as the pytorch version but not bad anyway :)
 421.849 milliseconds for resolution of 1080 x 1080.
 
 ## Requirements
-* python3
-    - numpy
-    - opencv
-* [Oneflow](https://github.com/Oneflow-inc/oneflow)
-
+* python3.8
+    - numpy1.7
+    - opencv4.2
 
 ## Pretrain Models
 
