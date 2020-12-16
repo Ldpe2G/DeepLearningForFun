@@ -43,7 +43,15 @@ def main(args):
     check_point = flow.train.CheckPoint()
     check_point.load(args.model_load_dir)
 
+    import datetime
+    a = datetime.datetime.now()
+
     style_out = PredictNet(input_image)
+
+    b = datetime.datetime.now()
+    c = b - a
+
+    print("time: %s ms, height: %d, width: %d" % (c.microseconds / 1000, height, width))
 
     cv2.imwrite(args.output_image_path, recover_image(style_out))
 

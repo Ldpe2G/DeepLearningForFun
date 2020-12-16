@@ -48,20 +48,24 @@ The results are not as good as the pytorch version but not bad anyway :)
 </div>
 
 
-## Tested on
+## Environment
 | Spec                        |                                                             |
 |-----------------------------|-------------------------------------------------------------|
 | Operating System            | Ubuntu 20                                             |
 | GPU                         | Nvidia GTX 1070                                          |
 | CUDA Version                | 10.2                                                        |
 | Driver Version              | 440.100                                                      |
+| Oneflow Version 	| branch: master, commit_id: c8695c0c3768fd3d154c22fa1c997907e4b46666    |
 
+## Inference time
+
+421.849 milliseconds for resolution of 1080 x 1080.
 
 ## Requirements
 * python3
     - numpy
     - opencv
-* Oneflow: https://github.com/Oneflow-inc/oneflow
+* [Oneflow](https://github.com/Oneflow-inc/oneflow)
 
 ## Test Pretrained Style Transfer Model on Images
 
