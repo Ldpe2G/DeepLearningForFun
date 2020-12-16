@@ -34,7 +34,7 @@ This work is based on the repo: https://github.com/junyanz/pytorch-CycleGAN-and-
 | GPU                         | Nvidia GTX 1070                                          |
 | CUDA Version                | 10.2                                                        |
 | Driver Version              | 440.100                                                      |
-| Oneflow Version             | branc: master, commit_id: c8695c0c3768fd3d154c22fa1c997907e4b46666 |
+| Oneflow Version             | branch: master, commit_id: c8695c0c3768fd3d154c22fa1c997907e4b46666 |
 
 ## Requirements
 * python3
