@@ -7,13 +7,14 @@ This work is based on two repos: [li-haoran/DRL-FlappyBird](https://github.com/l
 ## screenshots
 <img src="play.gif"/>
 
-## Tested on
+## Environment
 | Spec                        |                                                             |
 |-----------------------------|-------------------------------------------------------------|
 | Operating System            | Ubuntu 20                                             |
 | GPU                         | Nvidia GTX 1070                                          |
 | CUDA Version                | 10.2                                                        |
 | Driver Version              | 440.100                                                      |
+| Oneflow Version 	          | branch: master, commit_id: c8695c0c3768fd3d154c22fa1c997907e4b46666 |
 
 ## Requirements
 
@@ -21,10 +22,13 @@ This work is based on two repos: [li-haoran/DRL-FlappyBird](https://github.com/l
     - pygame
     - numpy
     - opencv
-* Oneflow: https://github.com/Oneflow-inc/oneflow
+* [Oneflow](https://github.com/Oneflow-inc/oneflow)
 
+## Pretrain Model
 
-## Train with pretrain model
+[DQN_FlappyBird.zip](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/rl/DQN_FlappyBird.zip)
+
+## Play with pretrain model
 
 ```bash
 bash ruh_flappy_bird.sh
@@ -32,7 +36,7 @@ bash ruh_flappy_bird.sh
 
 ## Train from scratch
  
-Comment the line showing below in `run_flappy_bird.sh` then run the script
+Comments `--pretrain_models $PRETRAIN_MODEL_PATH` showing below in `run_flappy_bird.sh` then run the script
 
 ```bash
 python3 FlappyBirdDQN.py \
