@@ -36,6 +36,10 @@ This work is based on the repo: https://github.com/junyanz/pytorch-CycleGAN-and-
 | Driver Version              | 440.100                                                      |
 | Oneflow Version             | branch: master, commit_id: c8695c0c3768fd3d154c22fa1c997907e4b46666 |
 
+## Inference time
+
+55.117 milliseconds on average for resolution of 256 x 256.
+
 ## Requirements
 * python3
     - numpy
