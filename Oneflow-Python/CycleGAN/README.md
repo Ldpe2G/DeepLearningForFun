@@ -42,6 +42,39 @@ This work is based on the repo: https://github.com/junyanz/pytorch-CycleGAN-and-
     - opencv
 * [Oneflow](https://github.com/Oneflow-inc/oneflow)
 
+
+## PretrainModel
+
+[horse2zerba](https://oneflow-public.oss-cn-beijing.aliyuncs.com/model_zoo/cv/gan/CycleGAN_horse2zebra.zip)
+
+
+## Test Pretrained Model on Images
+
+Download the pretrained model and then use the `test.sh` script to predict images.
+
+```bash
+CHECKPOINT_LOAD_DIR="./pretrain_models/horse2zebra_epoch_73_iter_200_gloss_3.497316_dloss_0.253239/"
+
+NET_IN_SIZE=256
+
+# user just need to provide the directory containing the images
+INPUT_IMAGES="./datasets/horse2zebra/testB/"
+OUTPUT_IMAGES="./outputs/horse2zebra/outB2A/"
+
+# transform domain A images to domain B
+# DIRECTION="A2B"
+# transform domain B images to domain A
+DIRECTION="B2A"
+
+python3 test_of_cyclegan.py \
+    --input_images $INPUT_IMAGES \
+    --network_input_size $NET_IN_SIZE \
+    --output_images $OUTPUT_IMAGES \
+    --direction $DIRECTION \
+    --checkpoint_load_dir $CHECKPOINT_LOAD_DIR
+```
+
+
 ## Train with new task
 
 1, download datasets with the script：https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/datasets/download_cyclegan_dataset.sh
@@ -92,28 +125,4 @@ python3 train_of_cyclegan.py \
     --lambda_identity $LAMBDA_IDENTITY \
     --checkpoint_save_dir $CHECKPOINT_SAVE_DIR \
     # --checkpoint_load_dir $CHECKPOINT_LOAD_DIR
-```
-
-## Test Pretrained Model on Images
-
-```bash
-CHECKPOINT_LOAD_DIR="./pretrain_models/horse2zebra_epoch_73_iter_200_gloss_3.497316_dloss_0.253239/"
-
-NET_IN_SIZE=256
-
-# user just need to provide the directory containing the images
-INPUT_IMAGES="./datasets/horse2zebra/testB/"
-OUTPUT_IMAGES="./outputs/horse2zebra/outB2A/"
-
-# transform domain A images to domain B
-# DIRECTION="A2B"
-# transform domain B images to domain A
-DIRECTION="B2A"
-
-python3 test_of_cyclegan.py \
-    --input_images $INPUT_IMAGES \
-    --network_input_size $NET_IN_SIZE \
-    --output_images $OUTPUT_IMAGES \
-    --direction $DIRECTION \
-    --checkpoint_load_dir $CHECKPOINT_LOAD_DIR
 ```
