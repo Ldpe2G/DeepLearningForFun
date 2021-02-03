@@ -9,7 +9,7 @@ RGB_STD="58.393,57.12,57.375"
 STYLE_IMAGE="./images/style-images/sketch.jpg"
 
 # download from http://msvocds.blob.core.windows.net/coco2015/test2015.zip
-TRAIN_DATASET_PATH="./Coco/test2015"
+TRAIN_DATASET_PATH="/home/ldpe2g/DataSets/Coco/test2015/"
 
 IMAGE_SIZE=256
 

@@ -22,10 +22,13 @@ def recover_image(im):
     im = cv2.cvtColor(np.float32(im), cv2.COLOR_RGB2BGR)
     return im.astype(np.uint8)
 
-def get_predict_config():
+def get_predict_config(device_type="gpu", device_num=1):
     func_config = flow.FunctionConfig()
     func_config.default_data_type(flow.float32)
     func_config.default_logical_view(flow.scope.consistent_view())
+    func_config.default_placement_scope(
+        flow.scope.placement(device_type, "0:0-{}".format(device_num - 1))
+    )
     return func_config
 
 def main(args):
@@ -33,15 +36,15 @@ def main(args):
     height = input_image.shape[2]
     width = input_image.shape[3]
 
+    flow.env.init()
+
     @flow.global_function("predict", get_predict_config())
     def PredictNet(
         image: tp.Numpy.Placeholder((1, 3, height, width), dtype = flow.float32)) -> tp.Numpy:
-        with flow.scope.placement("gpu", "0:0-0"):
-            style_out = style_model.styleNet(image, trainable = True)
+        style_out = style_model.styleNet(image, trainable = True)
         return style_out
 
-    check_point = flow.train.CheckPoint()
-    check_point.load(args.model_load_dir)
+    flow.load_variables(flow.checkpoint.get(args.model_load_dir))
 
     import datetime
     a = datetime.datetime.now()
