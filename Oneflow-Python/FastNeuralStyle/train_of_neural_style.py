@@ -29,23 +29,22 @@ def recover_image(im):
     im = cv2.cvtColor(np.float32(im), cv2.COLOR_RGB2BGR)
     return im.astype(np.uint8)
 
-def get_train_config():
+def get_config(device_type="gpu", device_num=1):
     func_config = flow.FunctionConfig()
     func_config.default_data_type(flow.float32)
     func_config.default_logical_view(flow.scope.consistent_view())
-    return func_config
-
-def get_predict_config():
-    func_config = flow.FunctionConfig()
-    func_config.default_data_type(flow.float32)
-    func_config.default_logical_view(flow.scope.consistent_view())
+    func_config.default_placement_scope(
+        flow.scope.placement(device_type, "0:0-{}".format(device_num - 1))
+    )
     return func_config
 
 def main(args):
     global CONSOLE_ARGUMENTS
     CONSOLE_ARGUMENTS = args
 
-    @flow.global_function("train", get_train_config())
+    flow.env.init()
+
+    @flow.global_function("train", get_config())
     def TrainNet(
         image: tp.Numpy.Placeholder((1, 3, CONSOLE_ARGUMENTS.train_image_size, CONSOLE_ARGUMENTS.train_image_size), dtype = flow.float32),
         mean: tp.Numpy.Placeholder((1, 3, 1, 1), dtype = flow.float32),
@@ -55,40 +54,38 @@ def main(args):
         style_image_relu3_3: tp.Numpy.Placeholder((1, 256, CONSOLE_ARGUMENTS.train_image_size // 4, CONSOLE_ARGUMENTS.train_image_size // 4), dtype = flow.float32),
         style_image_relu4_3: tp.Numpy.Placeholder((1, 512, CONSOLE_ARGUMENTS.train_image_size // 8, CONSOLE_ARGUMENTS.train_image_size // 8), dtype = flow.float32), 
     ):
-        with flow.scope.placement("gpu", "0:0-0"):
-            style_out = style_model.styleNet(image, trainable = True)
+        style_out = style_model.styleNet(image, trainable = True)
 
-            image_norm = (image - mean) / std
-            org_content_relu2_2 = vgg16_model.vgg16bn_content_layer(image_norm, trainable = False, training = False)
-            
-            style_out_norm = (style_out - mean) / std
-            style_out_relu1_2, style_out_relu2_2, style_out_relu3_3, style_out_relu4_3 = vgg16_model.vgg16bn_style_layer(style_out_norm, trainable = False, training = False)
+        image_norm = (image - mean) / std
+        org_content_relu2_2 = vgg16_model.vgg16bn_content_layer(image_norm, trainable = False, training = False)
+        
+        style_out_norm = (style_out - mean) / std
+        style_out_relu1_2, style_out_relu2_2, style_out_relu3_3, style_out_relu4_3 = vgg16_model.vgg16bn_style_layer(style_out_norm, trainable = False, training = False)
 
-            # compute mean square error loss
-            content_loss = style_model.mse_loss(org_content_relu2_2 - style_out_relu2_2)
-            style_loss = style_model.mse_loss(style_model.gram_matrix(style_out_relu1_2) - style_model.gram_matrix(style_image_relu1_2)) \
-                        + style_model.mse_loss(style_model.gram_matrix(style_out_relu2_2) - style_model.gram_matrix(style_image_relu2_2)) \
-                        + style_model.mse_loss(style_model.gram_matrix(style_out_relu3_3) - style_model.gram_matrix(style_image_relu3_3)) \
-                        + style_model.mse_loss(style_model.gram_matrix(style_out_relu4_3) - style_model.gram_matrix(style_image_relu4_3))
+        # compute mean square error loss
+        content_loss = style_model.mse_loss(org_content_relu2_2 - style_out_relu2_2)
+        style_loss = style_model.mse_loss(style_model.gram_matrix(style_out_relu1_2) - style_model.gram_matrix(style_image_relu1_2)) \
+                    + style_model.mse_loss(style_model.gram_matrix(style_out_relu2_2) - style_model.gram_matrix(style_image_relu2_2)) \
+                    + style_model.mse_loss(style_model.gram_matrix(style_out_relu3_3) - style_model.gram_matrix(style_image_relu3_3)) \
+                    + style_model.mse_loss(style_model.gram_matrix(style_out_relu4_3) - style_model.gram_matrix(style_image_relu4_3))
 
-            loss = content_loss * CONSOLE_ARGUMENTS.content_weight + style_loss * CONSOLE_ARGUMENTS.style_weight
+        loss = content_loss * CONSOLE_ARGUMENTS.content_weight + style_loss * CONSOLE_ARGUMENTS.style_weight
 
-            flow.optimizer.Adam(flow.optimizer.PiecewiseConstantScheduler([], [CONSOLE_ARGUMENTS.learning_rate])).minimize(loss)
+        flow.optimizer.Adam(flow.optimizer.PiecewiseConstantScheduler([], [CONSOLE_ARGUMENTS.learning_rate])).minimize(loss)
 
         return style_out, loss
 
-    @flow.global_function("predict", get_predict_config())
+    @flow.global_function("predict", get_config())
     def getVgg16MiddleLayers(
         style_image: tp.Numpy.Placeholder((1, 3, CONSOLE_ARGUMENTS.train_image_size, CONSOLE_ARGUMENTS.train_image_size), dtype = flow.float32),
         mean: tp.Numpy.Placeholder((1, 3, 1, 1), dtype = flow.float32),
         std: tp.Numpy.Placeholder((1, 3, 1, 1), dtype = flow.float32)):
-        with flow.scope.placement("gpu", "0:0-0"):
-            style_image = (style_image - mean) / std
-            style_out_relu1_2, style_out_relu2_2, style_out_relu3_3, style_out_relu4_3 = vgg16_model.vgg16bn_style_layer(style_image, trainable = False, training = False)
+        style_image = (style_image - mean) / std
+        style_out_relu1_2, style_out_relu2_2, style_out_relu3_3, style_out_relu4_3 = vgg16_model.vgg16bn_style_layer(style_image, trainable = False, training = False)
         return style_out_relu1_2, style_out_relu2_2, style_out_relu3_3, style_out_relu4_3
 
-    check_point = flow.train.CheckPoint()
-    check_point.load(CONSOLE_ARGUMENTS.model_load_dir)
+    vars_in_file = flow.checkpoint.get(CONSOLE_ARGUMENTS.model_load_dir)
+    flow.load_variables(vars_in_file)
 
     mean_nd = np.array(float_list(CONSOLE_ARGUMENTS.rgb_mean)).reshape((1, 3, 1, 1)).astype(np.float32)
     std_nd = np.array(float_list(CONSOLE_ARGUMENTS.rgb_std)).reshape((1, 3, 1, 1)).astype(np.float32)
@@ -124,7 +121,7 @@ def main(args):
 
                 cur_loss = loss.numpy().mean()
                 
-                check_point.save("%s/lr_%f_cw_%f_sw_%f_epoch_%d_iter_%d_loss_%f" % \
+                flow.checkpoint.save("%s/lr_%f_cw_%f_sw_%f_epoch_%d_iter_%d_loss_%f" % \
                     (CONSOLE_ARGUMENTS.model_save_dir, CONSOLE_ARGUMENTS.learning_rate, CONSOLE_ARGUMENTS.content_weight, CONSOLE_ARGUMENTS.style_weight, e, i, cur_loss))
 
                 print("epoch: %d, iter: %d, loss : %f" % (e, i, cur_loss))
